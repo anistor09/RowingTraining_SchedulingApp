@@ -30,7 +30,7 @@ public class ParticipantService {
      * @return a new participant
      * @throws Exception
      */
-    public Participant addParticipant(nl.tudelft.sem.template.example.domain.participant.Username username, PositionManager positionManager, String gender, Certificate certificate,
+    public Participant addParticipant(Username username, PositionManager positionManager, String gender, Certificate certificate,
                                       String organization, String level){
        // if(checkUsernameIsUnique(username)){
             Participant participant= new Participant(username,positionManager,gender,certificate,organization,level);

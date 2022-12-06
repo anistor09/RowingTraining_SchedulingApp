@@ -19,7 +19,7 @@ public class Participant {
 
     @Column(name= "username", nullable = false)
     @Convert(converter = UsernameAttributeConverter.class)
-    private nl.tudelft.sem.template.example.domain.participant.Username username;
+    private Username username;
 
     @Column(name="positions", nullable = false)
     @Convert(converter = PositionAttributeCoverter.class)
@@ -39,7 +39,7 @@ public class Participant {
     private String level;
 
 
-    public Participant(nl.tudelft.sem.template.example.domain.participant.Username username, PositionManager positionManager, String gender, Certificate certificate, String organization, String level){
+    public Participant(Username username, PositionManager positionManager, String gender, Certificate certificate, String organization, String level){
         this.username= username;
         this.positionManager= positionManager;
         this.gender=gender;

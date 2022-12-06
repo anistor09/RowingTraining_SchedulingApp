@@ -4,12 +4,12 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class UsernameAttributeConverter implements AttributeConverter<nl.tudelft.sem.template.example.domain.participant.Username, String> {
+public class UsernameAttributeConverter implements AttributeConverter<Username, String> {
 
     @Override
-    public String convertToDatabaseColumn(nl.tudelft.sem.template.example.domain.participant.Username username){return username.toString();}
+    public String convertToDatabaseColumn(Username username){return username.toString();}
 
     @Override
-    public nl.tudelft.sem.template.example.domain.participant.Username convertToEntityAttribute(String dbData){return new nl.tudelft.sem.template.example.domain.participant.Username(dbData);}
+    public Username convertToEntityAttribute(String dbData){return new Username(dbData);}
 
 }

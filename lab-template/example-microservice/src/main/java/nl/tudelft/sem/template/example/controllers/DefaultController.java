@@ -5,6 +5,7 @@ import nl.tudelft.sem.template.example.domain.models.ParticipationRequestModel;
 import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
 import nl.tudelft.sem.template.example.domain.participant.PositionManager;
+import nl.tudelft.sem.template.example.domain.participant.Username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class DefaultController {
     @PostMapping("/details")
     public ResponseEntity addDetails(@RequestBody ParticipationRequestModel request){
         try{
-            nl.tudelft.sem.template.example.domain.participant.Username username= new nl.tudelft.sem.template.example.domain.participant.Username(authManager.getNetId());
+            Username username= new Username(authManager.getNetId());
             PositionManager positionManager= new PositionManager(request.getPositions());
             Certificate certificate= new Certificate(request.getCertificate());
             String gender= request.getGender();
