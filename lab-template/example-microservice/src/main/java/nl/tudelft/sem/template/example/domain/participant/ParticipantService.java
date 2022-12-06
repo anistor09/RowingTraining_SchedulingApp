@@ -1,6 +1,11 @@
 package nl.tudelft.sem.template.example.domain.participant;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Service for adding new Participants and their details
@@ -39,6 +44,18 @@ public class ParticipantService {
             return participant;
         //}
         //throw new Exception("some exception we need to create");
+    }
+    public List<String> getParticipantPositions(Username username) {
+        Optional<Participant> participant = participantRepository.findByUsername(username);
+        Participant currentParticipant;
+        try{
+            currentParticipant = participant.get();
+
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        }
+        return currentParticipant.getPositionManager().getPositions();
     }
 
     //public boolean checkUsernameIsUnique(Username username){

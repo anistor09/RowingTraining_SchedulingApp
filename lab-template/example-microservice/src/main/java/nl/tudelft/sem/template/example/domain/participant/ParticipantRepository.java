@@ -4,6 +4,8 @@ import nl.tudelft.sem.template.example.domain.participant.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * repository for participants
  */
@@ -13,7 +15,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, String
     /**
      * Find user by NetID.
      */
-    //Optional<Participant> findByUsername(Username username);
+    Optional<Participant> findByUsername(Username username);
 
     /**
      * checks if there is already an user with this name

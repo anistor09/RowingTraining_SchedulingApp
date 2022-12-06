@@ -1,12 +1,16 @@
 package nl.tudelft.sem.template.example.domain.participant;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "participants")
 @NoArgsConstructor
+@Getter
+@Setter
 public class Participant {
     @Id
     @SequenceGenerator(name = "participant",
