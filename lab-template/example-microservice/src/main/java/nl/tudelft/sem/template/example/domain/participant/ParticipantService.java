@@ -1,6 +1,5 @@
-package nl.tudelft.sem.template.example.domain;
+package nl.tudelft.sem.template.example.domain.participant;
 
-import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ParticipantService {
-    private final transient  ParticipantRepository participantRepository;
+    private final transient ParticipantRepository participantRepository;
 
     /**
      * Instantiates a new ParticipantService

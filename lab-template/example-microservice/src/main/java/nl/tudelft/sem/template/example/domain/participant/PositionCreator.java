@@ -1,6 +1,6 @@
-package nl.tudelft.sem.template.example.domain;
+package nl.tudelft.sem.template.example.domain.participant;
 
-public class PositionCreator implements PositionInterface{
+public class PositionCreator implements PositionInterface {
     @Override
     public void createPositions(String positions, PositionManager pm){
 

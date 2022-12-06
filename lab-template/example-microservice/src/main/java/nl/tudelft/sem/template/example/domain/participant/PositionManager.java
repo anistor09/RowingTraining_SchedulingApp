@@ -1,6 +1,7 @@
-package nl.tudelft.sem.template.example.domain;
+package nl.tudelft.sem.template.example.domain.participant;
 
 import lombok.EqualsAndHashCode;
+import nl.tudelft.sem.template.example.domain.participant.PositionCreator;
 
 /**
  * Positions that the participant is able to fill
