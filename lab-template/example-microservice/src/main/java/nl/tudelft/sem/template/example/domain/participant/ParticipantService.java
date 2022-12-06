@@ -1,5 +1,6 @@
 package nl.tudelft.sem.template.example.domain;
 
+import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import org.springframework.stereotype.Service;
 
 /**
