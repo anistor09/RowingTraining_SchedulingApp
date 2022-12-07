@@ -45,7 +45,7 @@ public class ParticipantService {
         //}
         //throw new Exception("some exception we need to create");
     }
-    public List<String> getParticipantPositions(Username username) {
+    public Participant getParticipant(Username username){
         Optional<Participant> participant = participantRepository.findByUsername(username);
         Participant currentParticipant;
         try{
@@ -55,8 +55,69 @@ public class ParticipantService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 
         }
-        return currentParticipant.getPositionManager().getPositions();
+        return currentParticipant;
+
     }
+    public List<String> getParticipantPositions(Username username) {
+
+        List<String> positions;
+        try{
+             positions = getParticipant(username).getPositionManager().getPositions();
+
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        }
+        return positions;
+    }
+
+    public String getParticipantCertificate(Username username) {
+        String certificate;
+        try{
+            certificate = getParticipant(username).getCertificate().toString();
+
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        }
+        return certificate;
+    }
+    public String getParticipantOrganization(Username username) {
+        String organization;
+        try{
+            organization = getParticipant(username).getOrganization();
+
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        }
+        return organization;
+    }
+    public String getParticipantGender(Username username) {
+        String gender;
+        try{
+            gender = getParticipant(username).getGender();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        }
+        return gender;
+    }
+    public String getParticipantLevel(Username username) {
+        String level;
+        try{
+            level = getParticipant(username).getLevel();
+        }catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        }
+        return level;
+    }
+    public void requestMatch(Username username, List<String> timeSlots){
+        Participant p = getParticipant(username);
+        p.requestMatch(timeSlots);
+    }
+
 
     //public boolean checkUsernameIsUnique(Username username){
       //  return !participantRepository.existsByUsername(username);

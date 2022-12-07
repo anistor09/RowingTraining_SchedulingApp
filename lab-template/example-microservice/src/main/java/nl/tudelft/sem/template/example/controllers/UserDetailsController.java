@@ -41,7 +41,55 @@ public class UserDetailsController {
 
     }
 
+    @GetMapping("/certificate")
+    public String getCertificate() {
+        String certificate="";
+        try {
+            Username participantName = new Username(authManager.getNetId());
+            certificate = participantService.getParticipantCertificate(participantName);
 
+        }   catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return certificate;
 
+    }
+    @GetMapping("/gender")
+    public String getGender() {
+        String gender="";
+        try {
+            Username participantName = new Username(authManager.getNetId());
+            gender = participantService.getParticipantGender(participantName);
 
+        }   catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return gender;
+
+    }
+    @GetMapping("/level")
+    public String getLevel() {
+        String level="";
+        try {
+            Username participantName = new Username(authManager.getNetId());
+            level = participantService.getParticipantLevel(participantName);
+
+        }   catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return level;
+
+    }
+    @GetMapping("/organization")
+    public String getOrganization() {
+        String organization="";
+        try {
+            Username participantName = new Username(authManager.getNetId());
+            organization = participantService.getParticipantOrganization(participantName);
+
+        }   catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+        return organization;
+    }
 }

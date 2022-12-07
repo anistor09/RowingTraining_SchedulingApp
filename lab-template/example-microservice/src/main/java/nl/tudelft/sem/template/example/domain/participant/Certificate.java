@@ -20,12 +20,19 @@ public class Certificate {
         this.certificateType=certificateType;
     }
 
+
+
     boolean isValid() {
         ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
         if(strings.contains(certificateType))
             return true;
         return false;
     }
+    @Override
+    public String toString() {
+        return certificateType;
+    }
+
 
 //    boolean isBetterCertificate(Certificate other) {
 //        int value1=-1;

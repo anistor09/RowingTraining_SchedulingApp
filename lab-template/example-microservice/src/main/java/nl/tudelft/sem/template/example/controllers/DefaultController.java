@@ -2,6 +2,7 @@ package nl.tudelft.sem.template.example.controllers;
 
 import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.domain.models.ParticipationRequestModel;
+import nl.tudelft.sem.template.example.domain.models.RequestMatchModel;
 import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
 import nl.tudelft.sem.template.example.domain.participant.PositionManager;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 /**
  * Hello World example controller.
@@ -71,5 +74,14 @@ public class DefaultController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         return ResponseEntity.ok("Fine");
+    }
+    @PostMapping("/requestMatch")
+    public ResponseEntity requestMatch(@RequestBody RequestMatchModel request) {
+        List<String> timeSlots = request.getTimeslots();
+        Username username= new Username(authManager.getNetId());
+        participantService.requestMatch(username,timeSlots);
+
+        return ResponseEntity.ok().build();
+
     }
 }
