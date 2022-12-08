@@ -4,7 +4,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class UsernameAttributeConverter implements AttributeConverter<NetId, String> {
+public class NetIdAttributeConverter implements AttributeConverter<NetId, String> {
 
     @Override
     public String convertToDatabaseColumn(NetId netId){return netId.toString();}

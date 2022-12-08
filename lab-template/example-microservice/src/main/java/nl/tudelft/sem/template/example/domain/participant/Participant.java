@@ -24,7 +24,7 @@ public class Participant extends HasEvents {
     private int id;
 
     @Column(name= "username", nullable = false)
-    @Convert(converter = UsernameAttributeConverter.class)
+    @Convert(converter = NetIdAttributeConverter.class)
     private NetId netId;
 
     @Column(name="positions", nullable = false)
