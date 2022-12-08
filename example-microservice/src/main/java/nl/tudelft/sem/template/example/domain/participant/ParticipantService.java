@@ -113,10 +113,10 @@ public class ParticipantService {
         }
         return level;
     }
-    public void requestMatch(NetId netId, List<String> timeSlots){
-        Participant p = getParticipant(netId);
-        p.requestMatch(timeSlots);
-    }
+//    public void requestMatch(NetId netId, List<String> timeSlots){
+//        Participant p = getParticipant(netId);
+//        p.requestMatch(timeSlots);
+//    }
 
 
     //public boolean checkUsernameIsUnique(Username username){
