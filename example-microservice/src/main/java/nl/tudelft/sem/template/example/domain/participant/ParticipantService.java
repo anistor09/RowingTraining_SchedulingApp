@@ -46,62 +46,44 @@ public class ParticipantService {
         //throw new Exception("some exception we need to create");
     }
     public Participant getParticipant(NetId netId){
-        Optional<Participant> participant = participantRepository.findByNetId(netId);
-        Participant currentParticipant;
-        try{
+        if(participantRepository.findByNetId(netId)!=null) {
+            Optional<Participant> participant = participantRepository.findByNetId(netId);
+            Participant currentParticipant;
             currentParticipant = participant.get();
-
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-
+            return currentParticipant;
         }
-        return currentParticipant;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     }
     public List<String> getParticipantPositions(NetId netId) {
 
-        List<String> positions;
-        try{
-             positions = getParticipant(netId).getPositionManager().getPositions();
-
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-
+        if(getParticipant(netId).getPositionManager().getPositions()!=null){
+            List<String> positions= getParticipant(netId).getPositionManager().getPositions();
+            return positions;
         }
-        return positions;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
     public String getParticipantCertificate(NetId netId) {
-        String certificate;
-        try{
-            certificate = getParticipant(netId).getCertificate().toString();
-
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-
+        if(getParticipant(netId).getCertificate()!=null){
+            String certificate= getParticipant(netId).getCertificate().toString();
+            return certificate;
         }
-        return certificate;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
     public String getParticipantOrganization(NetId netId) {
-        String organization;
-        try{
-            organization = getParticipant(netId).getOrganization();
-
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-
+        if(getParticipant(netId).getOrganization()!=null){
+            String organization= getParticipant(netId).getOrganization();
+            return organization;
         }
-        return organization;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
     public String getParticipantGender(NetId netId) {
-        String gender;
-        try{
-            gender = getParticipant(netId).getGender();
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-
+        if(getParticipant(netId).getGender()!=null){
+            String gender= getParticipant(netId).getGender();
+            return gender;
         }
-        return gender;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
     public String getParticipantLevel(NetId netId) {
         if(getParticipant(netId).getLevel()!=null){

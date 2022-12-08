@@ -33,7 +33,8 @@ public class PositionManager {
         for(int i = 0; i< positions.size()-1; i++){
             res += positions.get(i)+",";
         }
-        if(positions.size()>=1) {
+        int x=1;
+        if(positions.size()>=x) {
             res += positions.get(positions.size() - 1);
         }
         return res;
