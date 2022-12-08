@@ -16,6 +16,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.24/13a394eed5c4f9efb2a6d956e2086f1d81e857d9/lombok-1.18.24.jar" />
         </processorPath>
         <module name="nl.tudelft.cse.sem.template.template.authentication-microservice.main" />
+        <module name="nl.tudelft.cse.sem.template.template.notification-microservice.main" />
         <module name="nl.tudelft.cse.sem.template.template.example-microservice.main" />
       </profile>
     </annotationProcessing>
@@ -28,6 +29,8 @@
       <module name="nl.tudelft.cse.sem.template.template.example-microservice.main~1" target="11" />
       <module name="nl.tudelft.cse.sem.template.template.example-microservice.main~2" target="11" />
       <module name="nl.tudelft.cse.sem.template.template.example-microservice.test" target="11" />
+      <module name="nl.tudelft.cse.sem.template.template.notification-microservice.main~1" target="11" />
+      <module name="nl.tudelft.cse.sem.template.template.notification-microservice.main~2" target="11" />
       <module name="template.notification-microservice" target="11" />
       <module name="template.notification-microservice.main" target="11" />
       <module name="template.notification-microservice.test" target="11" />
