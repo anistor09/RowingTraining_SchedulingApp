@@ -75,13 +75,13 @@ public class DefaultController {
         }
         return ResponseEntity.ok("Fine");
     }
-    @PostMapping("/requestMatch")
-    public ResponseEntity requestMatch(@RequestBody RequestMatchModel request) {
-        List<String> timeSlots = request.getTimeslots();
-        NetId netId= new NetId(authManager.getNetId());
-        participantService.requestMatch(netId,timeSlots);
-
-        return ResponseEntity.ok().build();
-
-    }
+//    @PostMapping("/requestMatch")
+//    public ResponseEntity requestMatch(@RequestBody RequestMatchModel request) {
+//        List<String> timeSlots = request.getTimeslots();
+//        NetId netId= new NetId(authManager.getNetId());
+//        participantService.requestMatch(netId,timeSlots);
+//
+//        return ResponseEntity.ok().build();
+//
+//    }
 }

@@ -69,27 +69,24 @@ public class UserDetailsController {
     }
     @GetMapping("/level")
     public String getLevel() {
-        String level="";
         try {
             NetId participantName = new NetId(authManager.getNetId());
-            level = participantService.getParticipantLevel(participantName);
-
+            String level = participantService.getParticipantLevel(participantName);
+            return level;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return level;
 
     }
     @GetMapping("/organization")
     public String getOrganization() {
-        String organization="";
         try {
             NetId participantName = new NetId(authManager.getNetId());
-            organization = participantService.getParticipantOrganization(participantName);
-
+            String organization = participantService.getParticipantOrganization(participantName);
+            return organization;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return organization;
+
     }
 }
