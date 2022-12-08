@@ -53,10 +53,10 @@ public class Participant extends HasEvents {
         this.organization= organization;
         this.level=level;
     }
-    public void requestMatch(List<String> timeSlots){
-        //this.recordThat(new ParticipantRequestedMatchEvent(this.username,timeSlots));
-        TestEvent tv = new TestEvent(this.netId,timeSlots);
-        this.recordThat(tv);
-    }
+//    public void requestMatch(List<String> timeSlots){
+//        //this.recordThat(new ParticipantRequestedMatchEvent(this.username,timeSlots));
+//        TestEvent tv = new TestEvent(this.netId,timeSlots);
+//        this.recordThat(tv);
+//    }
 
 }
