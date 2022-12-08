@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d660c626-7d44-48b6-9b18-5049ec78ab8a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d660c626-7d44-48b6-9b18-5049ec78ab8a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +79,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/hp/SEM31c",
+    "last_opened_file_path": "C:/Users/hp/SEM31c/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -93,6 +91,10 @@
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="nl.tudelft.sem.template.example.controllers" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hp\SEM31c\example-microservice\src\main\java\nl\tudelft\sem\template\example\domain\participant" />
+      <recent name="C:\Users\hp\SEM31c\example-microservice\src\main\java\nl\tudelft\sem\template\example\domain\models" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.SEM31c [build]">
@@ -272,7 +274,7 @@
       <workItem from="1670501814998" duration="2655000" />
       <workItem from="1670506328718" duration="1812000" />
       <workItem from="1670509013726" duration="623000" />
-      <workItem from="1670512023228" duration="826000" />
+      <workItem from="1670512023228" duration="1138000" />
     </task>
     <servers />
   </component>
