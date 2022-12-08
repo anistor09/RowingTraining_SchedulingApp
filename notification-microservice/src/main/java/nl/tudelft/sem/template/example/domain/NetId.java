@@ -1,10 +1,12 @@
 package nl.tudelft.sem.template.example.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
+@NoArgsConstructor
 public class NetId {
-    private final transient String id;
+    private transient String id;
 
     public NetId(String id){
         this.id = id;

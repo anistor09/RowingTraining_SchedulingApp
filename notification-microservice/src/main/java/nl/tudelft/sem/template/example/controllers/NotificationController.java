@@ -6,6 +6,7 @@ import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
 import nl.tudelft.sem.template.example.domain.NotificationService;
 import nl.tudelft.sem.template.example.domain.models.NotificationRequestModel;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,10 @@ public class NotificationController {
         String message = request.getMessage();
         Notification n = notificationService.createNotification(activityId, netId, message);
         return ResponseEntity.ok(n);
+    }
+
+    @PostMapping("/addNotification")
+    public ResponseEntity<Notification> addNotification(@RequestBody Notification request){
+        return ResponseEntity.ok(notificationService.addNotification(request));
     }
 }

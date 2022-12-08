@@ -4,8 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
+@NoArgsConstructor
 public class ActivityId {
-    private final transient String id;
+    private transient String id;
 
     public ActivityId(String id){
         this.id = id;
