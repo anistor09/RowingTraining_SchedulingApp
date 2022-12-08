@@ -18,8 +18,7 @@ public class NotificationService {
 
     public Notification createNotification(ActivityId activityId, NetId netId, String message){
         Notification n = new Notification(activityId, netId, message);
-        notificationRepository.save(n);
-        return n;
+        return notificationRepository.save(n);
     }
 
     public Notification addNotification(Notification notification){

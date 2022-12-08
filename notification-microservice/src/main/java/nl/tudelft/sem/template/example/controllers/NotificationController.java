@@ -1,8 +1,11 @@
 package nl.tudelft.sem.template.example.controllers;
 
 
+import nl.tudelft.sem.template.example.domain.ActivityId;
+import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
 import nl.tudelft.sem.template.example.domain.NotificationService;
+import nl.tudelft.sem.template.example.domain.models.NotificationRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +29,11 @@ public class NotificationController {
     }
 
     @PostMapping("/addNotif")
-    public ResponseEntity<Notification> addNotif(@RequestBody Notification request){
-        Notification n = notificationService.addNotification(request);
-        return ResponseEntity.ok(n);
+    public ResponseEntity<Notification> addNotif(@RequestBody NotificationRequestModel request){
+        ActivityId activityId = new ActivityId(request.getActivityId());
+        NetId netId = new NetId(request.getNetId());
+        String message = request.getMessage();
+        notificationService.createNotification(activityId, netId, message);
+        return ResponseEntity.ok().build();
     }
 }
