@@ -1,6 +1,5 @@
 package nl.tudelft.sem.template.example.domain;
 
-import nl.tudelft.sem.template.example.domain.participant.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +10,9 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
     /**
      * Find user by NetID.
      */
-    Optional<Notification> findByActivityID(ActivityId activityId);
+    Optional<Notification> findByActivityId(ActivityId activityId);
     /**
      * Check if an existing user already uses a NetID.
      */
-    boolean existsByActivityID(ActivityId activityId);
+    boolean existsByActivityId(ActivityId activityId);
 }

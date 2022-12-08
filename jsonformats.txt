@@ -1,0 +1,12 @@
+notification:
+{
+    "activityId" : 
+        {
+            "id" : 123
+        },
+    "netId" :
+        {
+            "id" : 456
+        },
+    "message" : "accepted"
+}

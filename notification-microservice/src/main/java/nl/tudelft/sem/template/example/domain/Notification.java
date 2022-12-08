@@ -1,12 +1,8 @@
-package nl.tudelft.sem.template.example.domain.participant;
+package nl.tudelft.sem.template.example.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.tudelft.sem.template.example.domain.ActivityId;
-import nl.tudelft.sem.template.example.domain.ActivityIdConverter;
-import nl.tudelft.sem.template.example.domain.NetId;
-import nl.tudelft.sem.template.example.domain.NetIdConverter;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -23,12 +19,12 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator = "notification")
     private int id;
-    @Column(name = "activityID")
+    @Column(name = "activityId")
     @Convert(converter = ActivityIdConverter.class)
-    private ActivityId activityID;
-    @Column(name="receivingUser")
+    private ActivityId activityId;
+    @Column(name="netId")
     @Convert(converter = NetIdConverter.class)
-    private NetId userID;
+    private NetId netId;
     @Column(name="message")
     private String message;
 
@@ -44,11 +40,11 @@ public class Notification {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(activityID);
+        return Objects.hash(activityId);
     }
     public Notification(ActivityId activityId, NetId netId, String message){
-        this.activityID = activityId;
-        this.userID = netId;
+        this.activityId = activityId;
+        this.netId = netId;
         this.message = message;
     }
 }

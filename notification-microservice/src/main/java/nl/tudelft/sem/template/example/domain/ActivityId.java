@@ -1,6 +1,7 @@
 package nl.tudelft.sem.template.example.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
 public class ActivityId {

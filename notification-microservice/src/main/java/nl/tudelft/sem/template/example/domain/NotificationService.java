@@ -1,7 +1,6 @@
 package nl.tudelft.sem.template.example.domain;
 
 import org.springframework.stereotype.Service;
-import nl.tudelft.sem.template.example.domain.participant.Notification;
 
 import java.util.List;
 
@@ -24,8 +23,7 @@ public class NotificationService {
     }
 
     public Notification addNotification(Notification notification){
-        notificationRepository.save(notification);
-        return notification;
+        return notificationRepository.save(notification);
     }
 
     public List<Notification> getAllNotifications(){
