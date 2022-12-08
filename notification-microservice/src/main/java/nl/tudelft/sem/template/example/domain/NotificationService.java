@@ -1,8 +1,5 @@
 package nl.tudelft.sem.template.example.domain;
 
-import nl.tudelft.sem.template.example.domain.ActivityId;
-import nl.tudelft.sem.template.example.domain.NetId;
-import nl.tudelft.sem.template.example.domain.NotificationRepository;
 import org.springframework.stereotype.Service;
 import nl.tudelft.sem.template.example.domain.participant.Notification;
 

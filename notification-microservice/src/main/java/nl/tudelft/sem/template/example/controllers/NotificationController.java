@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("notifications")
 public class NotificationController {
-    private final NotificationService notificationService;
+    private final transient NotificationService notificationService;
 
     @Autowired
     public NotificationController(NotificationService notificationService){
