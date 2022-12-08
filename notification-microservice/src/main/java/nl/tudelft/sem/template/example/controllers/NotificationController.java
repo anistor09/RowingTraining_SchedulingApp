@@ -33,7 +33,7 @@ public class NotificationController {
         ActivityId activityId = new ActivityId(request.getActivityId());
         NetId netId = new NetId(request.getNetId());
         String message = request.getMessage();
-        notificationService.createNotification(activityId, netId, message);
-        return ResponseEntity.ok().build();
+        Notification n = notificationService.createNotification(activityId, netId, message);
+        return ResponseEntity.ok(n);
     }
 }
