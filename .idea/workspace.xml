@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d660c626-7d44-48b6-9b18-5049ec78ab8a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/ParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/ParticipantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/PositionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/PositionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -316,7 +314,7 @@
       <workItem from="1670501814998" duration="2655000" />
       <workItem from="1670506328718" duration="1812000" />
       <workItem from="1670509013726" duration="623000" />
-      <workItem from="1670512023228" duration="4854000" />
+      <workItem from="1670512023228" duration="5266000" />
     </task>
     <servers />
   </component>
