@@ -29,42 +29,45 @@ public class UserDetailsController {
     }
     @GetMapping("/positions")
     public List<String> getPositions() {
-        List<String> positions;
+
         try {
+            List<String> positions;
             NetId participantName = new NetId(authManager.getNetId());
              positions = participantService.getParticipantPositions(participantName);
-
+            return positions;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return positions;
+
 
     }
 
     @GetMapping("/certificate")
     public String getCertificate() {
-        String certificate="";
-        try {
-            NetId participantName = new NetId(authManager.getNetId());
-            certificate = participantService.getParticipantCertificate(participantName);
 
+        try {
+
+            NetId participantName = new NetId(authManager.getNetId());
+            String certificate = participantService.getParticipantCertificate(participantName);
+            return certificate;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return certificate;
+
 
     }
     @GetMapping("/gender")
     public String getGender() {
-        String gender="";
-        try {
-            NetId participantName = new NetId(authManager.getNetId());
-            gender = participantService.getParticipantGender(participantName);
 
+        try {
+
+            NetId participantName = new NetId(authManager.getNetId());
+            String gender = participantService.getParticipantGender(participantName);
+            return gender;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-        return gender;
+
 
     }
     @GetMapping("/level")
