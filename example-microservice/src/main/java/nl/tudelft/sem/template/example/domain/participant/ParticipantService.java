@@ -104,14 +104,11 @@ public class ParticipantService {
         return gender;
     }
     public String getParticipantLevel(NetId netId) {
-        String level;
-        try{
-            level = getParticipant(netId).getLevel();
-        }catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-
+        if(getParticipant(netId).getLevel()!=null){
+            String level= getParticipant(netId).getLevel();
+            return level;
         }
-        return level;
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 //    public void requestMatch(NetId netId, List<String> timeSlots){
 //        Participant p = getParticipant(netId);
