@@ -6,6 +6,7 @@ gradle-app.setting
 !gradle/wrapper/gradle-wrapper.jar
 **/build/
 .gradletasknamecache
+.idea/
 ### Java ###
 # Compiled class file
 *.class
@@ -27,12 +28,5 @@ gradle-app.setting
 
 *.db
 /.idea/
-.idea/workspace.xml
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+**/.idea/workspace.xml
 .idea/
