@@ -6,7 +6,7 @@ import nl.tudelft.sem.template.example.domain.models.RequestMatchModel;
 import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
 import nl.tudelft.sem.template.example.domain.participant.PositionManager;
-import nl.tudelft.sem.template.example.domain.participant.Username;
+import nl.tudelft.sem.template.example.domain.participant.NetId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,14 +62,14 @@ public class DefaultController {
     @PostMapping("/details")
     public ResponseEntity addDetails(@RequestBody ParticipationRequestModel request){
         try{
-            Username username= new Username(authManager.getNetId());
+            NetId netId= new NetId(authManager.getNetId());
             PositionManager positionManager= new PositionManager(request.getPositions());
             Certificate certificate= new Certificate(request.getCertificate());
             String gender= request.getGender();
             //here we need to throw an exception if the entered certificate is wrong
             String organization= request.getOrganization();
             String level= request.getLevel();
-            participantService.addParticipant(username,positionManager,gender,certificate,organization,level);
+            participantService.addParticipant(netId,positionManager,gender,certificate,organization,level);
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -78,8 +78,8 @@ public class DefaultController {
     @PostMapping("/requestMatch")
     public ResponseEntity requestMatch(@RequestBody RequestMatchModel request) {
         List<String> timeSlots = request.getTimeslots();
-        Username username= new Username(authManager.getNetId());
-        participantService.requestMatch(username,timeSlots);
+        NetId netId= new NetId(authManager.getNetId());
+        participantService.requestMatch(netId,timeSlots);
 
         return ResponseEntity.ok().build();
 

@@ -2,7 +2,7 @@ package nl.tudelft.sem.template.example.controllers;
 
 import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
-import nl.tudelft.sem.template.example.domain.participant.Username;
+import nl.tudelft.sem.template.example.domain.participant.NetId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +31,7 @@ public class UserDetailsController {
     public List<String> getPositions() {
         List<String> positions;
         try {
-            Username participantName = new Username(authManager.getNetId());
+            NetId participantName = new NetId(authManager.getNetId());
              positions = participantService.getParticipantPositions(participantName);
 
         }   catch (Exception e) {
@@ -45,7 +45,7 @@ public class UserDetailsController {
     public String getCertificate() {
         String certificate="";
         try {
-            Username participantName = new Username(authManager.getNetId());
+            NetId participantName = new NetId(authManager.getNetId());
             certificate = participantService.getParticipantCertificate(participantName);
 
         }   catch (Exception e) {
@@ -58,7 +58,7 @@ public class UserDetailsController {
     public String getGender() {
         String gender="";
         try {
-            Username participantName = new Username(authManager.getNetId());
+            NetId participantName = new NetId(authManager.getNetId());
             gender = participantService.getParticipantGender(participantName);
 
         }   catch (Exception e) {
@@ -71,7 +71,7 @@ public class UserDetailsController {
     public String getLevel() {
         String level="";
         try {
-            Username participantName = new Username(authManager.getNetId());
+            NetId participantName = new NetId(authManager.getNetId());
             level = participantService.getParticipantLevel(participantName);
 
         }   catch (Exception e) {
@@ -84,7 +84,7 @@ public class UserDetailsController {
     public String getOrganization() {
         String organization="";
         try {
-            Username participantName = new Username(authManager.getNetId());
+            NetId participantName = new NetId(authManager.getNetId());
             organization = participantService.getParticipantOrganization(participantName);
 
         }   catch (Exception e) {

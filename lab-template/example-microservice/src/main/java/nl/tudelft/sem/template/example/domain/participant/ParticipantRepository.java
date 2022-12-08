@@ -15,7 +15,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, String
     /**
      * Find user by NetID.
      */
-    Optional<Participant> findByUsername(Username username);
+    Optional<Participant> findByNetId(NetId netId);
 
     /**
      * checks if there is already an user with this name

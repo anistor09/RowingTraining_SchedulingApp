@@ -26,7 +26,7 @@ public class ParticipantService {
     /**
      * Add a new participant
      *
-     * @param username The username of the participant
+     * @param netId The username of the participant
      * @param positionManager The positions of the participant
      * @param gender The gender of the participant
      * @param certificate The best certificate of the participant
@@ -35,18 +35,18 @@ public class ParticipantService {
      * @return a new participant
      * @throws Exception
      */
-    public Participant addParticipant(Username username, PositionManager positionManager, String gender, Certificate certificate,
+    public Participant addParticipant(NetId netId, PositionManager positionManager, String gender, Certificate certificate,
                                       String organization, String level){
        // if(checkUsernameIsUnique(username)){
-            Participant participant= new Participant(username,positionManager,gender,certificate,organization,level);
+            Participant participant= new Participant(netId,positionManager,gender,certificate,organization,level);
 
             participantRepository.save(participant);
             return participant;
         //}
         //throw new Exception("some exception we need to create");
     }
-    public Participant getParticipant(Username username){
-        Optional<Participant> participant = participantRepository.findByUsername(username);
+    public Participant getParticipant(NetId netId){
+        Optional<Participant> participant = participantRepository.findByNetId(netId);
         Participant currentParticipant;
         try{
             currentParticipant = participant.get();
@@ -58,11 +58,11 @@ public class ParticipantService {
         return currentParticipant;
 
     }
-    public List<String> getParticipantPositions(Username username) {
+    public List<String> getParticipantPositions(NetId netId) {
 
         List<String> positions;
         try{
-             positions = getParticipant(username).getPositionManager().getPositions();
+             positions = getParticipant(netId).getPositionManager().getPositions();
 
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -71,10 +71,10 @@ public class ParticipantService {
         return positions;
     }
 
-    public String getParticipantCertificate(Username username) {
+    public String getParticipantCertificate(NetId netId) {
         String certificate;
         try{
-            certificate = getParticipant(username).getCertificate().toString();
+            certificate = getParticipant(netId).getCertificate().toString();
 
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -82,10 +82,10 @@ public class ParticipantService {
         }
         return certificate;
     }
-    public String getParticipantOrganization(Username username) {
+    public String getParticipantOrganization(NetId netId) {
         String organization;
         try{
-            organization = getParticipant(username).getOrganization();
+            organization = getParticipant(netId).getOrganization();
 
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -93,28 +93,28 @@ public class ParticipantService {
         }
         return organization;
     }
-    public String getParticipantGender(Username username) {
+    public String getParticipantGender(NetId netId) {
         String gender;
         try{
-            gender = getParticipant(username).getGender();
+            gender = getParticipant(netId).getGender();
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 
         }
         return gender;
     }
-    public String getParticipantLevel(Username username) {
+    public String getParticipantLevel(NetId netId) {
         String level;
         try{
-            level = getParticipant(username).getLevel();
+            level = getParticipant(netId).getLevel();
         }catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
 
         }
         return level;
     }
-    public void requestMatch(Username username, List<String> timeSlots){
-        Participant p = getParticipant(username);
+    public void requestMatch(NetId netId, List<String> timeSlots){
+        Participant p = getParticipant(netId);
         p.requestMatch(timeSlots);
     }
 

@@ -25,7 +25,7 @@ public class Participant extends HasEvents {
 
     @Column(name= "username", nullable = false)
     @Convert(converter = UsernameAttributeConverter.class)
-    private Username username;
+    private NetId netId;
 
     @Column(name="positions", nullable = false)
     @Convert(converter = PositionAttributeCoverter.class)
@@ -45,8 +45,8 @@ public class Participant extends HasEvents {
     private String level;
 
 
-    public Participant(Username username, PositionManager positionManager, String gender, Certificate certificate, String organization, String level){
-        this.username= username;
+    public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, String level){
+        this.netId= netId;
         this.positionManager= positionManager;
         this.gender=gender;
         this.certificate= certificate;
@@ -55,7 +55,7 @@ public class Participant extends HasEvents {
     }
     public void requestMatch(List<String> timeSlots){
         //this.recordThat(new ParticipantRequestedMatchEvent(this.username,timeSlots));
-        TestEvent tv = new TestEvent(this.username,timeSlots);
+        TestEvent tv = new TestEvent(this.netId,timeSlots);
         this.recordThat(tv);
     }
 

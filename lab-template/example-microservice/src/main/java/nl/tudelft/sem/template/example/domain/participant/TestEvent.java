@@ -6,10 +6,10 @@ import java.util.List;
  * A DDD domain event that indicated a user was created.
  */
 public class TestEvent {
-    private final Username username;
+    private final NetId netId;
     private final List<String> timeSlots;
-    public TestEvent(Username username, List<String> timeSlots) {
-        this.username = username;
+    public TestEvent(NetId netId, List<String> timeSlots) {
+        this.netId = netId;
         this.timeSlots = timeSlots;
     }
 
@@ -17,7 +17,7 @@ public class TestEvent {
         return timeSlots;
     }
 
-    public Username getUsername() {
-        return this.username;
+    public NetId getUsername() {
+        return this.netId;
     }
 }
