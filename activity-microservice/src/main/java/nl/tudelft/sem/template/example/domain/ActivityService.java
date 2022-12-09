@@ -18,6 +18,35 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
+    public Training createTraining(Username username, ActivityRequestModel request) {
+        username = new Username("user");
+        Training training = new Training(username, request.getDate(), request.getTime(), request.getBoat(), request.getPositions());
+        activityRepository.save(training);
+        return training;
+    }
+
+    public Competition createCompetition(Username username, ActivityRequestModel request) {
+        username = new Username("user");
+        Competition competition = new Competition(username, request.getDate(), request.getTime(), request.getBoat(), request.getPositions(), request.getOrganization(), request.getGender(), request.getCompetitive());
+        activityRepository.save(competition);
+        return competition;
+    }
+
+    public void deleteByUser(Username username) {
+        List<Activity> activities = activityRepository.findAll();
+        List<Activity> toDelete = new ArrayList<>();
+        for (Activity activity : activities) {
+            if (activity.getOwner().equals(username)) {
+                toDelete.add(activity);
+            }
+        }
+        activityRepository.deleteAll(toDelete);
+    }
+
+    public void deleteById(Long id) {
+        activityRepository.deleteById(id);
+    }
+
     public List<Training> getTrainings() {
         List<Activity> activities = getAll();
         List<Training> trainings = new ArrayList<>();
@@ -47,13 +76,4 @@ public class ActivityService {
         }
         return result;
     }
-
-    public Training createTraining(Username username, ActivityRequestModel request) {
-        username = new Username("user");
-        Training training = new Training(username, request.getDateTime(), request.getBoat(), request.getPositions());
-        //System.out.println(training.toString());
-        activityRepository.save(training);
-        return training;
-    }
-
 }

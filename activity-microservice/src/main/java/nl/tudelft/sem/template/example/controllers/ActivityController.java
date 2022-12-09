@@ -20,6 +20,12 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
+    @PostMapping("/createCompetition")
+    public ResponseEntity<Competition> createCompetition(@RequestBody ActivityRequestModel request) {
+        Username username= new Username(authManager.getNetId());
+        return ResponseEntity.ok(activityService.createCompetition(username, request));
+    }
+
     @PostMapping("/createTraining")
     public ResponseEntity<Training> createTraining(@RequestBody ActivityRequestModel request) {
         Username username= new Username(authManager.getNetId());
