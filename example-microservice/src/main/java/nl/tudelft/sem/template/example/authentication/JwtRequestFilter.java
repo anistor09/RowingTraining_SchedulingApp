@@ -66,7 +66,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         String netId = jwtTokenVerifier.getNetIdFromToken(token);
                         var authenticationToken = new UsernamePasswordAuthenticationToken(
                                 netId,
-                                null, List.of() // no credentials and no authorities
+                                token, List.of() // no credentials and no authorities
                         );
                         authenticationToken.setDetails(new WebAuthenticationDetailsSource()
                                 .buildDetails(request));
@@ -83,7 +83,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     System.err.println("Unable to parse JWT token");
                 }
             }
-            System.err.println("Invalid authorization header");
+            else System.err.println("Invalid authorization header");
         }
 
         filterChain.doFilter(request, response);
