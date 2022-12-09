@@ -11,9 +11,11 @@ public class TransferMatch {
     String position;
     String  timeSlot;
 
-    public TransferMatch(String activityName, String position, String timeSlot) {
+    String netId;
+    public TransferMatch(String activityName, String position, String timeSlot,String netId) {
         this.activityName = activityName;
         this.position = position;
         this.timeSlot = timeSlot;
+        this.netId = netId;
     }
 }
