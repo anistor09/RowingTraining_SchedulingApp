@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 public class Competition extends Activity{
-    private String organization;
-    private String gender;
-    private boolean competitive;
+    private transient String organization;
+    private transient String gender;
+    private transient boolean competitive;
 
     public Competition(String activityName,NetId owner, LocalDateTime dateTime, String boat, List<String> positions, String organization, String gender, boolean competitive) {
         super(activityName,owner, dateTime, boat, positions);

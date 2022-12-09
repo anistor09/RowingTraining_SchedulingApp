@@ -3,9 +3,6 @@ package nl.tudelft.sem.template.example.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.tudelft.sem.template.example.domain.NetIdAttributeConverter;
-import nl.tudelft.sem.template.example.domain.PositionAttributeCoverter;
-import nl.tudelft.sem.template.example.domain.CertificateAttributeConverter;
 import javax.persistence.*;
 
 @NoArgsConstructor
