@@ -16,6 +16,12 @@
       <module name="nl.tudelft.cse.sem.template.template.authentication-microservice.main~2" target="11" />
       <module name="nl.tudelft.cse.sem.template.template.example-microservice.main~1" target="11" />
       <module name="nl.tudelft.cse.sem.template.template.example-microservice.main~2" target="11" />
+      <module name="template.authentication-microservice" target="11" />
+      <module name="template.authentication-microservice.main" target="11" />
+      <module name="template.authentication-microservice.test" target="11" />
+      <module name="template.example-microservice" target="11" />
+      <module name="template.example-microservice.main" target="11" />
+      <module name="template.example-microservice.test" target="11" />
       <module name="template.notification-microservice" target="11" />
       <module name="template.notification-microservice.main" target="11" />
       <module name="template.notification-microservice.test" target="11" />
