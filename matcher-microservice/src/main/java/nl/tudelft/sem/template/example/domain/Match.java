@@ -23,16 +23,18 @@ public class Match {
     private int id;
 
     @Column(name="participant", nullable = false)
-    @Convert(converter = ParticipantAttributeCoverter.class)
-    private Participant participant;
+    @Convert(converter = NetIdAttributeConverter.class)
+    private NetId netId;
 
     @Column(name="activity", nullable = false)
-    @Convert(converter = ActivityAttributeCoverter.class)
-    private Activity activity;
+    private String activityName;
 
-    public Match(int id, Participant participant, Activity activity) {
-        this.id = id;
-        this.participant = participant;
-        this.activity = activity;
+    @Column(name="position", nullable = false)
+    private String position;
+
+    public Match(NetId netId, String activityName,String position) {
+        this.netId = netId;
+        this.activityName = activityName;
+        this.position=position;
     }
 }

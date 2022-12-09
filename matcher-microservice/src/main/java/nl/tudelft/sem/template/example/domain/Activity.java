@@ -14,6 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class Activity {
+
+    @Column(name= "activityName", nullable = false)
+    private String activityName;
+
     @Column(name= "owner", nullable = false)
     @Convert(converter = NetIdAttributeConverter.class)
     private NetId owner;
@@ -29,7 +33,8 @@ public abstract class Activity {
     @Convert(converter = PositionListConverter.class)
     private List<String> positions;
 
-    public Activity(NetId owner, LocalDateTime dateTime, String boat, List<String> positions) {
+    public Activity(String activityName,NetId owner, LocalDateTime dateTime, String boat, List<String> positions) {
+        this.activityName=activityName;
         this.owner = owner;
         this.dateTime = dateTime;
         this.boat = boat;

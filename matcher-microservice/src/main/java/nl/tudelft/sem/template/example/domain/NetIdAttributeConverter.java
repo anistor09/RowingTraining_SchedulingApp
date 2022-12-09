@@ -1,6 +1,5 @@
 package nl.tudelft.sem.template.example.domain;
 
-import nl.tudelft.sem.template.example.domain.NetId;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

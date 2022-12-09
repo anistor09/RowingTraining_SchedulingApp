@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface MatcherRepository extends JpaRepository<Match,String> {
 
-
+    Optional<Match> findByactivityName(String activityName);
 }
