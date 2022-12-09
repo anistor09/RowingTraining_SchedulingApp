@@ -3,24 +3,15 @@ package nl.tudelft.sem.template.example.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.tudelft.sem.template.example.domain.HasEvents;
-
+import nl.tudelft.sem.template.example.domain.participant.NetIdAttributeConverter;
+import nl.tudelft.sem.template.example.domain.participant.PositionAttributeCoverter;
+import nl.tudelft.sem.template.example.domain.participant.CertificateAttributeConverter;
 import javax.persistence.*;
 
-@Entity
-@Table(name = "participants")
 @NoArgsConstructor
 @Getter
 @Setter
 public class Participant  {
-    @Id
-    @SequenceGenerator(name = "participant",
-            sequenceName = "participant",
-            allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "participant")
-    @Column(name = "id", nullable = false)
-    private int id;
 
     @Column(name= "username", nullable = false)
     @Convert(converter = NetIdAttributeConverter.class)
