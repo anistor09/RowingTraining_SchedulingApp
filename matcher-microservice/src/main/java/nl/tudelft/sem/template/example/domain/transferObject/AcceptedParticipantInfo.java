@@ -7,13 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class toNotificationObject {
+public class AcceptedParticipantInfo {
     String activityName;
     String netId;
     String position;
     String timeslot;
 
-    public toNotificationObject(String activityName, String netId, String position, String timeslot) {
+    public AcceptedParticipantInfo(String activityName, String netId, String position, String timeslot) {
         this.activityName = activityName;
         this.netId = netId;
         this.position = position;
