@@ -22,23 +22,36 @@ public class ActivityRequestModel {
     private boolean competitive;
     private List<String> positions;
 
+    /**
+     * Converts the date to a Date object.
+     * @return the date as a Date object
+     */
     public LocalDate getDate() {
         try {
-            LocalDate date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalDate date = LocalDate.parse(this.date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             return date;
         } catch (Exception e) {
             return LocalDate.now();
         }
     }
 
+    /**
+     * Converts the time to a Time object.
+     * @return the time as a Time object
+     */
     public LocalTime getTime() {
         try {
-            LocalTime time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime time = LocalTime.parse(this.time, DateTimeFormatter.ofPattern("HH:mm"));
             return time;
         } catch (Exception e) {
             return LocalTime.now();
         }
     }
+
+    /**
+     *
+     * @return competitive
+     */
     public boolean getCompetitive() {
         return competitive;
     }

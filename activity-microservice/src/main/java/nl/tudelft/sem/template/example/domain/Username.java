@@ -9,6 +9,10 @@ import lombok.EqualsAndHashCode;
 public class Username {
     private final transient String usernameValue;
 
+    /**
+     * Constructor for Username.
+     * @param usernameValue
+     */
     public Username(String usernameValue){
         this.usernameValue=usernameValue;
     }

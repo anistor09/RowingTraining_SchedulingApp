@@ -9,9 +9,21 @@ import java.util.List;
 
 @Entity
 public class Training extends Activity{
+
+    /**
+     * Empty constructor for Training.
+     */
     public Training() {
     }
 
+    /**
+     * Constructor for Training.
+     * @param owner
+     * @param date
+     * @param time
+     * @param boat
+     * @param positions
+     */
     public Training(Username owner, LocalDate date, LocalTime time, String boat, List<String> positions) {
         super(owner, date, time, boat, positions);
     }
