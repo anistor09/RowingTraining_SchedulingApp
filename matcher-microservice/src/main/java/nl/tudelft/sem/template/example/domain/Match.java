@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Matcher {
+public class Match {
 
     @Id
     @SequenceGenerator(name = "match",
@@ -30,7 +30,7 @@ public class Matcher {
     @Convert(converter = ActivityAttributeCoverter.class)
     private Activity activity;
 
-    public Matcher(int id, Participant participant, Activity activity) {
+    public Match(int id, Participant participant, Activity activity) {
         this.id = id;
         this.participant = participant;
         this.activity = activity;
