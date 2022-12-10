@@ -33,7 +33,7 @@ public class MatcherService {
                 if(verifyTimeslots(ts,activity.getTimeSlot())){
                     for(String position : p.getPositionManager().getPositions()){
                         if(activity.getPositions().contains(position)){
-                            if(position=="cox" && !verifyCertificate(p.getCertificate(),activity.getBoat()))
+                            if(position.equals("cox") && !verifyCertificate(p.getCertificate(),activity.getBoat()))
                                 continue;
                             else{
                                 if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
