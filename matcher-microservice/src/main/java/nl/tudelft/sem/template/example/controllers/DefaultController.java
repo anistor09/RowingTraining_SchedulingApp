@@ -41,9 +41,7 @@ public class DefaultController {
      * @return the example found in the database with the given id
      */
     @GetMapping("/requestMatch")
-    public List<TransferMatch> requestMatch() {
-        //RequestMatch rm, MatcherService matcherService
-        RequestMatch rm= null;
+    public List<TransferMatch> requestMatch(RequestMatch rm, MatcherService matcherService) {
         return matcherService.computeMatch(rm) ;
 
     }

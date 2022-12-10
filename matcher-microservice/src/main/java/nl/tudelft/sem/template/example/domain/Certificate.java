@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * certificate of the Participant.
@@ -35,16 +37,11 @@ public class Certificate {
 
 
     boolean isBetterCertificate(Certificate other) {
-        int value1=-1;
-        int value2=-1;
-        ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
-        for(int i=0;i<strings.size();i++){
-            if(strings.get(i).equals(other.certificateType))
-                value2=i;
-            if(strings.get(i).equals(this.certificateType))
-                value1=i;
-        }
-        return value1>=value2;
+
+        Map<String,Integer> hm = Map.of("C4",1, "4+", 2,"8+",3);
+
+            return hm.get(this.getCertificateType())>=hm.get(other.getCertificateType());
+
     }
 
 }

@@ -5,16 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TimeSlot {
-    Date begin;
-    Date end;
-    SimpleDateFormat converter;
+    transient Date begin;
+    transient Date end;
+    transient SimpleDateFormat converter;
     public TimeSlot(String timeSlot){
         String begin = timeSlot.split(";")[0];
         String end =  timeSlot.split(";")[1];
 
-        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
         try {
             this.begin= converter.parse(begin);
             this.end= converter.parse(end);
@@ -41,6 +42,6 @@ public class TimeSlot {
 
     @Override
     public String toString() {
-        return begin.toString() +";"+ end.toString();
+        return converter.format(begin) +";"+ converter.format(end);
     }
 }
