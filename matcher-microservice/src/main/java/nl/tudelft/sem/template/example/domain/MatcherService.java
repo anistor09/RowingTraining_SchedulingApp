@@ -26,10 +26,12 @@ public class MatcherService {
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
         List<Activity> activities = new ArrayList<>();
-
+        //List<Activity> activities= getActivities();
 
         Participant p = rm.getParticipant();
+        //Participant p= getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
+        //List<TimeSlot> timeSlots= getTs();
         //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
         for(Activity activity : activities){
             for(TimeSlot ts : timeSlots){
