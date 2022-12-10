@@ -1,6 +1,8 @@
 package nl.tudelft.sem.template.example.domain.participant;
 
+import nl.tudelft.sem.template.example.domain.models.RequetsTransferMatchModel;
 import nl.tudelft.sem.template.example.domain.transferClasses.RequestMatch;
+import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -97,6 +99,16 @@ public class ParticipantService {
     public RequestMatch getRequestMatch(NetId netId, List<String> timeSlots) {
         Participant p = getParticipant(netId);
         return new RequestMatch(p,timeSlots);
+
+    }
+
+    public TransferMatch getTransferMatch(RequetsTransferMatchModel request){
+        String activityName = request.getActivityName();
+        String positions = request.getPositions();
+        String timeSlot = request.getTimeSlot();
+        String netId= request.getNetId();
+        TransferMatch transferMatch= new TransferMatch(activityName,positions,timeSlot,netId);
+        return transferMatch;
 
     }
 //    public void requestMatch(NetId netId, List<String> timeSlots){

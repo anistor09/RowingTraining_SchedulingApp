@@ -10,7 +10,6 @@ public class TransferMatch {
     String activityName;
     String position;
     String  timeSlot;
-
     String netId;
     public TransferMatch(String activityName, String position, String timeSlot, String netId) {
         this.activityName = activityName;

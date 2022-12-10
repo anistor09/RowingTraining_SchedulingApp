@@ -3,6 +3,7 @@ package nl.tudelft.sem.template.example.controllers;
 import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.domain.models.ParticipationRequestModel;
 import nl.tudelft.sem.template.example.domain.models.RequestMatchModel;
+import nl.tudelft.sem.template.example.domain.models.RequetsTransferMatchModel;
 import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
 import nl.tudelft.sem.template.example.domain.participant.PositionManager;
@@ -88,5 +89,10 @@ public class DefaultController {
 
         return serverUtils.sendRequestMatch(rm);
 
+    }
+
+    @PostMapping("/acceptedMatch")
+    public TransferMatch requestTransferMatch(@RequestBody RequetsTransferMatchModel request){
+        return participantService.getTransferMatch(request);
     }
 }

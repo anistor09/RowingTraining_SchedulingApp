@@ -5,59 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d73a50f6-c090-4654-a505-ff1a0ed6dbdd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferClasses/RequestMatch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferClasses/TransferMatch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/utils/ServerUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/.gitlab-ci.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/application/.keep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/authentication/AuthManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/authentication/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/authentication/JwtRequestFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/authentication/JwtTokenVerifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/config/H2Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/config/RequestAuthenticationConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/.keep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/Activity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/Certificate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/CertificateAttributeConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/Competition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/Match.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/MatcherRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/MatcherService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/NetId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/NetIdAttributeConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/Participant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/PositionAttributeCoverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/PositionListConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/PositionManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/TimeSlot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/Training.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/models/NotificationRequestModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferObject/OwnerNotification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferObject/RequestMatch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferObject/TransferMatch.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/resources/application-dev.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/test/java/nl/tudelft/sem/template/example/authentication/AuthManagerTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/test/java/nl/tudelft/sem/template/example/authentication/JwtAuthenticationEntryPointTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/test/java/nl/tudelft/sem/template/example/authentication/JwtRequestFilterTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/test/java/nl/tudelft/sem/template/example/authentication/JwtTokenVerifierTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/test/java/nl/tudelft/sem/template/example/profiles/MockAuthenticationManagerProfile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matcher-microservice/src/test/java/nl/tudelft/sem/template/example/profiles/MockTokenVerifierProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/models/RequetsTransferMatchModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/authentication/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/authentication/JwtRequestFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/NetId.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/NetId.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/ParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/ParticipantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferClasses/TransferMatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferClasses/TransferMatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/MatcherController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +81,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -180,7 +135,7 @@
       <recent name="nl.tudelft.sem.template.example.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.SEM31c [build]">
+  <component name="RunManager" selected="Gradle.SEM31c:matcher-microservice [build]">
     <configuration name="ExampleTest.helloWorld" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -246,7 +201,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="SEM31c:example-microservice [bootRun]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SEM31c:example-microservice [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/example-microservice" />
@@ -257,7 +212,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="bootRun" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -267,10 +222,10 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="SEM31c:example-microservice [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SEM31c:matcher-microservice [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/example-microservice" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/matcher-microservice" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -346,11 +301,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.SEM31c:matcher-microservice [build]" />
         <item itemvalue="Gradle.SEM31c [build]" />
         <item itemvalue="Gradle.SEM31c:example-microservice [build]" />
         <item itemvalue="Gradle.ExampleTest.helloWorld" />
         <item itemvalue="Gradle.SEM31c:authentication-microservice [build]" />
-        <item itemvalue="Gradle.SEM31c:example-microservice [bootRun]" />
       </list>
     </recent_temporary>
   </component>
