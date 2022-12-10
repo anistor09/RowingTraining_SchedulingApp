@@ -7,6 +7,8 @@ import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -40,10 +42,11 @@ public class DefaultController {
      *
      * @return the example found in the database with the given id
      */
-    @GetMapping("/requestMatch")
-    public List<TransferMatch> helloWorld(RequestMatch rm, MatcherService matcherService) {
-
-        return matcherService.computeMatch(rm) ;
+    @PostMapping("/requestMatch")
+    public List<TransferMatch> requestMatch(@RequestBody RequestMatch rm) {
+        System.out.println(rm.getTimeSlots());
+        List<TransferMatch> lst = matcherService.computeMatch(rm) ;
+        return lst ;
 
     }
 

@@ -2,6 +2,7 @@ package nl.tudelft.sem.template.example.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -15,8 +16,9 @@ import java.util.Map;
 @EqualsAndHashCode
 @Getter
 @Setter
+@NoArgsConstructor
 public class Certificate {
-    final transient String certificateType;
+     transient String certificateType;
 
     public Certificate(String certificateType){
         this.certificateType=certificateType;
