@@ -25,13 +25,9 @@ public class MatcherService {
 
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
-<<<<<<< HEAD
-        List<Activity> activities = new ArrayList<>();
-        //List<Activity> activities= getActivities();
 
-=======
         List<Activity> activities = getActivities();
->>>>>>> implementUserMicroservice
+
         Participant p = rm.getParticipant();
         //Participant p= getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
@@ -45,20 +41,16 @@ public class MatcherService {
                             if(position.equals("cox") && !verifyCertificate(p.getCertificate(),activity.getBoat()))
                                 continue;
 
-<<<<<<< HEAD
                             if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
-=======
-                                if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
->>>>>>> implementUserMicroservice
+
                                     continue;
 
                             res.add(new TransferMatch
                                             (activity.getActivityName(),position,activity.getTimeSlot().toString(),p.getNetId().toString()));
 
-<<<<<<< HEAD
 
-=======
->>>>>>> implementUserMicroservice
+
+
 
                         }
                     }

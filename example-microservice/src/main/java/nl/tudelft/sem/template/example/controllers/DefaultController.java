@@ -93,6 +93,6 @@ public class DefaultController {
 
     @PostMapping("/acceptedMatch")
     public TransferMatch requestTransferMatch(@RequestBody RequetsTransferMatchModel request){
-        return participantService.getTransferMatch(request);
+            return participantService.getTransferMatch(request);
     }
 }

@@ -39,17 +39,13 @@ public class MatcherController {
      *
      * @return the example found in the database with the given id
      */
-<<<<<<< HEAD:matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java
-    @GetMapping("/requestMatch")
-    public List<TransferMatch> requestMatch(RequestMatch rm, MatcherService matcherService) {
-        return matcherService.computeMatch(rm) ;
-=======
+
     @PostMapping("/requestMatch")
     public List<TransferMatch> requestMatch(@RequestBody RequestMatch rm) {
         System.out.println(rm.getTimeSlots());
         List<TransferMatch> lst = matcherService.computeMatch(rm) ;
         return lst ;
->>>>>>> implementUserMicroservice:matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/MatcherController.java
+
 
     }
 

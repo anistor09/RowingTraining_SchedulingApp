@@ -18,8 +18,5 @@ public class NetId {
         this.netIdValue = netId;
     }
 
-    @Override
-    public String toString() {
-        return netIdValue;
-    }
+
 }
