@@ -1,5 +1,6 @@
 package nl.tudelft.sem.template.example.domain.participant;
 
+import nl.tudelft.sem.template.example.domain.transferClasses.RequestMatch;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -91,6 +92,12 @@ public class ParticipantService {
             return level;
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    }
+
+    public RequestMatch getRequestMatch(NetId netId, List<String> timeSlots) {
+        Participant p = getParticipant(netId);
+        return new RequestMatch(p,timeSlots);
+
     }
 //    public void requestMatch(NetId netId, List<String> timeSlots){
 //        Participant p = getParticipant(netId);

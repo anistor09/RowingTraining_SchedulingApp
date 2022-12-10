@@ -7,6 +7,9 @@ import nl.tudelft.sem.template.example.domain.participant.Certificate;
 import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
 import nl.tudelft.sem.template.example.domain.participant.PositionManager;
 import nl.tudelft.sem.template.example.domain.participant.NetId;
+import nl.tudelft.sem.template.example.domain.transferClasses.RequestMatch;
+import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
+import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,7 @@ public class DefaultController {
 
     private final transient AuthManager authManager;
     private final transient ParticipantService participantService;
+    private final transient ServerUtils serverUtils;
 
     /**
      * Instantiates a new controller.
@@ -36,9 +40,10 @@ public class DefaultController {
      * @param authManager Spring Security component used to authenticate and authorize the user
      */
     @Autowired
-    public DefaultController(AuthManager authManager, ParticipantService participantService) {
+    public DefaultController(AuthManager authManager, ParticipantService participantService, ServerUtils serverUtils) {
         this.authManager = authManager;
         this.participantService= participantService;
+        this.serverUtils = serverUtils;
     }
 
     /**
@@ -75,13 +80,13 @@ public class DefaultController {
         }
         return ResponseEntity.ok("Fine");
     }
-//    @PostMapping("/requestMatch")
-//    public ResponseEntity requestMatch(@RequestBody RequestMatchModel request) {
-//        List<String> timeSlots = request.getTimeslots();
-//        NetId netId= new NetId(authManager.getNetId());
-//        participantService.requestMatch(netId,timeSlots);
-//
-//        return ResponseEntity.ok().build();
-//
-//    }
+    @GetMapping("/requestMatch")
+    public List<TransferMatch> requestMatch(@RequestBody RequestMatchModel request) {
+        List<String> timeSlots = request.getTimeslots();
+        NetId netId= new NetId(authManager.getNetId());
+        RequestMatch rm = participantService.getRequestMatch(netId,timeSlots);
+
+        return serverUtils.sendRequestMatch(rm);
+
+    }
 }
