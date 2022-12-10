@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class RequetsTransferMatchModel {
     String activityName;
-    String positions;
+    String position;
     String timeSlot;
     String netId;
 }

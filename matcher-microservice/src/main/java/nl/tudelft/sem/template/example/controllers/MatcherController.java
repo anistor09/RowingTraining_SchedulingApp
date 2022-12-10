@@ -1,10 +1,13 @@
 package nl.tudelft.sem.template.example.controllers;
 
 import nl.tudelft.sem.template.example.authentication.AuthManager;
+import nl.tudelft.sem.template.example.domain.Match;
 import nl.tudelft.sem.template.example.domain.MatcherService;
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +49,16 @@ public class MatcherController {
         return lst ;
 
     }
+    @PostMapping("/acceptedMatch")
+    public void acceptedMatch(@RequestBody TransferMatch tm){
+        Match m = new Match(tm.getNetId(),tm.getActivityName(),tm.getPosition());
+        matcherService.saveMatch(m);
 
+    }
+    @GetMapping("/getAllPendingMatches")
+    public List<Match> acceptedMatch(){
+        return matcherService.getAllMatches();
+    }
 
 
 }

@@ -40,18 +40,20 @@ public class ServerUtils {
 
     public ResponseEntity<String> sendAcceptedMatch(TransferMatch tm){
         try{
-            return new ResteasyClientBuilder().build()
+             new ResteasyClientBuilder().build()
                     .target(MATCHER_SERVER).path("acceptedMatch")
                     .request(APPLICATION_JSON)
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
-                    .post(Entity.entity(tm,APPLICATION_JSON),ResponseEntity.class);
+                    .post(Entity.entity(tm,APPLICATION_JSON));
+
+             return ResponseEntity.ok("Added");
 
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok("Not added");
     }
 
 }
