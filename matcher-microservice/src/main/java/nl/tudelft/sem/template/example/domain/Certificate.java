@@ -41,7 +41,7 @@ public class Certificate {
         for(int i=0;i<strings.size();i++){
             if(strings.get(i).equals(other.certificateType))
                 value2=i;
-            else if(strings.get(i).equals(this.certificateType))
+            if(strings.get(i).equals(this.certificateType))
                 value1=i;
         }
         return value1>=value2;

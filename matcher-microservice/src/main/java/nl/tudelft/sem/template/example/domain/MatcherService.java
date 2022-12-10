@@ -22,9 +22,12 @@ public class MatcherService {
     public MatcherService(MatcherRepository matcherRepository) {
         this.matcherRepository = matcherRepository;
     }
+
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
         List<Activity> activities = new ArrayList<>();
+
+
         Participant p = rm.getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
         //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
@@ -33,16 +36,16 @@ public class MatcherService {
                 if(verifyTimeslots(ts,activity.getTimeSlot())){
                     for(String position : p.getPositionManager().getPositions()){
                         if(activity.getPositions().contains(position)){
-                            if(position=="cox" && !verifyCertificate(p.getCertificate(),activity.getBoat()))
+                            if(position.equals("cox") && !verifyCertificate(p.getCertificate(),activity.getBoat()))
                                 continue;
-                            else{
-                                if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
+
+                            if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
                                     continue;
 
-                                    res.add(new TransferMatch
+                            res.add(new TransferMatch
                                             (activity.getActivityName(),position,activity.getTimeSlot().toString(),p.getNetId().toString()));
 
-                            }
+
 
                         }
                     }
@@ -50,7 +53,6 @@ public class MatcherService {
                 }
             }
         }
-
         return res;
 
     }
@@ -74,14 +76,33 @@ public class MatcherService {
     }
 
     public boolean verifyTimeslots(TimeSlot ts, TimeSlot activityTs){
-        if((ts.begin.after(activityTs.begin)||ts.begin.equals(activityTs.begin))
-                && (ts.end.before(activityTs.end) ||ts.end.equals(activityTs.end)))
+        if((ts.begin.before(activityTs.begin)||ts.begin.equals(activityTs.begin))
+                && (ts.end.after(activityTs.end) ||ts.end.equals(activityTs.end)))
             return true;
         return false;
 
     }
 
-
-
-
+//    public Participant getParticipant(){
+//        Participant p= new Participant(new NetId("Marius"),new PositionManager("cox,coach,sculling rower"),"M",new Certificate("C4"),"org","pro");
+//        return p;
+//    }
+//
+//    public List<TimeSlot> getTs(){
+//        List<TimeSlot> timeSlots= new ArrayList<>();
+//        timeSlots.add(new TimeSlot("21-12-2012 17:33;29-12-2022 15:22"));
+//        return timeSlots;
+//    }
+//
+//    public List<Activity> getActivities(){
+//        List<Activity> activities= new ArrayList<>();
+//        List<String> positions= new ArrayList<>();
+//        positions.add("cox");
+//        positions.add("coach");
+//        positions.add("sculling rower");
+//        activities.add(new Training
+//                ("name",new NetId("owner"),new TimeSlot("22-12-2012 17:33;29-12-2022 15:22"),"C4",positions));
+//        activities.add(new Competition("name2",new NetId("owner2"),new TimeSlot("25-12-2012 17:33;29-12-2022 15:22"),"C4",positions,"org","M","pro"));
+//        return activities;
+//    }
 }
