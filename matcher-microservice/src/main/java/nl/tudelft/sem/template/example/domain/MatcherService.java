@@ -99,6 +99,13 @@ public class MatcherService {
         return activities;
     }
 
+    public void saveMatch(Match match) {
+        matcherRepository.save(match);
+    }
+    public List<Match> getAllMatches(){
+        return matcherRepository.findAll();
+    }
+
 //    public Participant getParticipant(){
 //        Participant p= new Participant(new NetId("Marius"),new PositionManager("cox,coach,sculling rower"),"M",new Certificate("C4"),"org","pro");
 //        return p;
