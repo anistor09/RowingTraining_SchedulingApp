@@ -1,5 +1,7 @@
 package nl.tudelft.sem.template.example.domain;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -8,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
 public class Competition extends Activity{
     private String organization;
     private String gender;

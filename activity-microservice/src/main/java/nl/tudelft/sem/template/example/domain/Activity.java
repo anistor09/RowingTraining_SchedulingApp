@@ -1,6 +1,11 @@
 package nl.tudelft.sem.template.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +16,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "participants")
+@Table(name = "activities")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Training.class, name = "Training"),
+
+        @JsonSubTypes.Type(value = Competition.class, name = "Competition") }
+)
 @NoArgsConstructor
 @Getter
 @Setter
