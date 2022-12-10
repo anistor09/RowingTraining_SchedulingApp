@@ -34,17 +34,17 @@ public class Certificate {
     }
 
 
-//    boolean isBetterCertificate(Certificate other) {
-//        int value1=-1;
-//        int value2=-1;
-//        ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
-//        for(int i=0;i<strings.size();i++){
-//            if(strings.get(i).equals(other.certificateType))
-//                value2=i;
-//            else if(strings.get(i).equals(this.certificateType))
-//                value1=i;
-//        }
-//        return value1>=value2;
-//    }
+    boolean isBetterCertificate(Certificate other) {
+        int value1=-1;
+        int value2=-1;
+        ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
+        for(int i=0;i<strings.size();i++){
+            if(strings.get(i).equals(other.certificateType))
+                value2=i;
+            else if(strings.get(i).equals(this.certificateType))
+                value1=i;
+        }
+        return value1>=value2;
+    }
 
 }

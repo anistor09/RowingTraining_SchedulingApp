@@ -11,7 +11,7 @@ public class Training extends Activity{
     public Training() {
     }
 
-    public Training(String activityName, NetId owner, LocalDateTime dateTime, String boat, List<String> positions) {
-        super(activityName,owner, dateTime, boat, positions);
+    public Training(String activityName, NetId owner, TimeSlot ts, String boat, List<String> positions) {
+        super(activityName,owner, ts, boat, positions);
     }
 }

@@ -24,7 +24,7 @@ public abstract class Activity {
 
     @Column(name= "date", nullable = false)
     @JsonFormat(pattern="dd/MM/yyyy HH:mm")
-    private LocalDateTime dateTime;
+    private TimeSlot timeSlot;
 
     @Column(name= "boat", nullable = false)
     private String boat;
@@ -33,10 +33,10 @@ public abstract class Activity {
     @Convert(converter = PositionListConverter.class)
     private List<String> positions;
 
-    public Activity(String activityName,NetId owner, LocalDateTime dateTime, String boat, List<String> positions) {
+    public Activity(String activityName,NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         this.activityName=activityName;
         this.owner = owner;
-        this.dateTime = dateTime;
+        this.timeSlot = timeSlot;
         this.boat = boat;
         this.positions = positions;
     }
@@ -45,7 +45,7 @@ public abstract class Activity {
     public String toString() {
         return "Activity{" +
                 ", owner=" + owner +
-                ", dateTime=" + dateTime +
+                ", timeslot=" + timeSlot +
                 ", boat='" + boat + '\'' +
                 ", positions=" + positions +
                 '}';
