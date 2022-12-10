@@ -35,4 +35,22 @@ public class ServerUtils {
         }
         return new ArrayList<>();
     }
+
+
+    public TransferMatch sendAcceptedMatch(RequestMatch rm){
+        try{
+            TransferMatch res = new ResteasyClientBuilder().build()
+                    .target(MATCHER_SERVER).path("acceptedMatch")
+                    .request(APPLICATION_JSON)
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + SecurityContextHolder.getContext().getAuthentication().getCredentials())
+                    .accept(APPLICATION_JSON)
+                    .post(Entity.entity(rm,APPLICATION_JSON),TransferMatch.class);
+            return res;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

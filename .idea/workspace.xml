@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d73a50f6-c090-4654-a505-ff1a0ed6dbdd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/models/RequetsTransferMatchModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/ParticipantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/participant/ParticipantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferClasses/TransferMatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/transferClasses/TransferMatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java" beforeDir="false" afterPath="$PROJECT_DIR$/matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/MatcherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/utils/ServerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/utils/ServerUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +42,9 @@
         <task path="$PROJECT_DIR$/example-microservice">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/matcher-microservice">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -69,6 +67,24 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="template" type="f1a62948:ProjectNode" />
                 <item name="authentication-microservice" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="template" type="f1a62948:ProjectNode" />
+                <item name="matcher-microservice" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="template" type="f1a62948:ProjectNode" />
+                <item name="matcher-microservice" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="template" type="f1a62948:ProjectNode" />
+                <item name="matcher-microservice" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
