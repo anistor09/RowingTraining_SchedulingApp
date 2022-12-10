@@ -20,6 +20,40 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
+    //TODO:
+    // only authorized users can delete it - has to be updated
+    @DeleteMapping("/deleteUser/{username}")
+    public void deleteByUser(@PathVariable Username username) {
+        activityService.deleteByUser(username);
+    }
+
+    //TODO:
+    // only authorized users can delete it - has to be updated
+    @DeleteMapping("deleteId/{id}")
+    public void deleteById(@PathVariable Long id) {
+        activityService.deleteById(id);
+    }
+
+    @PutMapping("/editPositions/{id}")
+    public void editPositions(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
+        activityService.editPositions(id, request.getPositions());
+    }
+
+    @PutMapping("/editBoat/{id}")
+    public void editBoat(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
+        activityService.editBoat(id, request.getBoat());
+    }
+
+    @PutMapping("/editDate/{id}")
+    public void editDate(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
+        activityService.editDate(id, request.getDate());
+    }
+
+    @PutMapping("/editTime/{id}")
+    public void editTime(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
+        activityService.editTime(id, request.getTime());
+    }
+
     @PostMapping("/createCompetition")
     public ResponseEntity<Competition> createCompetition(@RequestBody ActivityRequestModel request) {
         Username username= new Username(authManager.getNetId());
