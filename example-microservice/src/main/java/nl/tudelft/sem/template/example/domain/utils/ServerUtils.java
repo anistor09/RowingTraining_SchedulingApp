@@ -6,6 +6,7 @@ import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
 import org.jvnet.hk2.annotations.Service;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -37,20 +38,20 @@ public class ServerUtils {
     }
 
 
-    public TransferMatch sendAcceptedMatch(RequestMatch rm){
+    public ResponseEntity<String> sendAcceptedMatch(TransferMatch tm){
         try{
-            TransferMatch res = new ResteasyClientBuilder().build()
+            return new ResteasyClientBuilder().build()
                     .target(MATCHER_SERVER).path("acceptedMatch")
                     .request(APPLICATION_JSON)
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
-                    .post(Entity.entity(rm,APPLICATION_JSON),TransferMatch.class);
-            return res;
+                    .post(Entity.entity(tm,APPLICATION_JSON),ResponseEntity.class);
+
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return null;
+        return ResponseEntity.badRequest().build();
     }
 
 }

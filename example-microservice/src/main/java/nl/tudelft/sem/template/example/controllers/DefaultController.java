@@ -13,6 +13,7 @@ import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -92,7 +93,8 @@ public class DefaultController {
     }
 
     @PostMapping("/acceptedMatch")
-    public TransferMatch requestTransferMatch(@RequestBody RequetsTransferMatchModel request){
-        return participantService.getTransferMatch(request);
+    public ResponseEntity<String> requestTransferMatch(@RequestBody RequetsTransferMatchModel request){
+        TransferMatch tm = participantService.getTransferMatch(request);
+        return serverUtils.sendAcceptedMatch(tm);
     }
 }
