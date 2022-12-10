@@ -1,17 +1,15 @@
-package nl.tudelft.sem.template.example.domain;
+package nl.tudelft.sem.template.example.domain.participant;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * A DDD value object representing a NetID in our domain.
  */
 @EqualsAndHashCode
 @Getter
-@NoArgsConstructor
 public class NetId {
-    private  transient String netIdValue;
+    private final transient String netIdValue;
 
     public NetId(String netId) {
         // validate NetID

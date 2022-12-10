@@ -1,14 +1,11 @@
-package nl.tudelft.sem.template.example.domain;
+package nl.tudelft.sem.template.example.domain.participant;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * certificate of the Participant.
@@ -16,9 +13,8 @@ import java.util.Map;
 @EqualsAndHashCode
 @Getter
 @Setter
-@NoArgsConstructor
 public class Certificate {
-     transient String certificateType;
+    final transient String certificateType;
 
     public Certificate(String certificateType){
         this.certificateType=certificateType;
@@ -38,12 +34,17 @@ public class Certificate {
     }
 
 
-    boolean isBetterCertificate(Certificate other) {
-
-        Map<String,Integer> hm = Map.of("C4",1, "4+", 2,"8+",3);
-
-            return hm.get(this.getCertificateType())>=hm.get(other.getCertificateType());
-
-    }
+//    boolean isBetterCertificate(Certificate other) {
+//        int value1=-1;
+//        int value2=-1;
+//        ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
+//        for(int i=0;i<strings.size();i++){
+//            if(strings.get(i).equals(other.certificateType))
+//                value2=i;
+//            else if(strings.get(i).equals(this.certificateType))
+//                value1=i;
+//        }
+//        return value1>=value2;
+//    }
 
 }

@@ -25,9 +25,13 @@ public class MatcherService {
 
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
+<<<<<<< HEAD
         List<Activity> activities = new ArrayList<>();
         //List<Activity> activities= getActivities();
 
+=======
+        List<Activity> activities = getActivities();
+>>>>>>> implementUserMicroservice
         Participant p = rm.getParticipant();
         //Participant p= getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
@@ -41,13 +45,20 @@ public class MatcherService {
                             if(position.equals("cox") && !verifyCertificate(p.getCertificate(),activity.getBoat()))
                                 continue;
 
+<<<<<<< HEAD
                             if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
+=======
+                                if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
+>>>>>>> implementUserMicroservice
                                     continue;
 
                             res.add(new TransferMatch
                                             (activity.getActivityName(),position,activity.getTimeSlot().toString(),p.getNetId().toString()));
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> implementUserMicroservice
 
                         }
                     }
@@ -83,6 +94,17 @@ public class MatcherService {
             return true;
         return false;
 
+    }
+        public List<Activity> getActivities(){
+        List<Activity> activities= new ArrayList<>();
+        List<String> positions= new ArrayList<>();
+        positions.add("cox");
+        positions.add("coach");
+        positions.add("sculling rower");
+        activities.add(new Training
+                ("name",new NetId("owner"),new TimeSlot("22-12-2012 17:33;29-12-2022 15:22"),"C4",positions));
+        activities.add(new Competition("name2",new NetId("owner2"),new TimeSlot("25-12-2012 17:33;29-12-2022 15:22"),"C4",positions,"org","M","pro"));
+        return activities;
     }
 
 //    public Participant getParticipant(){

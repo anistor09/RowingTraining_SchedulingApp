@@ -1,8 +1,7 @@
-package nl.tudelft.sem.template.example.domain;
+package nl.tudelft.sem.template.example.domain.participant;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  */
 @EqualsAndHashCode
 @Getter
-@NoArgsConstructor
 public class PositionManager {
 
     private List<String> positions;

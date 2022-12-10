@@ -5,12 +5,11 @@ import nl.tudelft.sem.template.example.domain.MatcherService;
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * Hello World example controller.
@@ -19,7 +18,7 @@ import java.util.regex.Matcher;
  * </p>
  */
 @RestController
-public class DefaultController {
+public class MatcherController {
 
     private final transient AuthManager authManager;
     private final transient MatcherService matcherService;
@@ -30,7 +29,7 @@ public class DefaultController {
      * @param authManager Spring Security component used to authenticate and authorize the user
      */
     @Autowired
-    public DefaultController(AuthManager authManager,MatcherService matcherService) {
+    public MatcherController(AuthManager authManager, MatcherService matcherService) {
         this.authManager = authManager;
         this.matcherService = matcherService;
     }
@@ -40,10 +39,20 @@ public class DefaultController {
      *
      * @return the example found in the database with the given id
      */
+<<<<<<< HEAD:matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/DefaultController.java
     @GetMapping("/requestMatch")
     public List<TransferMatch> requestMatch(RequestMatch rm, MatcherService matcherService) {
         return matcherService.computeMatch(rm) ;
+=======
+    @PostMapping("/requestMatch")
+    public List<TransferMatch> requestMatch(@RequestBody RequestMatch rm) {
+        System.out.println(rm.getTimeSlots());
+        List<TransferMatch> lst = matcherService.computeMatch(rm) ;
+        return lst ;
+>>>>>>> implementUserMicroservice:matcher-microservice/src/main/java/nl/tudelft/sem/template/example/controllers/MatcherController.java
 
     }
+
+
 
 }
