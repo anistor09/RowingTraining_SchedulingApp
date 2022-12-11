@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d73a50f6-c090-4654-a505-ff1a0ed6dbdd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/utils/ServerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/example-microservice/src/main/java/nl/tudelft/sem/template/example/domain/utils/ServerUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +66,24 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="template" type="f1a62948:ProjectNode" />
                 <item name="authentication-microservice" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="template" type="f1a62948:ProjectNode" />
+                <item name="example-microservice" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="template" type="f1a62948:ProjectNode" />
+                <item name="example-microservice" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="template" type="f1a62948:ProjectNode" />
+                <item name="example-microservice" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -151,7 +168,7 @@
       <recent name="nl.tudelft.sem.template.example.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.SEM31c:matcher-microservice [build]">
+  <component name="RunManager" selected="Gradle.SEM31c:example-microservice [build]">
     <configuration name="ExampleTest.helloWorld" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -317,9 +334,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.SEM31c:matcher-microservice [build]" />
-        <item itemvalue="Gradle.SEM31c [build]" />
         <item itemvalue="Gradle.SEM31c:example-microservice [build]" />
+        <item itemvalue="Gradle.SEM31c [build]" />
+        <item itemvalue="Gradle.SEM31c:matcher-microservice [build]" />
         <item itemvalue="Gradle.ExampleTest.helloWorld" />
         <item itemvalue="Gradle.SEM31c:authentication-microservice [build]" />
       </list>
