@@ -1,6 +1,11 @@
 package nl.tudelft.sem.template.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +16,12 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "participants")
+@Table(name = "activities")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Training.class, name = "Training"),
+
+        @JsonSubTypes.Type(value = Competition.class, name = "Competition") }
+)
 @NoArgsConstructor
 @Getter
 @Setter
@@ -33,18 +43,11 @@ public abstract class Activity {
     private Username owner;
 
     /**
-     * The date of the activity.
+     * The time slot of the activity.
      */
-    @Column(name = "date", nullable = false)
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate date;
-
-    /**
-     * The time of the activity.
-     */
-    @Column(name = "time", nullable = false)
-    @JsonFormat(pattern = "HH:mm")
-    private LocalTime time;
+    @Column(name= "timeSlot", nullable = false)
+    @Convert(converter = TimeSlotConverter.class)
+    private TimeSlot timeSlot;
 
     /**
      * The required boat for the activity.
@@ -62,15 +65,13 @@ public abstract class Activity {
     /**
      * The constructor for the activity.
      * @param owner
-     * @param date
-     * @param time
+     * @param timeSlot
      * @param boat
      * @param positions
      */
-    public Activity(Username owner, LocalDate date, LocalTime time, String boat, List<String> positions) {
+    public Activity(Username owner, TimeSlot timeSlot, String boat, List<String> positions) {
         this.owner = owner;
-        this.date = date;
-        this.time = time;
+        this.timeSlot = timeSlot;
         this.boat = boat;
         this.positions = positions;
     }
@@ -84,8 +85,7 @@ public abstract class Activity {
         return "Activity{" +
                 "id=" + id +
                 ", owner=" + owner +
-                ", date=" + date +
-                ", time=" + time +
+                ", timeSlot=" + timeSlot +
                 ", boat='" + boat + '\'' +
                 ", positions=" + positions +
                 '}';
