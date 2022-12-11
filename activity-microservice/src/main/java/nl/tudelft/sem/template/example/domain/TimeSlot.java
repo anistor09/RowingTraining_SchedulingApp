@@ -18,14 +18,13 @@ public class TimeSlot {
     private transient Date end;
     transient SimpleDateFormat converter;
 
-    public TimeSlot(String timeSlot){
-        String begin = timeSlot.split(";")[0];
-        String end =  timeSlot.split(";")[1];
-
-        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+    public TimeSlot(String timeSlot) {
+        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        converter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String[] dates = timeSlot.split(";");
         try {
-            this.begin= converter.parse(begin);
-            this.end= converter.parse(end);
+            begin = converter.parse(dates[0]);
+            end = converter.parse(dates[1]);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -38,6 +37,7 @@ public class TimeSlot {
         }
         return  ts;
     }
+
     public static TimeSlot getTimeSlot(String timeSlot){
         return new TimeSlot(timeSlot);
     }
