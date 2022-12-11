@@ -80,4 +80,9 @@ public class ActivityController {
         }
         return activity;
     }
+
+    @GetMapping("/user/{id}")
+    public Username getOwnerById(@PathVariable("id") long id) {
+        return activityService.getById(id).get().getOwner();
+    }
 }
