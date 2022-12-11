@@ -36,7 +36,7 @@ public class ActivityService {
      */
     public Training createTraining(Username username, ActivityRequestModel request) {
         username = new Username("user");
-        Training training = new Training(username, request.getDate(), request.getTime(), request.getBoat(), request.getPositions());
+        Training training = new Training(username, request.getTimeSlot(), request.getBoat(), request.getPositions());
         activityRepository.save(training);
         return training;
     }
@@ -49,7 +49,7 @@ public class ActivityService {
      */
     public Competition createCompetition(Username username, ActivityRequestModel request) {
         username = new Username("user");
-        Competition competition = new Competition(username, request.getDate(), request.getTime(), request.getBoat(), request.getPositions(), request.getOrganization(), request.getGender(), request.getCompetitive());
+        Competition competition = new Competition(username, request.getTimeSlot(), request.getBoat(), request.getPositions(), request.getOrganization(), request.getGender(), request.getCompetitive());
         activityRepository.save(competition);
         return competition;
     }
@@ -79,22 +79,11 @@ public class ActivityService {
     /**
      * Edits the date.
      * @param id
-     * @param date
+     * @param timeSlot
      */
-    public void editDate(Long id, LocalDate date) {
+    public void editTimeSlot(Long id, TimeSlot timeSlot) {
         Activity activity = activityRepository.findById(id).get();
-        activity.setDate(date);
-        activityRepository.save(activity);
-    }
-
-    /**
-     * Edits the time.
-     * @param id
-     * @param time
-     */
-    public void editTime(Long id, LocalTime time) {
-        Activity activity = activityRepository.findById(id).get();
-        activity.setTime(time);
+        activity.setTimeSlot(timeSlot);
         activityRepository.save(activity);
     }
 

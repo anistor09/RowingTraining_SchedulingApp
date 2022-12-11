@@ -1,11 +1,16 @@
 package nl.tudelft.sem.template.example.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * An object representing the username of the Participant
  */
 @EqualsAndHashCode
+@Getter
+@Setter
 public class Username {
     private final transient String usernameValue;
 
@@ -19,10 +24,6 @@ public class Username {
 
     @Override
     public String toString(){
-        return usernameValue;
-    }
-
-    public String getUsernameValue() {
         return usernameValue;
     }
 }

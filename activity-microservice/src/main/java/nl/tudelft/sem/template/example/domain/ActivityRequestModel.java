@@ -14,40 +14,16 @@ import java.util.List;
 
 @Data
 public class ActivityRequestModel {
-    private String date;
-    private String time;
+    private String timeSlot;
     private String boat;
     private String organization;
     private String gender;
     private boolean competitive;
     private List<String> positions;
 
-    /**
-     * Converts the date to a Date object.
-     * @return the date as a Date object
-     */
-    public LocalDate getDate() {
-        try {
-            LocalDate date = LocalDate.parse(this.date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            return date;
-        } catch (Exception e) {
-            return LocalDate.now();
-        }
+    public TimeSlot getTimeSlot() {
+        return TimeSlot.getTimeSlot(timeSlot);
     }
-
-    /**
-     * Converts the time to a Time object.
-     * @return the time as a Time object
-     */
-    public LocalTime getTime() {
-        try {
-            LocalTime time = LocalTime.parse(this.time, DateTimeFormatter.ofPattern("HH:mm"));
-            return time;
-        } catch (Exception e) {
-            return LocalTime.now();
-        }
-    }
-
     /**
      *
      * @return competitive

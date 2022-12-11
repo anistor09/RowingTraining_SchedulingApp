@@ -44,14 +44,9 @@ public class ActivityController {
         activityService.editBoat(id, request.getBoat());
     }
 
-    @PutMapping("/editDate/{id}")
+    @PutMapping("/editTimeSlot/{id}")
     public void editDate(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
-        activityService.editDate(id, request.getDate());
-    }
-
-    @PutMapping("/editTime/{id}")
-    public void editTime(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
-        activityService.editTime(id, request.getTime());
+        activityService.editTimeSlot(id, request.getTimeSlot());
     }
 
     @PostMapping("/createCompetition")
