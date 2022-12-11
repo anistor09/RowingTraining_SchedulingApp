@@ -53,20 +53,34 @@ public class ActivityService {
         return competition;
     }
 
-    //edit all fields of activty
+    //edit all fields of activity that are not null
+    /**
+     * Edits an activity.
+     * @param id
+     * @param request
+     */
     public void editActivity(Long id, ActivityRequestModel request) {
-        Activity activity = activityRepository.findById(id).get();
-        if(request.getTimeSlot() != null) {
-            activity.setTimeSlot(request.getTimeSlot());
+        Optional<Activity> activity = activityRepository.findById(id);
+        if (activity.isPresent()) {
+            if (!isNullOrEmpty(request.getTimeSlot())) {
+                activity.get().setTimeSlot(request.getTimeSlot());
+            } else {
+                activity.get().setTimeSlot(activity.get().getTimeSlot());
+            }
+            if (!isNullOrEmpty(request.getBoat())) {
+                activity.get().setBoat(request.getBoat());
+            } else {
+                activity.get().setBoat(activity.get().getBoat());
+            }
+            if (!isNullOrEmpty(request.getPositions())) {
+                activity.get().setPositions(request.getPositions());
+            } else {
+                activity.get().setPositions(activity.get().getPositions());
+            }
+            activityRepository.save(activity.get());
         }
-        if(request.getBoat() != null) {
-            activity.setBoat(request.getBoat());
-        }
-        if(request.getPositions() != null) {
-            activity.setPositions(request.getPositions());
-        }
-        activityRepository.save(activity);
     }
+
 
     /**
      * Edits the boat.
@@ -169,5 +183,16 @@ public class ActivityService {
 
     public Optional<Activity> getById(long id) {
         return activityRepository.findById(id);
+    }
+
+    private static boolean isNullOrEmpty(Object o) {
+        if (o == null) {
+            return true;
+        }
+        if (o instanceof String) {
+            String s = (String) o;
+            return s.isEmpty();
+        }
+        return false;
     }
 }
