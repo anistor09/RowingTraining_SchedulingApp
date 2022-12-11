@@ -53,6 +53,21 @@ public class ActivityService {
         return competition;
     }
 
+    //edit all fields of activty
+    public void editActivity(Long id, ActivityRequestModel request) {
+        Activity activity = activityRepository.findById(id).get();
+        if(request.getTimeSlot() != null) {
+            activity.setTimeSlot(request.getTimeSlot());
+        }
+        if(request.getBoat() != null) {
+            activity.setBoat(request.getBoat());
+        }
+        if(request.getPositions() != null) {
+            activity.setPositions(request.getPositions());
+        }
+        activityRepository.save(activity);
+    }
+
     /**
      * Edits the boat.
      * @param id

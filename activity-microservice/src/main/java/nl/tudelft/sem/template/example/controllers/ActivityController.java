@@ -34,6 +34,12 @@ public class ActivityController {
         activityService.deleteById(id);
     }
 
+    //edit all fields of activity
+    @PutMapping("/edit/{id}")
+    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
+        activityService.editActivity(id, request);
+    }
+
     @PutMapping("/editPositions/{id}")
     public void editPositions(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
         activityService.editPositions(id, request.getPositions());
