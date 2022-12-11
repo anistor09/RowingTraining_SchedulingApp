@@ -1,5 +1,6 @@
 package nl.tudelft.sem.template.example.domain.participant;
 
+import nl.tudelft.sem.template.example.domain.transferClasses.RequestMatch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -82,4 +83,18 @@ class ParticipantServiceTest {
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         assertTrue(ps.getParticipantLevel(netId).equals("pro"));
     }
+
+
+    @Test
+    void getRequestMatch() {
+        NetId netId= new NetId("user");
+        List<String> timeslots= new ArrayList<>();
+        timeslots.add("23-11-2022 22:30;24-11-2022 22:30");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","pro");
+        when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
+        RequestMatch rm= new RequestMatch(p,timeslots);
+        assertTrue(ps.getRequestMatch(netId,timeslots).getTimeSlots().equals(rm.getTimeSlots()));
+        assertTrue(ps.getRequestMatch(netId,timeslots).getParticipant().equals(rm.getParticipant()));
+    }
+
 }

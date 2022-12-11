@@ -135,6 +135,7 @@
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="nl.tudelft.sem.template.example.domain" />
       <recent name="nl.tudelft.sem.template.example.domain.participant" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -142,7 +143,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.SEM31c [build]">
-    <configuration name="ParticipantServiceTest.getParticipantCertificate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CertificateTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -153,9 +154,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":example-microservice:test" />
+            <option value=":matcher-microservice:test" />
             <option value="--tests" />
-            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.ParticipantServiceTest.getParticipantCertificate&quot;" />
+            <option value="&quot;nl.tudelft.sem.template.example.domain.CertificateTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -165,7 +166,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParticipantServiceTest.getParticipantGender" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CertificateTest.testToString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -178,7 +179,7 @@
           <list>
             <option value=":example-microservice:test" />
             <option value="--tests" />
-            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.ParticipantServiceTest.getParticipantGender&quot;" />
+            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.CertificateTest.testToString&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -188,7 +189,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParticipantServiceTest.getParticipantOrganization" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NetIdTest.testToString" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -201,7 +202,7 @@
           <list>
             <option value=":example-microservice:test" />
             <option value="--tests" />
-            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.ParticipantServiceTest.getParticipantOrganization&quot;" />
+            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.NetIdTest.testToString&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -211,7 +212,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParticipantServiceTest.getParticipantPositions" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParticipantServiceTest.getRequestMatch" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -224,7 +225,7 @@
           <list>
             <option value=":example-microservice:test" />
             <option value="--tests" />
-            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.ParticipantServiceTest.getParticipantPositions&quot;" />
+            <option value="&quot;nl.tudelft.sem.template.example.domain.participant.ParticipantServiceTest.getRequestMatch&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -327,10 +328,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.SEM31c [build]" />
-        <item itemvalue="Gradle.ParticipantServiceTest.getParticipantGender" />
-        <item itemvalue="Gradle.ParticipantServiceTest.getParticipantOrganization" />
-        <item itemvalue="Gradle.ParticipantServiceTest.getParticipantCertificate" />
-        <item itemvalue="Gradle.ParticipantServiceTest.getParticipantPositions" />
+        <item itemvalue="Gradle.ParticipantServiceTest.getRequestMatch" />
+        <item itemvalue="Gradle.CertificateTest.testToString" />
+        <item itemvalue="Gradle.NetIdTest.testToString" />
+        <item itemvalue="Gradle.CertificateTest" />
       </list>
     </recent_temporary>
   </component>

@@ -1,7 +1,6 @@
-package nl.tudelft.sem.template.example.domain.participant;
+package nl.tudelft.sem.template.example.domain;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
