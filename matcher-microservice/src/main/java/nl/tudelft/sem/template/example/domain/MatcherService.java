@@ -92,6 +92,11 @@ public class MatcherService {
     }
 
 
-
+    public void saveMatch(Match m) {
+        matcherRepository.save(m);
+    }
+    public List<Match> getAllMatches(){
+        return matcherRepository.findAll();
+    }
 
 }

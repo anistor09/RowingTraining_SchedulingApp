@@ -23,8 +23,7 @@ public class Match {
     private int id;
 
     @Column(name="participant", nullable = false)
-    @Convert(converter = NetIdAttributeConverter.class)
-    private NetId netId;
+    private String netId;
 
     @Column(name="activity", nullable = false)
     private String activityName;
@@ -32,7 +31,7 @@ public class Match {
     @Column(name="position", nullable = false)
     private String position;
 
-    public Match(NetId netId, String activityName,String position) {
+    public Match(String netId, String activityName,String position) {
         this.netId = netId;
         this.activityName = activityName;
         this.position=position;

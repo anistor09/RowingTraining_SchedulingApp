@@ -104,7 +104,7 @@ public class ParticipantService {
 
     public TransferMatch getTransferMatch(RequetsTransferMatchModel request){
         String activityName = request.getActivityName();
-        String positions = request.getPositions();
+        String positions = request.getPosition();
         String timeSlot = request.getTimeSlot();
         String netId= request.getNetId();
         TransferMatch transferMatch= new TransferMatch(activityName,positions,timeSlot,netId);
