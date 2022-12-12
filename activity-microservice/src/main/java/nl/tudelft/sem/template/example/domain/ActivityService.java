@@ -1,10 +1,7 @@
 package nl.tudelft.sem.template.example.domain;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +50,6 @@ public class ActivityService {
         return competition;
     }
 
-    //edit all fields of activity that are not null
     /**
      * Edits an activity.
      * @param id
