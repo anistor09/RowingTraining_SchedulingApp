@@ -37,7 +37,8 @@ public class ActivityController {
     //edit all fields of activity
     @PutMapping("/edit/{id}")
     public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
-        activityService.editActivity(id, request);
+        Username username = new Username(authManager.getNetId());
+        activityService.editActivity(username, id, request);
     }
 
     @PutMapping("/editPositions/{id}")

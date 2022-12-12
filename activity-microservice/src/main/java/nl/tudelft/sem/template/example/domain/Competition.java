@@ -23,4 +23,8 @@ public class Competition extends Activity{
         this.competitive = competitive;
     }
 
+    public boolean getCompetitive() {
+        return competitive;
+    }
+
 }

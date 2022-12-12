@@ -55,25 +55,42 @@ public class ActivityService {
      * @param id
      * @param request
      */
-    public void editActivity(Long id, ActivityRequestModel request) {
+    public void editActivity(Username username, Long id, ActivityRequestModel request) {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
-            if (!isNullOrEmpty(request.getTimeSlot())) {
-                activity.get().setTimeSlot(request.getTimeSlot());
-            } else {
-                activity.get().setTimeSlot(activity.get().getTimeSlot());
+            if (activity.get().getOwner().equals(username)) {
+                if (!isNullOrEmpty(request.getTimeSlot())) {
+                    activity.get().setTimeSlot(request.getTimeSlot());
+                } else {
+                    activity.get().setTimeSlot(activity.get().getTimeSlot());
+                }
+                if (!isNullOrEmpty(request.getBoat())) {
+                    activity.get().setBoat(request.getBoat());
+                } else {
+                    activity.get().setBoat(activity.get().getBoat());
+                }
+                if (!isNullOrEmpty(request.getPositions())) {
+                    activity.get().setPositions(request.getPositions());
+                } else {
+                    activity.get().setPositions(activity.get().getPositions());
+                }
+                if (!isNullOrEmpty(request.getOrganization())) {
+                    ((Competition) activity.get()).setOrganization(request.getOrganization());
+                } else {
+                    ((Competition) activity.get()).setOrganization(((Competition) activity.get()).getOrganization());
+                }
+                if (!isNullOrEmpty(request.getGender())) {
+                    ((Competition) activity.get()).setGender(request.getGender());
+                } else {
+                    ((Competition) activity.get()).setGender(((Competition) activity.get()).getGender());
+                }
+                if (!isNullOrEmpty(request.getCompetitive())) {
+                    ((Competition) activity.get()).setCompetitive(request.getCompetitive());
+                } else {
+                    ((Competition) activity.get()).setCompetitive(((Competition) activity.get()).getCompetitive());
+                }
+                activityRepository.save(activity.get());
             }
-            if (!isNullOrEmpty(request.getBoat())) {
-                activity.get().setBoat(request.getBoat());
-            } else {
-                activity.get().setBoat(activity.get().getBoat());
-            }
-            if (!isNullOrEmpty(request.getPositions())) {
-                activity.get().setPositions(request.getPositions());
-            } else {
-                activity.get().setPositions(activity.get().getPositions());
-            }
-            activityRepository.save(activity.get());
         }
     }
 
