@@ -55,10 +55,10 @@ public class ActivityService {
      * @param id
      * @param request
      */
-    public void editActivity(Username username, Long id, ActivityRequestModel request) {
+    public void editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
-            if (activity.get().getOwner().equals(username)) {
+            if (activity.get().getOwner().getUsernameValue().equals(username.getUsernameValue())) {
                 if (!isNullOrEmpty(request.getTimeSlot())) {
                     activity.get().setTimeSlot(request.getTimeSlot());
                 } else {
@@ -90,65 +90,41 @@ public class ActivityService {
                     ((Competition) activity.get()).setCompetitive(((Competition) activity.get()).getCompetitive());
                 }
                 activityRepository.save(activity.get());
+            } else {
+                throw new UnauthorizedException("You are not the owner of this activity.");
             }
         }
-    }
-
-
-    /**
-     * Edits the boat.
-     * @param id
-     * @param boat
-     */
-    public void editBoat(Long id, String boat) {
-        Activity activity = activityRepository.findById(id).get();
-        activity.setBoat(boat);
-        activityRepository.save(activity);
-    }
-
-    /**
-     * Edits positions.
-     * @param id
-     * @param positions
-     */
-    public void editPositions(Long id, List<String> positions) {
-        Activity activity = activityRepository.findById(id).get();
-        activity.setPositions(positions);
-        activityRepository.save(activity);
-    }
-
-    /**
-     * Edits the date.
-     * @param id
-     * @param timeSlot
-     */
-    public void editTimeSlot(Long id, TimeSlot timeSlot) {
-        Activity activity = activityRepository.findById(id).get();
-        activity.setTimeSlot(timeSlot);
-        activityRepository.save(activity);
     }
 
     /**
      * Deletes all activities of the given user.
      * @param username
+     * @param logged
      */
-    public void deleteByUser(Username username) {
-        List<Activity> activities = activityRepository.findAll();
-        List<Activity> toDelete = new ArrayList<>();
-        for (Activity activity : activities) {
-            if (activity.getOwner().equals(username)) {
-                toDelete.add(activity);
+    public void deleteByUser(Username username, Username logged) throws UnauthorizedException {
+        if(username.getUsernameValue().equals(logged.getUsernameValue())) {
+            List<Activity> activities = activityRepository.findAll();
+            List<Activity> toDelete = new ArrayList<>();
+            for (Activity activity : activities) {
+                if (activity.getOwner().getUsernameValue().equals(username.getUsernameValue())) {
+                    toDelete.add(activity);
+                }
             }
+            activityRepository.deleteAll(toDelete);
+        } else {
+            throw new UnauthorizedException("You are not the owner of this activity.");
         }
-        activityRepository.deleteAll(toDelete);
     }
 
-    /**
-     * Deletes an activity by id.
-     * @param id
-     */
-    public void deleteById(Long id) {
-        activityRepository.deleteById(id);
+    public void deleteById(Username username, Long id) throws UnauthorizedException {
+        Optional<Activity> activity = activityRepository.findById(id);
+        if (activity.isPresent()) {
+            if (activity.get().getOwner().getUsernameValue().equals(username.getUsernameValue())) {
+                activityRepository.deleteById(id);
+            } else {
+                throw new UnauthorizedException("You are not the owner of this activity.");
+            }
+        }
     }
 
     /**

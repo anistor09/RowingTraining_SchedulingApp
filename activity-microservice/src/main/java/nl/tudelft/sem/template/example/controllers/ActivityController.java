@@ -20,40 +20,24 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    //TODO:
-    // only authorized users can delete it - has to be updated
     @DeleteMapping("/deleteUser/{username}")
-    public void deleteByUser(@PathVariable Username username) {
-        activityService.deleteByUser(username);
+    public void deleteByUser(@PathVariable Username username) throws UnauthorizedException {
+        Username logged = new Username(authManager.getNetId());
+        activityService.deleteByUser(username, logged);
     }
 
-    //TODO:
-    // only authorized users can delete it - has to be updated
+
     @DeleteMapping("deleteId/{id}")
-    public void deleteById(@PathVariable Long id) {
-        activityService.deleteById(id);
+    public void deleteById(@PathVariable Long id) throws UnauthorizedException{
+        Username username = new Username(authManager.getNetId());
+        activityService.deleteById(username, id);
     }
 
-    //edit all fields of activity
+
     @PutMapping("/edit/{id}")
-    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
+    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException {
         Username username = new Username(authManager.getNetId());
         activityService.editActivity(username, id, request);
-    }
-
-    @PutMapping("/editPositions/{id}")
-    public void editPositions(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
-        activityService.editPositions(id, request.getPositions());
-    }
-
-    @PutMapping("/editBoat/{id}")
-    public void editBoat(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
-        activityService.editBoat(id, request.getBoat());
-    }
-
-    @PutMapping("/editTimeSlot/{id}")
-    public void editDate(@PathVariable Long id, @RequestBody ActivityRequestModel request) {
-        activityService.editTimeSlot(id, request.getTimeSlot());
     }
 
     @PostMapping("/createCompetition")
