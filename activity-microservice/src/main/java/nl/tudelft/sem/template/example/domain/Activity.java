@@ -30,8 +30,8 @@ public abstract class Activity {
      * The owner of the activity.
      */
     @Column(name = "owner", nullable = false)
-    @Convert(converter = UsernameAttributeConverter.class)
-    private Username owner;
+    @Convert(converter = NetIdAttributeConverter.class)
+    private NetId owner;
 
     /**
      * The time slot of the activity.
@@ -60,7 +60,7 @@ public abstract class Activity {
      * @param boat
      * @param positions
      */
-    public Activity(Username owner, TimeSlot timeSlot, String boat, List<String> positions) {
+    public Activity(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         this.owner = owner;
         this.timeSlot = timeSlot;
         this.boat = boat;

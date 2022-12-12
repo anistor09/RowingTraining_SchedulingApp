@@ -20,7 +20,7 @@ public class Training extends Activity{
      * @param boat
      * @param positions
      */
-    public Training(Username owner, TimeSlot timeSlot, String boat, List<String> positions) {
+    public Training(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         super(owner, timeSlot, boat, positions);
     }
 

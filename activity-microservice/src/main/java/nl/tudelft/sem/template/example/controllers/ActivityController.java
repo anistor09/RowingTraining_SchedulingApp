@@ -1,10 +1,14 @@
 package nl.tudelft.sem.template.example.controllers;
 
 import java.util.List;
+import java.util.Optional;
+
 import nl.tudelft.sem.template.example.authentication.AuthManager;
+import nl.tudelft.sem.template.example.authentication.JwtTokenVerifier;
 import nl.tudelft.sem.template.example.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,7 +31,7 @@ public class ActivityController {
     }
 
 
-    @DeleteMapping("deleteId/{id}")
+    @DeleteMapping("/deleteId/{id}")
     public void deleteById(@PathVariable Long id) throws UnauthorizedException{
         Username username = new Username(authManager.getNetId());
         activityService.deleteById(username, id);
@@ -42,13 +46,13 @@ public class ActivityController {
 
     @PostMapping("/createCompetition")
     public ResponseEntity<Competition> createCompetition(@RequestBody ActivityRequestModel request) {
-        Username username = new Username(authManager.getNetId());
+        NetId username = new NetId(authManager.getNetId());
         return ResponseEntity.ok(activityService.createCompetition(username, request));
     }
 
     @PostMapping("/createTraining")
     public ResponseEntity<Training> createTraining(@RequestBody ActivityRequestModel request) {
-        Username username = new Username(authManager.getNetId());
+        NetId username = new NetId(authManager.getNetId());
         return ResponseEntity.ok(activityService.createTraining(username, request));
     }
 
@@ -73,7 +77,12 @@ public class ActivityController {
     }
 
     @GetMapping("/user/{id}")
-    public Username getOwnerById(@PathVariable("id") long id) {
-        return activityService.getById(id).get().getOwner();
+    public NetId getOwnerById(@PathVariable("id") long id) {
+        return activityService.getById(id).getOwner();
+    }
+
+    @GetMapping("/user")
+    public List<Activity> getByNetId(UsernamePasswordAuthenticationToken token) {
+        return activityService.getByUsername(token.getName());
     }
 }

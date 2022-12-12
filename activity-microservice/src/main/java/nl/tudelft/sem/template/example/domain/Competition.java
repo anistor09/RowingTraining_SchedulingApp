@@ -16,7 +16,7 @@ public class Competition extends Activity{
     private String gender;
     private boolean competitive;
 
-    public Competition(Username owner, TimeSlot timeSlot, String boat, List<String> positions, String organization, String gender, boolean competitive) {
+    public Competition(NetId owner, TimeSlot timeSlot, String boat, List<String> positions, String organization, String gender, boolean competitive) {
         super(owner, timeSlot, boat, positions);
         this.organization = organization;
         this.gender = gender;

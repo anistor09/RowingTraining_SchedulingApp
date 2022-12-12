@@ -34,7 +34,7 @@ public class ActivityService {
      * @param request
      * @return new training
      */
-    public Training createTraining(Username username, ActivityRequestModel request) {
+    public Training createTraining(NetId username, ActivityRequestModel request) {
         Training training = new Training(username, request.getTimeSlot(), request.getBoat(), request.getPositions());
         activityRepository.save(training);
         return training;
@@ -46,7 +46,7 @@ public class ActivityService {
      * @param request
      * @return new competition
      */
-    public Competition createCompetition(Username username, ActivityRequestModel request) {
+    public Competition createCompetition(NetId username, ActivityRequestModel request) {
         Competition competition = new Competition(username, request.getTimeSlot(), request.getBoat(), request.getPositions(), request.getOrganization(), request.getGender(), request.getCompetitive());
         activityRepository.save(competition);
         return competition;
@@ -60,7 +60,7 @@ public class ActivityService {
     public ResponseEntity editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
-            if (activity.get().getOwner().getUsernameValue().equals(username.getUsernameValue())) {
+            if (activity.get().getOwner().getNetIdValue().equals(username.getUsernameValue())) {
                 if (!isNullOrEmpty(request.getTimeSlot())) {
                     activity.get().setTimeSlot(request.getTimeSlot());
                 } else {
@@ -109,7 +109,7 @@ public class ActivityService {
             List<Activity> activities = activityRepository.findAll();
             List<Activity> toDelete = new ArrayList<>();
             for (Activity activity : activities) {
-                if (activity.getOwner().getUsernameValue().equals(username.getUsernameValue())) {
+                if (activity.getOwner().getNetIdValue().equals(username.getUsernameValue())) {
                     toDelete.add(activity);
                 }
             }
@@ -122,7 +122,7 @@ public class ActivityService {
     public void deleteById(Username username, Long id) throws UnauthorizedException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
-            if (activity.get().getOwner().getUsernameValue().equals(username.getUsernameValue())) {
+            if (activity.get().getOwner().getNetIdValue().equals(username.getUsernameValue())) {
                 activityRepository.deleteById(id);
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
@@ -173,8 +173,8 @@ public class ActivityService {
         return result;
     }
 
-    public Optional<Activity> getById(long id) {
-        return activityRepository.findById(id);
+    public Activity getById(long id) {
+        return activityRepository.findById(id).get();
     }
 
     private static boolean isNullOrEmpty(Object o) {
