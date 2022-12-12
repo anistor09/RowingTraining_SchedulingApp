@@ -14,7 +14,7 @@ public class ActivityRequestModel {
     private List<String> positions;
 
     public TimeSlot getTimeSlot() {
-        return TimeSlot.getTimeSlot(timeSlot);
+        return timeSlot == null ? null : TimeSlot.getTimeSlot(timeSlot);
     }
     /**
      *
