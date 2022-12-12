@@ -1,5 +1,7 @@
 package nl.tudelft.sem.template.example.domain;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ActivityService {
      * @param id
      * @param request
      */
-    public void editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
+    public ResponseEntity editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             if (activity.get().getOwner().getUsernameValue().equals(username.getUsernameValue())) {
@@ -94,6 +96,7 @@ public class ActivityService {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
         }
+        return ResponseEntity.ok("successfully edited the activity");
     }
 
     /**

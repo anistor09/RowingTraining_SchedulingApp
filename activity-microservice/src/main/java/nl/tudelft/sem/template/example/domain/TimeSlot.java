@@ -19,7 +19,7 @@ public class TimeSlot {
     transient SimpleDateFormat converter;
 
     public TimeSlot(String timeSlot) {
-        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
         converter.setTimeZone(TimeZone.getTimeZone("UTC"));
         String[] dates = timeSlot.split(";");
         try {
