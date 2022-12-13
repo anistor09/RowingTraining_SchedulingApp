@@ -1,0 +1,16 @@
+notification:
+{
+    "activityId": {
+        "id": "abc"
+    },
+    "netId": {
+        "id": "user"
+    },
+    "message": "accepted"
+}
+
+user:
+{
+    "netId" : "user",
+    "password" : "password"
+}
