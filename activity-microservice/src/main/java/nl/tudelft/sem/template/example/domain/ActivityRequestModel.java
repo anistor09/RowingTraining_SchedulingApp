@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class ActivityRequestModel {
+    private String name;
     private String timeSlot;
     private String boat;
     private String organization;
@@ -16,6 +17,7 @@ public class ActivityRequestModel {
     public TimeSlot getTimeSlot() {
         return timeSlot == null ? null : TimeSlot.getTimeSlot(timeSlot);
     }
+
     /**
      *
      * @return competitive
