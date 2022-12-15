@@ -5,10 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,7 +20,7 @@ public class Training extends Activity{
      * @param boat
      * @param positions
      */
-    public Training(Username owner, TimeSlot timeSlot, String boat, List<String> positions) {
+    public Training(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         super(owner, timeSlot, boat, positions);
     }
 

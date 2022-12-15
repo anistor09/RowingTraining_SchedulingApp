@@ -1,18 +1,9 @@
 package nl.tudelft.sem.template.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -39,8 +30,8 @@ public abstract class Activity {
      * The owner of the activity.
      */
     @Column(name = "owner", nullable = false)
-    @Convert(converter = UsernameAttributeConverter.class)
-    private Username owner;
+    @Convert(converter = NetIdAttributeConverter.class)
+    private NetId owner;
 
     /**
      * The time slot of the activity.
@@ -69,7 +60,7 @@ public abstract class Activity {
      * @param boat
      * @param positions
      */
-    public Activity(Username owner, TimeSlot timeSlot, String boat, List<String> positions) {
+    public Activity(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         this.owner = owner;
         this.timeSlot = timeSlot;
         this.boat = boat;

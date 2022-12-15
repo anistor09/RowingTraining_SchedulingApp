@@ -27,4 +27,8 @@ gradle-app.setting
 *.rar
 
 *.db
+/.idea/
+**/.idea/workspace.xml
 .idea/
+/.idea/
+.idea/*
