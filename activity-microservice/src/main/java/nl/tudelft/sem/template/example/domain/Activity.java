@@ -2,6 +2,7 @@ package nl.tudelft.sem.template.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +24,7 @@ public abstract class Activity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, updatable=false)
     private Long id;
 
     /**
@@ -73,5 +74,9 @@ public abstract class Activity {
         this.timeSlot = timeSlot;
         this.boat = boat;
         this.positions = positions;
+    }
+
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
     }
 }

@@ -60,38 +60,30 @@ public class ActivityService {
     public ResponseEntity editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
-            if (activity.get().getOwner().getNetIdValue().equals(username.getUsernameValue())) {
+            Activity change = activity.get();
+            if (change.getOwner().getNetIdValue().equals(username.getUsernameValue())) {
                 if (!isNullOrEmpty(request.getTimeSlot())) {
-                    activity.get().setTimeSlot(request.getTimeSlot());
-                } else {
-                    activity.get().setTimeSlot(activity.get().getTimeSlot());
+                    TimeSlot rt = TimeSlot.getTimeSlot(request.timeSlotString());
+                    change.setTimeSlot(TimeSlot.getTimeSlot(request.timeSlotString()));
                 }
                 if (!isNullOrEmpty(request.getBoat())) {
-                    activity.get().setBoat(request.getBoat());
-                } else {
-                    activity.get().setBoat(activity.get().getBoat());
+                    change.setBoat(request.getBoat());
                 }
                 if (!isNullOrEmpty(request.getPositions())) {
-                    activity.get().setPositions(request.getPositions());
-                } else {
-                    activity.get().setPositions(activity.get().getPositions());
+                    change.setPositions(request.getPositions());
                 }
-                if (!isNullOrEmpty(request.getOrganization())) {
-                    ((Competition) activity.get()).setOrganization(request.getOrganization());
-                } else {
-                    ((Competition) activity.get()).setOrganization(((Competition) activity.get()).getOrganization());
+                if(activity.get() instanceof Competition) {
+                    if (!isNullOrEmpty(request.getOrganization())) {
+                        ((Competition) change).setOrganization(request.getOrganization());
+                    }
+                    if (!isNullOrEmpty(request.getGender())) {
+                        ((Competition) change).setGender(request.getGender());
+                    }
+                    if (!isNullOrEmpty(request.getCompetitive())) {
+                        ((Competition) change).setCompetitive(request.getCompetitive());
+                    }
                 }
-                if (!isNullOrEmpty(request.getGender())) {
-                    ((Competition) activity.get()).setGender(request.getGender());
-                } else {
-                    ((Competition) activity.get()).setGender(((Competition) activity.get()).getGender());
-                }
-                if (!isNullOrEmpty(request.getCompetitive())) {
-                    ((Competition) activity.get()).setCompetitive(request.getCompetitive());
-                } else {
-                    ((Competition) activity.get()).setCompetitive(((Competition) activity.get()).getCompetitive());
-                }
-                activityRepository.save(activity.get());
+                activityRepository.save(change);
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
