@@ -62,9 +62,11 @@ public class ActivityService {
         if (activity.isPresent()) {
             Activity change = activity.get();
             if (change.getOwner().getNetIdValue().equals(username.getUsernameValue())) {
+                if (!isNullOrEmpty(request.getName())) {
+                    change.setName(request.getName());
+                }
                 if (!isNullOrEmpty(request.getTimeSlot())) {
-                    TimeSlot rt = TimeSlot.getTimeSlot(request.timeSlotString());
-                    change.setTimeSlot(TimeSlot.getTimeSlot(request.timeSlotString()));
+                    change.setTimeSlot(request.getTimeSlot());
                 }
                 if (!isNullOrEmpty(request.getBoat())) {
                     change.setBoat(request.getBoat());

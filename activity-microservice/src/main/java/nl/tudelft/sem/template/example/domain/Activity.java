@@ -2,7 +2,6 @@ package nl.tudelft.sem.template.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
