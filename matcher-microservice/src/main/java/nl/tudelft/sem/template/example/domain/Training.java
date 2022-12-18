@@ -1,17 +1,42 @@
 package nl.tudelft.sem.template.example.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
-
+@Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class Training extends Activity{
-    public Training() {
+
+    /**
+     * Constructor for Training.
+     * @param owner
+     * @param name
+     * @param timeSlot
+     * @param boat
+     * @param positions
+     */
+    public Training(NetId owner, String name, TimeSlot timeSlot, String boat, List<String> positions) {
+        super(owner, name, timeSlot, boat, positions);
     }
 
-    public Training(String activityName, NetId owner, TimeSlot ts, String boat, List<String> positions) {
-        super(activityName,owner, ts, boat, positions);
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

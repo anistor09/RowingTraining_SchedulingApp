@@ -14,15 +14,19 @@ import java.util.List;
 @Setter
 public abstract class Activity {
 
+    @Id
+    @Column(name = "id", nullable = false, updatable=false)
+    private Long id;
+
     @Column(name= "activityName", nullable = false)
-    private String activityName;
+    private String name;
 
     @Column(name= "owner", nullable = false)
     @Convert(converter = NetIdAttributeConverter.class)
     private NetId owner;
 
     @Column(name= "date", nullable = false)
-    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
+    @Convert(converter = TimeSlotConverter.class)
     private TimeSlot timeSlot;
 
     @Column(name= "boat", nullable = false)
@@ -32,8 +36,8 @@ public abstract class Activity {
     @Convert(converter = PositionListConverter.class)
     private List<String> positions;
 
-    public Activity(String activityName,NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
-        this.activityName=activityName;
+    public Activity(NetId owner, String name, TimeSlot timeSlot, String boat, List<String> positions) {
+        this.name=name;
         this.owner = owner;
         this.timeSlot = timeSlot;
         this.boat = boat;

@@ -2,13 +2,11 @@ package nl.tudelft.sem.template.example.domain;
 
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
+import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * A DDD service for registering a new user.
@@ -16,15 +14,17 @@ import java.util.regex.Matcher;
 @Service
 public class MatcherService {
     private final transient MatcherRepository matcherRepository;
+    private final transient ServerUtils serverUtils;
 
 
-
-    public MatcherService(MatcherRepository matcherRepository) {
+    public MatcherService(MatcherRepository matcherRepository, ServerUtils serverUtils) {
         this.matcherRepository = matcherRepository;
+        this.serverUtils = serverUtils;
     }
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
-        List<Activity> activities = getActivities();
+        //List<Activity> activities = getActivities();
+        List<Activity> activities = serverUtils.getActivities();
         Participant p = rm.getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
         //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
@@ -40,7 +40,7 @@ public class MatcherService {
                                     continue;
 
                                     res.add(new TransferMatch
-                                            (activity.getActivityName(),position,activity.getTimeSlot().toString(),p.getNetId().toString()));
+                                            (activity.getName(),position,activity.getTimeSlot().toString(),p.getNetId().toString()));
 
 
                         }
@@ -86,8 +86,8 @@ public class MatcherService {
         positions.add("coach");
         positions.add("sculling rower");
         activities.add(new Training
-                ("name",new NetId("owner"),new TimeSlot("22-12-2012 17:33;29-12-2022 15:22"),"C4",positions));
-        activities.add(new Competition("name2",new NetId("owner2"),new TimeSlot("25-12-2012 17:33;29-12-2022 15:22"),"C4",positions,"org","M","pro"));
+                (new NetId("owner"),"name", new TimeSlot("22-12-2012 17:33;29-12-2022 15:22"),"C4",positions));
+        activities.add(new Competition(new NetId("owner2"), "name2", new TimeSlot("25-12-2012 17:33;29-12-2022 15:22"),"C4",positions,"org","M",true));
         return activities;
     }
 
