@@ -25,9 +25,9 @@ public class MatcherService {
     }
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
-        //List<Activity> activities = getActivities();
-        List<Activity> activities = serverUtils.getActivities();
+        List<Activity> activities = getActivities();
         List<Training> trainings = getTrainings();
+        List<Competition> competitions = getCompetitions();
         Participant p = rm.getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
         //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
