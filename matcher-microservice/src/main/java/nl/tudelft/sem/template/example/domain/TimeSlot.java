@@ -1,12 +1,14 @@
 package nl.tudelft.sem.template.example.domain;
 
+import lombok.Getter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+@Getter
 public class TimeSlot {
     transient Date begin;
     transient Date end;
