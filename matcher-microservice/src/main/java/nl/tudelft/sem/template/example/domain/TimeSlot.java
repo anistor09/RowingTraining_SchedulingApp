@@ -16,10 +16,9 @@ import java.util.*;
 public class TimeSlot {
     transient Date begin;
     transient Date end;
-    transient SimpleDateFormat converter;
 
     public TimeSlot(String timeSlot) {
-        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+        SimpleDateFormat converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
         converter.setTimeZone(TimeZone.getTimeZone("UTC"));
         String[] dates = timeSlot.split(";");
         try {
@@ -37,12 +36,15 @@ public class TimeSlot {
         }
         return  ts;
     }
+
     public static TimeSlot getTimeSlot(String timeSlot){
         return new TimeSlot(timeSlot);
     }
 
     @Override
     public String toString() {
+        SimpleDateFormat converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+        converter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return converter.format(begin) +";"+ converter.format(end);
     }
 }
