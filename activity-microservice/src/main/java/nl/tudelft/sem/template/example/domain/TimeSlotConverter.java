@@ -8,7 +8,7 @@ public class TimeSlotConverter implements AttributeConverter<TimeSlot, String> {
 
     @Override
     public String convertToDatabaseColumn(TimeSlot timeSlot) {
-        return timeSlot.timeSlotToString();
+        return timeSlot.toString();
     }
 
     @Override

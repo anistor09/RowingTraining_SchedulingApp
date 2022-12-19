@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import java.util.List;
 
-@Entity
 @NoArgsConstructor
 @Getter
 @Setter

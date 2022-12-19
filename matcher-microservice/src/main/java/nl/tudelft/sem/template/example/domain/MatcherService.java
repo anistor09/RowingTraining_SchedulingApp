@@ -1,5 +1,7 @@
 package nl.tudelft.sem.template.example.domain;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
@@ -25,6 +27,7 @@ public class MatcherService {
         List<TransferMatch> res = new ArrayList<>();
         //List<Activity> activities = getActivities();
         List<Activity> activities = serverUtils.getActivities();
+        List<Training> trainings = getTrainings();
         Participant p = rm.getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
         //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
@@ -89,6 +92,16 @@ public class MatcherService {
                 (new NetId("owner"),"name", new TimeSlot("22-12-2012 17:33;29-12-2022 15:22"),"C4",positions));
         activities.add(new Competition(new NetId("owner2"), "name2", new TimeSlot("25-12-2012 17:33;29-12-2022 15:22"),"C4",positions,"org","M",true));
         return activities;
+    }
+
+    public List<Training> getTrainings() {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(serverUtils.getTrainings(), new TypeReference<List<Training>>() { });
+    }
+
+    public List<Competition> getCompetitions() {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(serverUtils.getCompetitions(), new TypeReference<List<Competition>>() { });
     }
 
 

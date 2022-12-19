@@ -42,7 +42,8 @@ public class TimeSlot {
         return new TimeSlot(timeSlot);
     }
 
-    public String timeSlotToString() {
+    @Override
+    public String toString() {
         return converter.format(begin) +";"+ converter.format(end);
     }
 }

@@ -1,30 +1,34 @@
 package nl.tudelft.sem.template.example.domain;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
+@EqualsAndHashCode
+@Getter
+@Setter
+@NoArgsConstructor
 public class TimeSlot {
     transient Date begin;
     transient Date end;
     transient SimpleDateFormat converter;
-    public TimeSlot(String timeSlot){
-        String begin = timeSlot.split(";")[0];
-        String end =  timeSlot.split(";")[1];
 
+    public TimeSlot(String timeSlot) {
         converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+        converter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String[] dates = timeSlot.split(";");
         try {
-            this.begin= converter.parse(begin);
-            this.end= converter.parse(end);
+            begin = converter.parse(dates[0]);
+            end = converter.parse(dates[1]);
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
-
-
 
     public static List<TimeSlot> getTimeSlots(List<String> timeSlots) {
         List<TimeSlot> ts = new ArrayList<>();
@@ -36,9 +40,6 @@ public class TimeSlot {
     public static TimeSlot getTimeSlot(String timeSlot){
         return new TimeSlot(timeSlot);
     }
-
-
-
 
     @Override
     public String toString() {
