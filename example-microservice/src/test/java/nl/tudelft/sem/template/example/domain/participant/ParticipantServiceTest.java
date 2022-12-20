@@ -35,7 +35,7 @@ class ParticipantServiceTest {
     @Test
     void getParticipantTest() {
         NetId netId= new NetId("user");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","level");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         assertTrue(ps.getParticipant(netId).equals(p));
     }
@@ -43,7 +43,7 @@ class ParticipantServiceTest {
     @Test
     void getParticipantPositions() {
         NetId netId= new NetId("user");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","level");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         List<String> result= new ArrayList<>();
         result.add("coach");
@@ -55,7 +55,7 @@ class ParticipantServiceTest {
     void getParticipantCertificate() {
         NetId netId= new NetId("user");
         Certificate cer= new Certificate("C4");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",cer,"org","level");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",cer,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         assertTrue(ps.getParticipantCertificate(netId).equals(cer.toString()));
     }
@@ -63,7 +63,7 @@ class ParticipantServiceTest {
     @Test
     void getParticipantOrganization() {
         NetId netId= new NetId("user");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","level");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         assertTrue(ps.getParticipantOrganization(netId).equals("org"));
     }
@@ -71,7 +71,7 @@ class ParticipantServiceTest {
     @Test
     void getParticipantGender() {
         NetId netId= new NetId("user");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","level");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         assertTrue(ps.getParticipantGender(netId).equals("M"));
     }
@@ -79,9 +79,9 @@ class ParticipantServiceTest {
     @Test
     void getParticipantLevel() {
         NetId netId= new NetId("user");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","pro");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
-        assertTrue(ps.getParticipantLevel(netId).equals("pro"));
+        assertTrue(ps.getParticipantLevel(netId).equals(true));
     }
 
 
@@ -90,7 +90,7 @@ class ParticipantServiceTest {
         NetId netId= new NetId("user");
         List<String> timeslots= new ArrayList<>();
         timeslots.add("23-11-2022 22:30;24-11-2022 22:30");
-        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org","pro");
+        Participant p= new Participant(netId,new PositionManager("coach,cox"),"M",null,"org",true);
         when(mockParticipantRepository.findByNetId(netId)).thenReturn(Optional.of(p));
         RequestMatch rm= new RequestMatch(p,timeslots);
         assertTrue(ps.getRequestMatch(netId,timeslots).getTimeSlots().equals(rm.getTimeSlots()));

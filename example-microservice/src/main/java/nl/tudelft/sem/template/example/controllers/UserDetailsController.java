@@ -71,10 +71,10 @@ public class UserDetailsController {
 
     }
     @GetMapping("/level")
-    public String getLevel() {
+    public Boolean getLevel() {
         try {
             NetId participantName = new NetId(authManager.getNetId());
-            String level = participantService.getParticipantLevel(participantName);
+            Boolean level = participantService.getParticipantLevel(participantName);
             return level;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
