@@ -29,10 +29,10 @@ public class Participant  {
     private String organization;
 
     @Column(name = "level")
-    private String level;
+    private Boolean level;
 
 
-    public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, String level){
+    public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, Boolean level){
         this.netId= netId;
         this.positionManager= positionManager;
         this.gender=gender;

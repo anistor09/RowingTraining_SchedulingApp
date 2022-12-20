@@ -26,7 +26,7 @@ public class Certificate {
 
 
 
-    boolean isValid() {
+    public boolean isValid() {
         ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
         if(strings.contains(certificateType))
             return true;
@@ -38,7 +38,7 @@ public class Certificate {
     }
 
 
-    boolean isBetterCertificate(Certificate other) {
+    public boolean isBetterCertificate(Certificate other) {
         Map<String,Integer> hm = Map.of("C4",1, "4+", 2,"8+",3);
 
             return hm.get(this.getCertificateType())>=hm.get(other.getCertificateType());
