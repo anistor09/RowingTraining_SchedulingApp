@@ -51,19 +51,17 @@ public class MatcherService {
 //        return res;
 //
 //    }
+    transient Validator handler;
+    transient List<TimeSlot> timeSlots;
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
-        List<Activity> activities = getActivities();
-        Participant participant = rm.getParticipant();
-        List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
-
-        Validator handler = setValidators();
-
-        for(Activity activity : activities){
+        handler = setValidators();
+        timeSlots = TimeSlot.getTimeSlots(rm.getTimeSlots());
+        for(Activity activity : getActivities()){
             for(String position : activity.getPositions()){
-                if(handler.handle(activity,position,participant,timeSlots))
+                if(handler.handle(activity,position,rm.getParticipant(),timeSlots))
                     res.add(new TransferMatch(activity.getActivityName(),position,activity.getTimeSlot().toString(),
-                            participant.getNetId().toString()));
+                            rm.getParticipant().getNetId().toString()));
             }
                     }
         return res;
@@ -81,32 +79,32 @@ public class MatcherService {
         return handler;
     }
 
-    private boolean isValidCompetition(Competition comp, Participant p){
-        if(!p.getGender().equals(comp.getGender()) )
-            return false;
-        if(!p.getOrganization().equals(comp.getOrganization()))
-            return false;
-        if(!p.getLevel().equals(comp.getCompetitive()))
-            return false;
-        return true;
-    }
-
-
-    private boolean verifyCertificate(Certificate certificate, String boat) {
-        Certificate boatCertificate = new Certificate(boat);
-        if(boatCertificate.isValid())
-            return certificate.isBetterCertificate(boatCertificate);
-        return false;
-
-    }
-
-    public boolean verifyTimeslots(TimeSlot ts, TimeSlot activityTs){
-        if((ts.begin.before(activityTs.begin)||ts.begin.equals(activityTs.begin))
-                && (ts.end.after(activityTs.end) ||ts.end.equals(activityTs.end)))
-            return true;
-        return false;
-
-    }
+//    private boolean isValidCompetition(Competition comp, Participant p){
+//        if(!p.getGender().equals(comp.getGender()) )
+//            return false;
+//        if(!p.getOrganization().equals(comp.getOrganization()))
+//            return false;
+//        if(!p.getLevel().equals(comp.getCompetitive()))
+//            return false;
+//        return true;
+//    }
+//
+//
+//    private boolean verifyCertificate(Certificate certificate, String boat) {
+//        Certificate boatCertificate = new Certificate(boat);
+//        if(boatCertificate.isValid())
+//            return certificate.isBetterCertificate(boatCertificate);
+//        return false;
+//
+//    }
+//
+//    public boolean verifyTimeslots(TimeSlot ts, TimeSlot activityTs){
+//        if((ts.begin.before(activityTs.begin)||ts.begin.equals(activityTs.begin))
+//                && (ts.end.after(activityTs.end) ||ts.end.equals(activityTs.end)))
+//            return true;
+//        return false;
+//
+//    }
         public List<Activity> getActivities(){
         List<Activity> activities= new ArrayList<>();
         List<String> positions= new ArrayList<>();

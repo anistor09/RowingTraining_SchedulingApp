@@ -11,12 +11,14 @@ import java.util.Date;
 import java.util.List;
 
 public class TimeSlotValidator extends BaseValidator{
+    transient Date startActivity;
+    transient TimeSlot activityTime;
 
     @Override
     public boolean handle(Activity activity, String position, Participant participant, List<TimeSlot> timeslots) {
 
-        Date startActivity = adjustStartTime(activity.getTimeSlot().getBegin(),activity instanceof Competition);
-        TimeSlot activityTime = activity.getTimeSlot();
+         startActivity = adjustStartTime(activity.getTimeSlot().getBegin(),activity instanceof Competition);
+         activityTime = activity.getTimeSlot();
         for(TimeSlot participantTime : timeslots)
         if((participantTime.getBegin().before(startActivity)
                 ||participantTime.getBegin().equals(startActivity))
