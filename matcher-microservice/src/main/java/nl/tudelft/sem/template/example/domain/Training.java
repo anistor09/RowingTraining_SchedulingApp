@@ -15,13 +15,12 @@ public class Training extends Activity{
     /**
      * Constructor for Training.
      * @param owner
-     * @param name
      * @param timeSlot
      * @param boat
      * @param positions
      */
-    public Training(NetId owner, String name, TimeSlot timeSlot, String boat, List<String> positions) {
-        super(owner, name, timeSlot, boat, positions);
+    public Training(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
+        super(owner, timeSlot, boat, positions);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class ActivityService {
      * @return new training
      */
     public Training createTraining(NetId username, ActivityRequestModel request) {
-        Training training = new Training(username, request.getName(),request.getTimeSlot(), request.getBoat(), request.getPositions());
+        Training training = new Training(username,request.getTimeSlot(), request.getBoat(), request.getPositions());
         activityRepository.save(training);
         return training;
     }
@@ -47,7 +47,7 @@ public class ActivityService {
      * @return new competition
      */
     public Competition createCompetition(NetId username, ActivityRequestModel request) {
-        Competition competition = new Competition(username, request.getName(), request.getTimeSlot(), request.getBoat(), request.getPositions(), request.getOrganization(), request.getGender(), request.getCompetitive());
+        Competition competition = new Competition(username, request.getTimeSlot(), request.getBoat(), request.getPositions(), request.getOrganization(), request.getGender(), request.getCompetitive());
         activityRepository.save(competition);
         return competition;
     }
@@ -62,9 +62,6 @@ public class ActivityService {
         if (activity.isPresent()) {
             Activity change = activity.get();
             if (change.getOwner().getNetIdValue().equals(username.getUsernameValue())) {
-                if (!isNullOrEmpty(request.getName())) {
-                    change.setName(request.getName());
-                }
                 if (!isNullOrEmpty(request.getTimeSlot())) {
                     change.setTimeSlot(request.getTimeSlot());
                 }

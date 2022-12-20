@@ -26,11 +26,6 @@ public abstract class Activity {
     @Column(name = "id", nullable = false, updatable=false)
     private Long id;
 
-    /**
-     * The name of the activity.
-     */
-    @Column(name = "name", nullable = false)
-    private String name;
 
     /**
      * The owner of the activity.
@@ -62,13 +57,11 @@ public abstract class Activity {
     /**
      * The constructor for the activity.
      * @param owner
-     * @param name
      * @param timeSlot
      * @param boat
      * @param positions
      */
-    public Activity(NetId owner, String name, TimeSlot timeSlot, String boat, List<String> positions) {
-        this.name = name;
+    public Activity(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         this.owner = owner;
         this.timeSlot = timeSlot;
         this.boat = boat;
