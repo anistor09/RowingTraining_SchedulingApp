@@ -103,11 +103,12 @@ public class ParticipantService {
     }
 
     public TransferMatch getTransferMatch(RequetsTransferMatchModel request){
-        String activityName = request.getActivityName();
+        Long activityName = request.getActivityId();
         String positions = request.getPosition();
         String timeSlot = request.getTimeSlot();
-        String netId= request.getNetId();
-        TransferMatch transferMatch= new TransferMatch(activityName,positions,timeSlot,netId);
+        String netId = request.getNetId();
+        String owner = request.getOwner();
+        TransferMatch transferMatch= new TransferMatch(activityName,positions,timeSlot,netId,owner);
         return transferMatch;
 
     }

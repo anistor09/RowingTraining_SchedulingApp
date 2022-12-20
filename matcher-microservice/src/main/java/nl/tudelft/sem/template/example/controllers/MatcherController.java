@@ -56,20 +56,20 @@ public class MatcherController {
     }
     @PostMapping("/acceptedMatch")
     public void acceptedMatch(@RequestBody TransferMatch tm){
-        Match m = new Match(tm.getNetId(),tm.getActivityName(),tm.getPosition());
+        Match m = new Match(tm.getNetId(),tm.getActivityId(),tm.getPosition());
         matcherService.saveMatch(m);
-
+        serverUtils.sendPendingUser(tm);
     }
     @GetMapping("/getAllPendingMatches")
     public List<Match> acceptedMatch(){
         return matcherService.getAllMatches();
     }
 
-    @PostMapping("/sendPendingUser")
-    public OwnerNotification sendPendingUser(@RequestBody TransferMatch tm){
-        //OwnerNotification on= matcherService.getOwnerNotification(tm);
-        return serverUtils.sendPendingUser(tm);
-    }
+//    @PostMapping("/sendPendingUser")
+//    public TransferMatch sendPendingUser(@RequestBody TransferMatch tm){
+//        //OwnerNotification on= matcherService.getOwnerNotification(tm);
+//        return serverUtils.sendPendingUser(tm);
+//    }
 
     @PostMapping("/sendAcceptedUsers")
     public void sendAcceptedUsers(@RequestBody AcceptedUsersModel request){
@@ -77,4 +77,3 @@ public class MatcherController {
         matcherService.removeMatches(acceptedMatches);
     }
 }
-    

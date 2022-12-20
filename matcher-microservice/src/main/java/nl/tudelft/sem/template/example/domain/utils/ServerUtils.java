@@ -68,15 +68,15 @@ public class ServerUtils {
 
     transient String MATCHER_SERVER = new String("http://localhost:8085/");
 
-    public OwnerNotification sendPendingUser(TransferMatch tm){
+    public TransferMatch sendPendingUser(TransferMatch tm){
         try{
-            OwnerNotification ownerNotification= new ResteasyClientBuilder().build()
+            TransferMatch transferMatch= new ResteasyClientBuilder().build()
                     .target(MATCHER_SERVER).path("getPendingUser")
                     .request(APPLICATION_JSON)
                     .header(HttpHeaders.AUTHORIZATION, credentials)
                     .accept(APPLICATION_JSON)
-                    .post(Entity.entity(tm,APPLICATION_JSON), OwnerNotification.class);
-            return ownerNotification;
+                    .post(Entity.entity(tm,APPLICATION_JSON), TransferMatch.class);
+            return transferMatch;
         }
         catch(Exception e){
             e.printStackTrace();
