@@ -8,12 +8,12 @@ import nl.tudelft.sem.template.example.domain.NetId;
 @Setter
 @Getter
 public class OwnerNotification {
-    NetId netId;
+    String netId;
     String position;
     String activityName;
-    NetId owner;
+    String owner;
 
-    public OwnerNotification(NetId netId, String position, String activityName, NetId owner) {
+    public OwnerNotification(String netId, String position, String activityName, String owner) {
         this.netId = netId;
         this.position = position;
         this.activityName = activityName;

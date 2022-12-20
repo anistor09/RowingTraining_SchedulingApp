@@ -1,5 +1,6 @@
 package nl.tudelft.sem.template.example.domain;
 
+import nl.tudelft.sem.template.example.domain.transferObject.OwnerNotification;
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.springframework.stereotype.Service;
@@ -99,4 +100,58 @@ public class MatcherService {
         return matcherRepository.findAll();
     }
 
+    public List<OwnerNotification> getAllOwnerNotifications() {
+        List<Activity> activities;
+        activities= getActivities();
+        List<Match> matches= getAllMatches();
+        List<OwnerNotification> ownerNotificationList= new ArrayList<>();
+
+        for(Match match: matches){
+            if(findOwner(activities,match.getActivityName())!=null){
+                String owner = findOwner(activities,match.getActivityName());
+                OwnerNotification notification= new OwnerNotification(match.getNetId(),match.getPosition(),match.getActivityName(),owner);
+                ownerNotificationList.add(notification);
+            }
+        }
+
+        return ownerNotificationList;
+    }
+
+    public String findOwner(List<Activity> activities, String matchActivity){
+        for (Activity activity : activities){
+            if(activity.getActivityName().equals(matchActivity))
+                return activity.getOwner().toString();
+        }
+        return null;
+    }
+
+    public void removeMatches(List<TransferMatch> acceptedMatches) {
+        List<Match> matches= getAllMatches();
+        for(TransferMatch transferMatch: acceptedMatches){
+            List<Match> toBeDeleted= findMatch(transferMatch,matches);
+            for(Match m: toBeDeleted)
+                deleteMatch(m);
+        }
+    }
+
+    public List<Match> findMatch(TransferMatch tr,List<Match> matches){
+        List<Match> toDeletMatches= new ArrayList<>();
+        for(Match m : matches){
+            if(m.getNetId().equals(tr.getNetId()))
+                if(!toDeletMatches.contains(m))
+                    toDeletMatches.add(m);
+        }
+        return toDeletMatches;
+    }
+
+    public void deleteMatch(Match m){
+        matcherRepository.delete(m);
+    }
+
+    public OwnerNotification getOwnerNotification(TransferMatch tm) {
+        List<Activity> activities = getActivities();
+        String owner = findOwner(activities,tm.getActivityName());
+        OwnerNotification ownerNotification= new OwnerNotification(tm.getNetId(),tm.getPosition(),tm.getActivityName(),owner);
+        return ownerNotification;
+    }
 }

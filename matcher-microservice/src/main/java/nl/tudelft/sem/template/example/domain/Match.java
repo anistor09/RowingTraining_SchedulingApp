@@ -27,7 +27,7 @@ public class Match {
 
     @Column(name="activity", nullable = false)
     private String activityName;
-
+    ///change to activityId
     @Column(name="position", nullable = false)
     private String position;
 
