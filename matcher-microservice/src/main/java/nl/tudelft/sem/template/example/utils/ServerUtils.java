@@ -19,14 +19,15 @@ public class ServerUtils {
 
     transient String MATCHER_SERVER = new String("http://localhost:8085/");
     
-    public OwnerNotification sendPendingUser(OwnerNotification on){
+    public OwnerNotification sendPendingUser(TransferMatch tm){
         try{
             OwnerNotification ownerNotification= new ResteasyClientBuilder().build()
-                    .target(MATCHER_SERVER).path("sendPendingUser")
+                    .target(MATCHER_SERVER).path("getPendingUser")
                     .request(APPLICATION_JSON)
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
-                    .post(Entity.entity(on,APPLICATION_JSON), OwnerNotification.class);
+                        .post(Entity.entity(tm,APPLICATION_JSON), OwnerNotification.class);
+            return ownerNotification;
         }
         catch(Exception e){
             e.printStackTrace();

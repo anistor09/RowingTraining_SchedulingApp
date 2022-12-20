@@ -18,14 +18,14 @@ import java.util.regex.Matcher;
 public class MatcherService {
     private final transient MatcherRepository matcherRepository;
 
-
+    transient List<Activity> activities;
 
     public MatcherService(MatcherRepository matcherRepository) {
         this.matcherRepository = matcherRepository;
     }
     public List<TransferMatch> computeMatch(RequestMatch rm){
         List<TransferMatch> res = new ArrayList<>();
-        List<Activity> activities = getActivities();
+        activities = getActivities();
         Participant p = rm.getParticipant();
         List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
         //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
@@ -100,8 +100,8 @@ public class MatcherService {
         return matcherRepository.findAll();
     }
 
+
     public List<OwnerNotification> getAllOwnerNotifications() {
-        List<Activity> activities;
         activities= getActivities();
         List<Match> matches= getAllMatches();
         List<OwnerNotification> ownerNotificationList= new ArrayList<>();
@@ -125,8 +125,10 @@ public class MatcherService {
         return null;
     }
 
+    transient List<Match> matches;
+
     public void removeMatches(List<TransferMatch> acceptedMatches) {
-        List<Match> matches= getAllMatches();
+        matches= getAllMatches();
         for(TransferMatch transferMatch: acceptedMatches){
             List<Match> toBeDeleted= findMatch(transferMatch,matches);
             for(Match m: toBeDeleted)
@@ -149,7 +151,7 @@ public class MatcherService {
     }
 
     public OwnerNotification getOwnerNotification(TransferMatch tm) {
-        List<Activity> activities = getActivities();
+        activities = getActivities();
         String owner = findOwner(activities,tm.getActivityName());
         OwnerNotification ownerNotification= new OwnerNotification(tm.getNetId(),tm.getPosition(),tm.getActivityName(),owner);
         return ownerNotification;

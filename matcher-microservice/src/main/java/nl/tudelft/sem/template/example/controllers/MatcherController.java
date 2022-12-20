@@ -75,8 +75,8 @@ public class MatcherController {
 
     @PostMapping("/sendPendingUser")
     public OwnerNotification sendPendingUser(@RequestBody TransferMatch tm){
-        OwnerNotification on= matcherService.getOwnerNotification(tm);
-        return serverUtils.sendPendingUser(on);
+        //OwnerNotification on= matcherService.getOwnerNotification(tm);
+        return serverUtils.sendPendingUser(tm);
     }
 
     @PostMapping("/sendAcceptedUsers")
