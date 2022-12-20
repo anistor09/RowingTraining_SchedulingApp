@@ -7,7 +7,8 @@ import nl.tudelft.sem.template.example.domain.TimeSlot;
 import java.util.List;
 
 public interface Validator {
-    void  setNext(Validator handler);
+    void setNext(Validator handler);
+
     boolean handle(Activity activity, String position, Participant participant, List<TimeSlot> timeslots);
 
 }

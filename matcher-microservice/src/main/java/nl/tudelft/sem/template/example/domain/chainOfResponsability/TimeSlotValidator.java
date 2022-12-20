@@ -10,34 +10,35 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class TimeSlotValidator extends BaseValidator{
+public class TimeSlotValidator extends BaseValidator {
     transient Date startActivity;
     transient TimeSlot activityTime;
 
     @Override
     public boolean handle(Activity activity, String position, Participant participant, List<TimeSlot> timeslots) {
 
-         startActivity = adjustStartTime(activity.getTimeSlot().getBegin(),activity instanceof Competition);
-         activityTime = activity.getTimeSlot();
-        for(TimeSlot participantTime : timeslots)
-        if((participantTime.getBegin().before(startActivity)
-                ||participantTime.getBegin().equals(startActivity))
-                && (participantTime.getEnd().after(activityTime.getEnd())
-                ||participantTime.getEnd().equals(activityTime.getEnd())))
-            return super.checkNext(activity,position,participant,timeslots);
+        startActivity = adjustStartTime(activity.getTimeSlot().getBegin(), activity instanceof Competition);
+        activityTime = activity.getTimeSlot();
+        for (TimeSlot participantTime : timeslots)
+            if ((participantTime.getBegin().before(startActivity)
+                    || participantTime.getBegin().equals(startActivity))
+                    && (participantTime.getEnd().after(activityTime.getEnd())
+                    || participantTime.getEnd().equals(activityTime.getEnd())))
+                return super.checkNext(activity, position, participant, timeslots);
 
         return false;
 
 
     }
-    public Date adjustStartTime(Date startTime, boolean isCompetition){
+
+    public Date adjustStartTime(Date startTime, boolean isCompetition) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(startTime);
 
-        if(isCompetition)
-        cal.add(Calendar.HOUR_OF_DAY, -24);
+        if (isCompetition)
+            cal.add(Calendar.HOUR_OF_DAY, -24);
         else
-        cal.add(Calendar.MINUTE,-30);
+            cal.add(Calendar.MINUTE, -30);
         return cal.getTime();
     }
 }

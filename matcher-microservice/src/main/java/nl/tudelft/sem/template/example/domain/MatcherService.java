@@ -16,11 +16,11 @@ public class MatcherService {
     private final transient MatcherRepository matcherRepository;
 
 
-
     public MatcherService(MatcherRepository matcherRepository) {
         this.matcherRepository = matcherRepository;
     }
-//    public List<TransferMatch> computeMatch(RequestMatch rm){
+
+    //    public List<TransferMatch> computeMatch(RequestMatch rm){
 //        List<TransferMatch> res = new ArrayList<>();
 //        List<Activity> activities = getActivities();
 //        Participant p = rm.getParticipant();
@@ -53,21 +53,23 @@ public class MatcherService {
 //    }
     transient Validator handler;
     transient List<TimeSlot> timeSlots;
-    public List<TransferMatch> computeMatch(RequestMatch rm){
+
+    public List<TransferMatch> computeMatch(RequestMatch rm) {
         List<TransferMatch> res = new ArrayList<>();
         handler = setValidators();
         timeSlots = TimeSlot.getTimeSlots(rm.getTimeSlots());
-        for(Activity activity : getActivities()){
-            for(String position : activity.getPositions()){
-                if(handler.handle(activity,position,rm.getParticipant(),timeSlots))
-                    res.add(new TransferMatch(activity.getActivityName(),position,activity.getTimeSlot().toString(),
+        for (Activity activity : getActivities()) {
+            for (String position : activity.getPositions()) {
+                if (handler.handle(activity, position, rm.getParticipant(), timeSlots))
+                    res.add(new TransferMatch(activity.getActivityName(), position, activity.getTimeSlot().toString(),
                             rm.getParticipant().getNetId().toString()));
             }
-                    }
+        }
         return res;
 
     }
-    private Validator setValidators(){
+
+    private Validator setValidators() {
         Validator handler = new TimeSlotValidator();
         Validator positionValidator = new PositionValidator();
         Validator competitionValidator = new CompetitionValidator();
@@ -79,7 +81,7 @@ public class MatcherService {
         return handler;
     }
 
-//    private boolean isValidCompetition(Competition comp, Participant p){
+    //    private boolean isValidCompetition(Competition comp, Participant p){
 //        if(!p.getGender().equals(comp.getGender()) )
 //            return false;
 //        if(!p.getOrganization().equals(comp.getOrganization()))
@@ -105,20 +107,20 @@ public class MatcherService {
 //        return false;
 //
 //    }
-        public List<Activity> getActivities(){
-        List<Activity> activities= new ArrayList<>();
-        List<String> positions= new ArrayList<>();
+    public List<Activity> getActivities() {
+        List<Activity> activities = new ArrayList<>();
+        List<String> positions = new ArrayList<>();
         positions.add("cox");
         positions.add("coach");
         positions.add("sculling rower");
 //        activities.add(new Training
 //                ("name",new NetId("owner"),new TimeSlot("22-12-2012 17:33;29-12-2022 15:22"),"C4",positions));
 //        activities.add(new Competition("name2",new NetId("owner2"),new TimeSlot("25-12-2012 17:33;29-12-2022 15:22"),"C4",positions,"org","M","pro"));
-        activities.add(new Competition("name3",new NetId("owner3"),new TimeSlot("26-12-2012 17:00;29-12-2022 16:00"),"C4",positions,"org","M","pro"));
+        activities.add(new Competition("name3", new NetId("owner3"), new TimeSlot("26-12-2012 17:00;29-12-2022 16:00"), "C4", positions, "org", "M", "pro"));
         activities.add(new Training
-                    ("name",new NetId("owner"),new TimeSlot("25-12-2012 18:05;29-12-2022 15:59"),"C4",positions));
-            activities.add(new Training
-                    ("name2",new NetId("owner2"),new TimeSlot("25-12-2012 18:35;29-12-2022 15:59"),"C4",positions));
+                ("name", new NetId("owner"), new TimeSlot("25-12-2012 18:05;29-12-2022 15:59"), "C4", positions));
+        activities.add(new Training
+                ("name2", new NetId("owner2"), new TimeSlot("25-12-2012 18:35;29-12-2022 15:59"), "C4", positions));
         return activities;
     }
 
@@ -126,7 +128,8 @@ public class MatcherService {
     public void saveMatch(Match m) {
         matcherRepository.save(m);
     }
-    public List<Match> getAllMatches(){
+
+    public List<Match> getAllMatches() {
         return matcherRepository.findAll();
     }
 

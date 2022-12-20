@@ -8,13 +8,15 @@ import java.util.List;
 
 public abstract class BaseValidator implements Validator {
     private transient Validator next;
-    public void setNext(Validator h){
+
+    public void setNext(Validator h) {
         this.next = h;
     }
-    protected boolean checkNext(Activity activity, String position, Participant participant, List<TimeSlot> timeslots){
-        if(next == null){
+
+    protected boolean checkNext(Activity activity, String position, Participant participant, List<TimeSlot> timeslots) {
+        if (next == null) {
             return true;
         }
-        return next.handle(activity,position,participant,timeslots);
+        return next.handle(activity, position, participant, timeslots);
     }
 }
