@@ -26,14 +26,14 @@ public class Match {
     private String netId;
 
     @Column(name="activity", nullable = false)
-    private String activityName;
+    private Long activityId;
 
     @Column(name="position", nullable = false)
     private String position;
 
-    public Match(String netId, String activityName,String position) {
+    public Match(String netId, Long activityId,String position) {
         this.netId = netId;
-        this.activityName = activityName;
+        this.activityId = activityId;
         this.position=position;
     }
 }

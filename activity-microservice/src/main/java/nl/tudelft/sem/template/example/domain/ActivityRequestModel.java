@@ -16,6 +16,8 @@ public class ActivityRequestModel {
     public TimeSlot getTimeSlot() {
         return timeSlot == null ? null : TimeSlot.getTimeSlot(timeSlot);
     }
+
+    public String timeSlotString() { return this.timeSlot; }
     /**
      *
      * @return competitive
