@@ -138,4 +138,29 @@ public class MatcherService {
         return matcherRepository.findAll();
     }
 
+    transient List<Match> matches;
+
+    public void removeMatches(List<TransferMatch> acceptedMatches) {
+        matches= getAllMatches();
+        for(TransferMatch transferMatch: acceptedMatches){
+            List<Match> toBeDeleted= findMatch(transferMatch,matches);
+            for(Match m: toBeDeleted)
+                deleteMatch(m);
+        }
+    }
+
+    public List<Match> findMatch(TransferMatch tr,List<Match> matches){
+        List<Match> toDeletMatches= new ArrayList<>();
+        for(Match m : matches){
+            if(m.getNetId().equals(tr.getNetId()))
+                if(!toDeletMatches.contains(m))
+                    toDeletMatches.add(m);
+        }
+        return toDeletMatches;
+    }
+
+    public void deleteMatch(Match m){
+        matcherRepository.delete(m);
+    }
+
 }
