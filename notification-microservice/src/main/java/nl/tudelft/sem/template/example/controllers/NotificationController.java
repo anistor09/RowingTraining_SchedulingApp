@@ -44,9 +44,8 @@ public class NotificationController {
     @PostMapping("/createParticipantNotification")
     public ResponseEntity<List<Notification>> createParticipantNotification(@RequestBody List<TransferMatch> requests){
         List<Notification> result = new ArrayList<>();
-        Parser parser = participantNotificationParserFactory.createParser();
         for (TransferMatch request : requests){
-            Notification temp = parser.parseOtherWay(request);
+            Notification temp = participantNotificationParserFactory.createParser().parseOtherWay(request);
             notificationService.addNotification(temp);
             result.add(temp);
         }
@@ -55,8 +54,7 @@ public class NotificationController {
 
     @PostMapping("/createOwnerNotification")
     public ResponseEntity<Notification> createOwnerNotification (@RequestBody TransferMatch request){
-        Parser parser = ownerNotificationParserFactory.createParser();
-        Notification temp = parser.parseOtherWay(request);
+        Notification temp = ownerNotificationParserFactory.createParser().parseOtherWay(request);
         notificationService.addNotification(temp);
         return ResponseEntity.ok(temp);
     }
@@ -65,10 +63,9 @@ public class NotificationController {
     public ResponseEntity<List<TransferMatch>> getOwnerNotifications(){
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
         List<TransferMatch> result = new ArrayList<>();
-        Parser parser = ownerNotificationParserFactory.createParser();
         for (Notification n : notifications){
             if (n.isOwnerNotification())
-                result.add(parser.parse(n));
+                result.add(ownerNotificationParserFactory.createParser().parse(n));
         }
         return ResponseEntity.ok(result);
     }
@@ -76,10 +73,9 @@ public class NotificationController {
     public ResponseEntity<List<TransferMatch>> getParticipantNotifications(){
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
         List<TransferMatch> result = new ArrayList<>();
-        Parser parser = participantNotificationParserFactory.createParser();
         for (Notification n : notifications){
             if (!n.isOwnerNotification())
-                result.add(parser.parse(n));
+                result.add(participantNotificationParserFactory.createParser().parse(n));
         }
         return ResponseEntity.ok(result);
     }
