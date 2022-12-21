@@ -6,15 +6,14 @@ import nl.tudelft.sem.template.example.domain.ActivityId;
 import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
 import nl.tudelft.sem.template.example.domain.NotificationService;
-import nl.tudelft.sem.template.example.domain.models.NotificationRequestModel;
+import nl.tudelft.sem.template.example.domain.factories.OwnerNotificationParserFactory;
+import nl.tudelft.sem.template.example.domain.factories.ParserFactory;
+import nl.tudelft.sem.template.example.domain.factories.Parser;
+import nl.tudelft.sem.template.example.domain.factories.ParticipantNotificationParserFactory;
 import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +23,16 @@ public class NotificationController {
     private final transient NotificationService notificationService;
     private final transient AuthManager authManager;
 
+    private final transient ParserFactory ownerNotificationParserFactory;
+
+    private final transient ParserFactory participantNotificationParserFactory;
+
     @Autowired
     public NotificationController(NotificationService notificationService, AuthManager authManager){
         this.notificationService = notificationService;
         this.authManager = authManager;
+        this.ownerNotificationParserFactory = new OwnerNotificationParserFactory();
+        this.participantNotificationParserFactory = new ParticipantNotificationParserFactory();
     }
 
     @GetMapping("/findAll")
@@ -39,13 +44,9 @@ public class NotificationController {
     @PostMapping("/createParticipantNotification")
     public ResponseEntity<List<Notification>> createParticipantNotification(@RequestBody List<TransferMatch> requests){
         List<Notification> result = new ArrayList<>();
+        Parser parser = participantNotificationParserFactory.createParser();
         for (TransferMatch request : requests){
-            ActivityId activityId = new ActivityId(request.getActivityId().toString());
-            NetId netId = new NetId(request.getNetId());
-            NetId ownerId = new NetId(request.getOwner());
-            String message = new String("You have been accepted by " + ownerId.toString()
-                    + " to participate as a " + request.getPosition() + " on " + request.getTimeSlot());
-            Notification temp = new Notification(activityId, netId, ownerId, message, false);
+            Notification temp = parser.parseOtherWay(request);
             notificationService.addNotification(temp);
             result.add(temp);
         }
@@ -54,34 +55,31 @@ public class NotificationController {
 
     @PostMapping("/createOwnerNotification")
     public ResponseEntity<Notification> createOwnerNotification (@RequestBody TransferMatch request){
-        ActivityId activityId = new ActivityId(request.getActivityId().toString());
-        NetId netId = new NetId(request.getNetId());
-        NetId ownerId = new NetId(request.getOwner());
-        String message = new String("The " + request.getPosition() + " " + netId.toString()
-                + " would like to participate in your activity labeled " + request.getActivityId() + " at" +
-                request.getTimeSlot());
-        Notification temp = new Notification(activityId, netId, ownerId, message, true);
+        Parser parser = ownerNotificationParserFactory.createParser();
+        Notification temp = parser.parseOtherWay(request);
         notificationService.addNotification(temp);
         return ResponseEntity.ok(temp);
     }
 
     @GetMapping("/getOwnerNotifications")
-    public ResponseEntity<List<Notification>> getOwnerNotifications(){
+    public ResponseEntity<List<TransferMatch>> getOwnerNotifications(){
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
-        List<Notification> result = new ArrayList<>();
+        List<TransferMatch> result = new ArrayList<>();
+        Parser parser = ownerNotificationParserFactory.createParser();
         for (Notification n : notifications){
             if (n.isOwnerNotification())
-                result.add(n);
+                result.add(parser.parse(n));
         }
         return ResponseEntity.ok(result);
     }
     @GetMapping("/getParticipantNotifications")
-    public ResponseEntity<List<Notification>> getParticipantNotifications(){
+    public ResponseEntity<List<TransferMatch>> getParticipantNotifications(){
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
-        List<Notification> result = new ArrayList<>();
+        List<TransferMatch> result = new ArrayList<>();
+        Parser parser = participantNotificationParserFactory.createParser();
         for (Notification n : notifications){
             if (!n.isOwnerNotification())
-                result.add(n);
+                result.add(parser.parse(n));
         }
         return ResponseEntity.ok(result);
     }
