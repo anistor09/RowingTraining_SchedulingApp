@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class NetId {
     private final transient String netIdValue;
 
-    private final transient Pattern pattern = Pattern.compile("[a-zA-Z0-9_]");
+    private final transient Pattern pattern = Pattern.compile("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$");
 
     public NetId(String netId) {
         // validate NetID
