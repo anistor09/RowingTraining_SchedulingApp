@@ -38,7 +38,8 @@ public class NotificationController {
         NetId netId = new NetId(request.getNetId());
         String message = request.getMessage();
         boolean ownerNotitication = request.isOwnerNotification();
-        Notification n = notificationService.createNotification(activityId, netId, message, ownerNotitication);
+        NetId ownerId = new NetId(request.getOwnerId());
+        Notification n = notificationService.createNotification(activityId, netId, ownerId, message, ownerNotitication);
         return ResponseEntity.ok(n);
     }
 

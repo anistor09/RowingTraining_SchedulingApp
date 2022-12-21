@@ -25,6 +25,9 @@ public class Notification {
     @Column(name="netId")
     @Convert(converter = NetIdConverter.class)
     private NetId netId;
+    @Column
+    @Convert(converter = NetIdConverter.class)
+    private NetId ownerId;
     @Column(name="message")
     private String message;
 
@@ -45,9 +48,10 @@ public class Notification {
     public int hashCode() {
         return Objects.hash(activityId);
     }
-    public Notification(ActivityId activityId, NetId netId, String message, boolean ownerNotification){
+    public Notification(ActivityId activityId, NetId netId, NetId ownerId, String message, boolean ownerNotification){
         this.activityId = activityId;
         this.netId = netId;
+        this.ownerId = ownerId;
         this.message = message;
         this.ownerNotification = ownerNotification;
     }

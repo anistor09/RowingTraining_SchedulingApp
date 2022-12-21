@@ -6,6 +6,7 @@ import lombok.Data;
 public class NotificationRequestModel {
     private String activityId;
     private String netId;
+    private String ownerId;
     private String message;
 
     private boolean ownerNotification;
@@ -17,10 +18,12 @@ public class NotificationRequestModel {
     public String getNetId(){
         return this.netId;
     }
+    public String getOwnerId(){return this.ownerId;}
 
     public String getMessage(){
         return this.message;
     }
 
     public boolean isOwnerNotification(){return this.ownerNotification;}
+
 }

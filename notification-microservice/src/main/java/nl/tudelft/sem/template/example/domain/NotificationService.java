@@ -16,8 +16,8 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public Notification createNotification(ActivityId activityId, NetId netId, String message, boolean ownerNotification){
-        Notification n = new Notification(activityId, netId, message, ownerNotification);
+    public Notification createNotification(ActivityId activityId, NetId netId, NetId ownerId, String message, boolean ownerNotification){
+        Notification n = new Notification(activityId, netId, ownerId, message, ownerNotification);
         return notificationRepository.save(n);
     }
 
