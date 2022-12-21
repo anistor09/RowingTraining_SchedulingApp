@@ -39,7 +39,7 @@ public class ParticipantService {
      * @throws Exception
      */
     public Participant addParticipant(NetId netId, PositionManager positionManager, String gender, Certificate certificate,
-                                      String organization, String level){
+                                      String organization, Boolean level){
        // if(checkUsernameIsUnique(username)){
             Participant participant= new Participant(netId,positionManager,gender,certificate,organization,level);
 
@@ -88,9 +88,9 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
-    public String getParticipantLevel(NetId netId) {
+    public Boolean getParticipantLevel(NetId netId) {
         if(getParticipant(netId).getLevel()!=null){
-            String level= getParticipant(netId).getLevel();
+            Boolean level= getParticipant(netId).getLevel();
             return level;
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -103,11 +103,12 @@ public class ParticipantService {
     }
 
     public TransferMatch getTransferMatch(RequetsTransferMatchModel request){
-        String activityName = request.getActivityName();
+        Long activityId = request.getActivityId();
         String positions = request.getPosition();
         String timeSlot = request.getTimeSlot();
-        String netId= request.getNetId();
-        TransferMatch transferMatch= new TransferMatch(activityName,positions,timeSlot,netId);
+        String netId = request.getNetId();
+        String owner = request.getOwner();
+        TransferMatch transferMatch= new TransferMatch(activityId,positions,timeSlot,netId,owner);
         return transferMatch;
 
     }

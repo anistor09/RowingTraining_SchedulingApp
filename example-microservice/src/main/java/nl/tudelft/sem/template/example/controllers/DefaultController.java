@@ -75,7 +75,7 @@ public class DefaultController {
             String gender= request.getGender();
             //here we need to throw an exception if the entered certificate is wrong
             String organization= request.getOrganization();
-            String level= request.getLevel();
+            Boolean level= request.getLevel();
             participantService.addParticipant(netId,positionManager,gender,certificate,organization,level);
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
