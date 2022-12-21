@@ -33,7 +33,4 @@ public class NotificationService {
         return notificationRepository.getAllByNetId(netId);
     }
 
-    public List<Notification> getActivityNotifications(ActivityId activityId){
-        return notificationRepository.getAllByActivityId(activityId);
-    }
 }

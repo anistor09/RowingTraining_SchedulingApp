@@ -7,12 +7,15 @@ import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
 import nl.tudelft.sem.template.example.domain.NotificationService;
 import nl.tudelft.sem.template.example.domain.models.NotificationRequestModel;
+import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,24 +35,54 @@ public class NotificationController {
         return notificationService.getAllNotifications();
     }
 
-    @PostMapping("/addNotif")
-    public ResponseEntity<Notification> addNotif(@RequestBody NotificationRequestModel request){
-        ActivityId activityId = new ActivityId(request.getActivityId());
+
+    @PostMapping("/createParticipantNotification")
+    public ResponseEntity<List<Notification>> createParticipantNotification(@RequestBody List<TransferMatch> requests){
+        List<Notification> result = new ArrayList<>();
+        for (TransferMatch request : requests){
+            ActivityId activityId = new ActivityId(request.getActivityId().toString());
+            NetId netId = new NetId(request.getNetId());
+            NetId ownerId = new NetId(request.getOwner());
+            String message = new String("You have been accepted by " + ownerId.toString()
+                    + " to participate as a " + request.getPosition() + " on " + request.getTimeSlot());
+            Notification temp = new Notification(activityId, netId, ownerId, message, false);
+            notificationService.addNotification(temp);
+            result.add(temp);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/createOwnerNotification")
+    public ResponseEntity<Notification> createOwnerNotification (@RequestBody TransferMatch request){
+        ActivityId activityId = new ActivityId(request.getActivityId().toString());
         NetId netId = new NetId(request.getNetId());
-        String message = request.getMessage();
-        boolean ownerNotitication = request.isOwnerNotification();
-        NetId ownerId = new NetId(request.getOwnerId());
-        Notification n = notificationService.createNotification(activityId, netId, ownerId, message, ownerNotitication);
-        return ResponseEntity.ok(n);
+        NetId ownerId = new NetId(request.getOwner());
+        String message = new String("The " + request.getPosition() + " " + netId.toString()
+                + " would like to participate in your activity labeled " + request.getActivityId() + " at" +
+                request.getTimeSlot());
+        Notification temp = new Notification(activityId, netId, ownerId, message, true);
+        notificationService.addNotification(temp);
+        return ResponseEntity.ok(temp);
     }
 
-    @PostMapping("/addNotification")
-    public ResponseEntity<Notification> addNotification(@RequestBody Notification request){
-        return ResponseEntity.ok(notificationService.addNotification(request));
+    @GetMapping("/getOwnerNotifications")
+    public ResponseEntity<List<Notification>> getOwnerNotifications(){
+        List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
+        List<Notification> result = new ArrayList<>();
+        for (Notification n : notifications){
+            if (n.isOwnerNotification())
+                result.add(n);
+        }
+        return ResponseEntity.ok(result);
     }
-
-    @GetMapping("/getUserNotifications")
-    public ResponseEntity<List<Notification>> getUserNotifications(){
-        return ResponseEntity.ok(notificationService.getUserNotifications(new NetId(authManager.getNetId())));
+    @GetMapping("/getParticipantNotifications")
+    public ResponseEntity<List<Notification>> getParticipantNotifications(){
+        List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
+        List<Notification> result = new ArrayList<>();
+        for (Notification n : notifications){
+            if (!n.isOwnerNotification())
+                result.add(n);
+        }
+        return ResponseEntity.ok(result);
     }
 }
