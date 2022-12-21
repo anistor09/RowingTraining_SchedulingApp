@@ -35,7 +35,7 @@ public class ActivityService {
      * @return new training
      */
     public Training createTraining(NetId username, ActivityRequestModel request) {
-        Training training = new Training(username,request.getTimeSlot(), request.getBoat(), request.getPositions());
+        Training training = new Training(username, request.getTimeSlot(), request.getBoat(), request.getPositions());
         activityRepository.save(training);
         return training;
     }
