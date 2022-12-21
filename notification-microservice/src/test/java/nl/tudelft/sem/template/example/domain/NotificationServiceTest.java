@@ -26,7 +26,7 @@ public class NotificationServiceTest {
         verify(notificationRepo).save(captor.capture());
         Notification notification = captor.getValue();
         assertEquals("1", notification.getActivityId().toString());
-        assertEquals("sem", notification.getNetId());
+        assertEquals("sem", notification.getNetId().toString());
         assertEquals("accepted", notification.getMessage());
     }
 }
