@@ -8,6 +8,8 @@ public class NotificationRequestModel {
     private String netId;
     private String message;
 
+    private boolean ownerNotification;
+
     public String getActivityId(){
         return this.activityId;
     }
@@ -19,4 +21,6 @@ public class NotificationRequestModel {
     public String getMessage(){
         return this.message;
     }
+
+    public boolean isOwnerNotification(){return this.ownerNotification;}
 }

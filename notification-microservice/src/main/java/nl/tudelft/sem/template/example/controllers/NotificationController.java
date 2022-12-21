@@ -1,6 +1,7 @@
 package nl.tudelft.sem.template.example.controllers;
 
 
+import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.domain.ActivityId;
 import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
@@ -18,10 +19,12 @@ import java.util.List;
 @RequestMapping("notifications")
 public class NotificationController {
     private final transient NotificationService notificationService;
+    private final transient AuthManager authManager;
 
     @Autowired
-    public NotificationController(NotificationService notificationService){
+    public NotificationController(NotificationService notificationService, AuthManager authManager){
         this.notificationService = notificationService;
+        this.authManager = authManager;
     }
 
     @GetMapping("/findAll")
@@ -34,7 +37,8 @@ public class NotificationController {
         ActivityId activityId = new ActivityId(request.getActivityId());
         NetId netId = new NetId(request.getNetId());
         String message = request.getMessage();
-        Notification n = notificationService.createNotification(activityId, netId, message);
+        boolean ownerNotitication = request.isOwnerNotification();
+        Notification n = notificationService.createNotification(activityId, netId, message, ownerNotitication);
         return ResponseEntity.ok(n);
     }
 
@@ -43,13 +47,8 @@ public class NotificationController {
         return ResponseEntity.ok(notificationService.addNotification(request));
     }
 
-    @GetMapping("/{id}/getUserNotifications")
-    public ResponseEntity<List<Notification>> getUserNotifications(@PathVariable String id){
-        return ResponseEntity.ok(notificationService.getUserNotifications(new NetId(id)));
-    }
-
-    @GetMapping("{id}/getActivityNotifications")
-    public ResponseEntity<List<Notification>> getActivityNotifications(@PathVariable String id){
-        return ResponseEntity.ok(notificationService.getActivityNotifications(new ActivityId(id)));
+    @GetMapping("/getUserNotifications")
+    public ResponseEntity<List<Notification>> getUserNotifications(){
+        return ResponseEntity.ok(notificationService.getUserNotifications(new NetId(authManager.getNetId())));
     }
 }

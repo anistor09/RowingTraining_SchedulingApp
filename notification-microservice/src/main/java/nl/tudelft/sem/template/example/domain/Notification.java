@@ -28,6 +28,9 @@ public class Notification {
     @Column(name="message")
     private String message;
 
+    @Column(name="ownerNotification")
+    private boolean ownerNotification;
+
     @Override
     public boolean equals(Object o){
         if (this == o)
@@ -42,9 +45,10 @@ public class Notification {
     public int hashCode() {
         return Objects.hash(activityId);
     }
-    public Notification(ActivityId activityId, NetId netId, String message){
+    public Notification(ActivityId activityId, NetId netId, String message, boolean ownerNotification){
         this.activityId = activityId;
         this.netId = netId;
         this.message = message;
+        this.ownerNotification = ownerNotification;
     }
 }
