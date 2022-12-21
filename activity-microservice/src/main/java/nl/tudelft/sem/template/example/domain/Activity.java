@@ -23,8 +23,9 @@ public abstract class Activity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, updatable=false)
     private Long id;
+
 
     /**
      * The owner of the activity.
@@ -67,18 +68,7 @@ public abstract class Activity {
         this.positions = positions;
     }
 
-    /**
-     *
-     * @return the string version of the activity
-     */
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "id=" + id +
-                ", owner=" + owner +
-                ", timeSlot=" + timeSlot +
-                ", boat='" + boat + '\'' +
-                ", positions=" + positions +
-                '}';
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
     }
 }

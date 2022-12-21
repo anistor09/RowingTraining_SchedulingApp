@@ -85,4 +85,9 @@ public class ActivityController {
     public List<Activity> getByNetId(UsernamePasswordAuthenticationToken token) {
         return activityService.getByUsername(token.getName());
     }
+
+    @GetMapping("/activityId/{id}")
+    public Activity getById(@PathVariable("id") long id) {
+        return activityService.getById(id);
+    }
 }
