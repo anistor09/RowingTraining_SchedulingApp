@@ -28,4 +28,12 @@ public class NotificationService {
     public List<Notification> getAllNotifications(){
         return notificationRepository.findAll();
     }
+
+    public List<Notification> getUserNotifications(NetId netId){
+        return notificationRepository.getAllByNetId(netId);
+    }
+
+    public List<Notification> getActivityNotifications(ActivityId activityId){
+        return notificationRepository.getAllByActivityId(activityId);
+    }
 }

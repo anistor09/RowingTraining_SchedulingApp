@@ -42,4 +42,14 @@ public class NotificationController {
     public ResponseEntity<Notification> addNotification(@RequestBody Notification request){
         return ResponseEntity.ok(notificationService.addNotification(request));
     }
+
+    @GetMapping("/{id}/getUserNotifications")
+    public ResponseEntity<List<Notification>> getUserNotifications(@PathVariable String id){
+        return ResponseEntity.ok(notificationService.getUserNotifications(new NetId(id)));
+    }
+
+    @GetMapping("{id}/getActivityNotifications")
+    public ResponseEntity<List<Notification>> getActivityNotifications(@PathVariable String id){
+        return ResponseEntity.ok(notificationService.getActivityNotifications(new ActivityId(id)));
+    }
 }
