@@ -23,13 +23,13 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
     transient String ACTIVITY_SERVER = new String("http://localhost:8084/activity/");
 
-    transient String credentials="Bearer "+ SecurityContextHolder.getContext().getAuthentication().getCredentials();
+    transient String credentials="Bearer ";
     public List<Activity> getActivities(){
         try {
             return new ResteasyClientBuilder().build()
                     .target(ACTIVITY_SERVER).path("all")
                     .request(APPLICATION_JSON)
-                    .header(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, credentials)
+                    .header(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, credentials+ SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
                     .get(List.class);
         } catch(Exception e){
@@ -43,7 +43,7 @@ public class ServerUtils {
             return new ResteasyClientBuilder().build()
                     .target(ACTIVITY_SERVER).path("training")
                     .request(APPLICATION_JSON)
-                    .header(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, credentials)
+                    .header(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, credentials+ SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
                     .get(List.class);
         } catch(Exception e){
@@ -57,7 +57,7 @@ public class ServerUtils {
             return new ResteasyClientBuilder().build()
                     .target(ACTIVITY_SERVER).path("competition")
                     .request(APPLICATION_JSON)
-                    .header(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, credentials)
+                    .header(javax.ws.rs.core.HttpHeaders.AUTHORIZATION, credentials+ SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
                     .get(List.class);
         } catch(Exception e){
@@ -73,7 +73,7 @@ public class ServerUtils {
             TransferMatch transferMatch= new ResteasyClientBuilder().build()
                     .target(MATCHER_SERVER).path("getPendingUser")
                     .request(APPLICATION_JSON)
-                    .header(HttpHeaders.AUTHORIZATION, credentials)
+                    .header(HttpHeaders.AUTHORIZATION, credentials+ SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
                     .post(Entity.entity(tm,APPLICATION_JSON), TransferMatch.class);
             return transferMatch;
