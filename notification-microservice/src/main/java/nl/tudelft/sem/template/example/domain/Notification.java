@@ -34,6 +34,9 @@ public class Notification {
     @Column(name="ownerNotification")
     private boolean ownerNotification;
 
+    private transient String position;
+    private transient String timeSlot;
+
     @Override
     public boolean equals(Object o){
         if (this == o)
@@ -54,5 +57,14 @@ public class Notification {
         this.ownerId = ownerId;
         this.message = message;
         this.ownerNotification = ownerNotification;
+    }
+    public Notification(ActivityId activityId, NetId netId, NetId ownerId, String message, boolean ownerNotification, String position, String timeSlot){
+        this.activityId = activityId;
+        this.netId = netId;
+        this.ownerId = ownerId;
+        this.message = message;
+        this.ownerNotification = ownerNotification;
+        this.position = position;
+        this.timeSlot = timeSlot;
     }
 }
