@@ -68,6 +68,10 @@ public abstract class Activity {
         this.positions = positions;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setTimeSlot(TimeSlot timeSlot) {
         this.timeSlot = timeSlot;
     }
