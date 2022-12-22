@@ -57,7 +57,7 @@ public class ActivityService {
      * @param id
      * @param request
      */
-    public ResponseEntity editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
+    public ResponseEntity editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             Activity change = activity.get();
@@ -86,6 +86,8 @@ public class ActivityService {
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
+        } else {
+            throw new ActivityNotFoundException(id);
         }
         return ResponseEntity.ok("successfully edited the activity");
     }
@@ -95,7 +97,7 @@ public class ActivityService {
      * @param username
      * @param logged
      */
-    public void deleteByUser(Username username, Username logged) throws UnauthorizedException {
+    public void deleteByUser(Username username, Username logged) throws UnauthorizedException, ActivityNotFoundException {
         if(username.getUsernameValue().equals(logged.getUsernameValue())) {
             List<Activity> activities = activityRepository.findAll();
             List<Activity> toDelete = new ArrayList<>();
@@ -104,13 +106,16 @@ public class ActivityService {
                     toDelete.add(activity);
                 }
             }
+            if (toDelete.isEmpty()) {
+                throw new ActivityNotFoundException("No activities found for this user.");
+            }
             activityRepository.deleteAll(toDelete);
         } else {
             throw new UnauthorizedException("You are not the owner of this activity.");
         }
     }
 
-    public void deleteById(Username username, Long id) throws UnauthorizedException {
+    public void deleteById(Username username, Long id) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             if (activity.get().getOwner().getNetIdValue().equals(username.getUsernameValue())) {
@@ -118,6 +123,8 @@ public class ActivityService {
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
+        } else {
+            throw new ActivityNotFoundException(id);
         }
     }
 
@@ -154,18 +161,25 @@ public class ActivityService {
      * @param username
      * @return all activties of the given user
      */
-    public List<Activity> getByUsername(String username) {
+    public List<Activity> getByUsername(String username) throws ActivityNotFoundException {
         List<Activity> activities = getAll();
         List<Activity> result = new ArrayList<>();
         for(Activity activity : activities) {
             if(activity.getOwner().toString().equals(username))
                 result.add(activity);
         }
+        if (result.isEmpty()) {
+            throw new ActivityNotFoundException("No activities found for this user.");
+        }
         return result;
     }
 
-    public Activity getById(long id) {
-        return activityRepository.findById(id).get();
+    public Activity getById(long id) throws ActivityNotFoundException {
+        if (activityRepository.findById(id).isPresent()) {
+            return activityRepository.findById(id).get();
+        } else {
+            throw new ActivityNotFoundException(id);
+        }
     }
 
     private static boolean isNullOrEmpty(Object o) {

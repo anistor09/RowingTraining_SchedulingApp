@@ -25,21 +25,21 @@ public class ActivityController {
     }
 
     @DeleteMapping("/deleteUser/{username}")
-    public void deleteByUser(@PathVariable Username username) throws UnauthorizedException {
+    public void deleteByUser(@PathVariable Username username) throws UnauthorizedException, ActivityNotFoundException {
         Username logged = new Username(authManager.getNetId());
         activityService.deleteByUser(username, logged);
     }
 
 
     @DeleteMapping("/deleteId/{id}")
-    public void deleteById(@PathVariable Long id) throws UnauthorizedException{
+    public void deleteById(@PathVariable Long id) throws UnauthorizedException, ActivityNotFoundException {
         Username username = new Username(authManager.getNetId());
         activityService.deleteById(username, id);
     }
 
 
     @PutMapping("/edit/{id}")
-    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException {
+    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         Username username = new Username(authManager.getNetId());
         activityService.editActivity(username, id, request);
     }
@@ -68,7 +68,7 @@ public class ActivityController {
     public List<Competition> getCompetitions() { return activityService.getCompetitions(); }
 
     @GetMapping("/{username}")
-    public List<Activity> getByUsername(@PathVariable("username") String username) {
+    public List<Activity> getByUsername(@PathVariable("username") String username) throws ActivityNotFoundException {
         var activity = activityService.getByUsername(username);
         if (activity.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Activity not found");
@@ -77,17 +77,17 @@ public class ActivityController {
     }
 
     @GetMapping("/user/{id}")
-    public NetId getOwnerById(@PathVariable("id") long id) {
+    public NetId getOwnerById(@PathVariable("id") long id) throws ActivityNotFoundException {
         return activityService.getById(id).getOwner();
     }
 
     @GetMapping("/user")
-    public List<Activity> getByNetId(UsernamePasswordAuthenticationToken token) {
+    public List<Activity> getByNetId(UsernamePasswordAuthenticationToken token) throws ActivityNotFoundException {
         return activityService.getByUsername(token.getName());
     }
 
     @GetMapping("/activityId/{id}")
-    public Activity getById(@PathVariable("id") long id) {
+    public Activity getById(@PathVariable("id") long id) throws ActivityNotFoundException {
         return activityService.getById(id);
     }
 }
