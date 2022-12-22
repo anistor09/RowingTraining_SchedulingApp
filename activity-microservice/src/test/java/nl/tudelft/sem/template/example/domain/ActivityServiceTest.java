@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import javax.persistence.EntityManager;
 import java.sql.Time;
 import java.util.List;
 
@@ -33,7 +34,6 @@ public class ActivityServiceTest {
         verify(activityRepo).save(captor.capture());
         Training training = captor.getValue();
         Training expected = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
-        assertThat(training.getId()).isEqualTo(expected.getId());
         assertThat(training.getOwner()).isEqualTo(expected.getOwner());
         assertThat(training.getTimeSlot()).isEqualTo(expected.getTimeSlot());
         assertThat(training.getBoat()).isEqualTo(expected.getBoat());
@@ -70,7 +70,7 @@ public class ActivityServiceTest {
     public void editCompetitionOneField() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
         setCompetitionRepo();
-        service.editActivity(user, (long) competition.getId(), request);
+        service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -82,7 +82,7 @@ public class ActivityServiceTest {
     public void editCompetitionMoreFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 13:00; 10-10-2022 16:00", "boat", List.of("captain", "cox"), "organization", "female", true);
         setCompetitionRepo();
-        service.editActivity(user, (long) competition.getId(), request);
+        service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -96,7 +96,7 @@ public class ActivityServiceTest {
     public void editCompetitionAllFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
         setCompetitionRepo();
-        service.editActivity(user, (long) competition.getId(), request);
+        service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -186,7 +186,7 @@ public class ActivityServiceTest {
     public void editCompetitionUnauthorized() {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
         setCompetitionRepo();
-        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), (long) competition.getId(), request));
+        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), competition.getId(), request));
     }
 //
 //    //PASSED

@@ -1,5 +1,6 @@
 package nl.tudelft.sem.template.example.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -21,6 +21,10 @@ public class ActivityRequestModel {
         return timeSlot == null ? null : TimeSlot.getTimeSlot(timeSlot);
     }
 
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
     public String timeSlotString() { return this.timeSlot; }
 
     /**
