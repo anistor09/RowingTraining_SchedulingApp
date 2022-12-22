@@ -3,7 +3,6 @@ package nl.tudelft.sem.template.example.domain.utils;
 import nl.tudelft.sem.template.example.domain.Activity;
 import nl.tudelft.sem.template.example.domain.Competition;
 import nl.tudelft.sem.template.example.domain.Training;
-import nl.tudelft.sem.template.example.domain.transferObject.OwnerNotification;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import java.util.List;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 

@@ -3,18 +3,15 @@ package nl.tudelft.sem.template.example.controllers;
 import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.domain.Match;
 import nl.tudelft.sem.template.example.domain.MatcherService;
-import nl.tudelft.sem.template.example.domain.models.AcceptedUsersModel;
-import nl.tudelft.sem.template.example.domain.transferObject.OwnerNotification;
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import  nl.tudelft.sem.template.example.*;
+
 import java.util.List;
 
 /**

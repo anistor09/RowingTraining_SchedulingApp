@@ -8,15 +8,10 @@ public class NotificationRequestModel {
     private String netId;
     private String message;
 
-    public String getActivityId(){
-        return this.activityId;
-    }
 
     public String getNetId(){
         return this.netId;
     }
 
-    public String getMessage(){
-        return this.message;
-    }
+
 }
