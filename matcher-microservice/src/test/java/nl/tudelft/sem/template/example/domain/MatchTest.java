@@ -31,20 +31,11 @@ class MatchTest {
         Match match = new Match("netId",1L,"cox");
         assertEquals(match.getPosition(),"cox");
     }
-
     @Test
-    void setId() {
+    void noArgConstructor() {
+        Match match1 = new Match();
+
+        assertNotNull(match1);
     }
 
-    @Test
-    void setNetId() {
-    }
-
-    @Test
-    void setActivityId() {
-    }
-
-    @Test
-    void setPosition() {
-    }
 }

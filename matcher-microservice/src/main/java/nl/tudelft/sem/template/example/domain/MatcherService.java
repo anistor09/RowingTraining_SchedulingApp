@@ -25,37 +25,7 @@ public class MatcherService {
         this.serverUtils = serverUtils;
     }
 
-    //    public List<TransferMatch> computeMatch(RequestMatch rm){
-//        List<TransferMatch> res = new ArrayList<>();
-//        List<Activity> activities = getActivities();
-//        Participant p = rm.getParticipant();
-//        List<TimeSlot> timeSlots= TimeSlot.getTimeSlots(rm.getTimeSlots());
-//        //Collections.sort(activities, Comparator.comparing(a -> a.getTimeSlot().end));
-//        for(Activity activity : activities){
-//            for(TimeSlot ts : timeSlots){
-//                if(verifyTimeslots(ts,activity.getTimeSlot())){
-//                    for(String position : p.getPositionManager().getPositions()){
-//                        if(activity.getPositions().contains(position)){
-//                            if(position.equals("cox") && !verifyCertificate(p.getCertificate(),activity.getBoat()))
-//                                continue;
-//
-//                                if(activity instanceof  Competition && !isValidCompetition((Competition) activity,p))
-//                                    continue;
-//
-//                                    res.add(new TransferMatch
-//                                            (activity.getActivityName(),position,activity.getTimeSlot().toString(),p.getNetId().toString()));
-//
-//
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-//
-//        return res;
-//
-//    }
+
     transient Validator handler;
     transient List<TimeSlot> timeSlots;
 
@@ -86,32 +56,7 @@ public class MatcherService {
         return handler;
     }
 
-    //    private boolean isValidCompetition(Competition comp, Participant p){
-//        if(!p.getGender().equals(comp.getGender()) )
-//            return false;
-//        if(!p.getOrganization().equals(comp.getOrganization()))
-//            return false;
-//        if(!p.getLevel().equals(comp.getCompetitive()))
-//            return false;
-//        return true;
-//    }
-//
-//
-//    private boolean verifyCertificate(Certificate certificate, String boat) {
-//        Certificate boatCertificate = new Certificate(boat);
-//        if(boatCertificate.isValid())
-//            return certificate.isBetterCertificate(boatCertificate);
-//        return false;
-//
-//    }
-//
-//    public boolean verifyTimeslots(TimeSlot ts, TimeSlot activityTs){
-//        if((ts.begin.before(activityTs.begin)||ts.begin.equals(activityTs.begin))
-//                && (ts.end.after(activityTs.end) ||ts.end.equals(activityTs.end)))
-//            return true;
-//        return false;
-//
-//    }
+
     public List<Activity> getActivities() {
         List<Activity> activities = new ArrayList<>();
         activities.addAll(getTrainings());
