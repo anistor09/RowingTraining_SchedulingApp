@@ -18,10 +18,7 @@ public class ActivityRequestModel {
     }
 
     public String timeSlotString() { return this.timeSlot; }
-    /**
-     *
-     * @return competitive
-     */
+
     public boolean getCompetitive() {
         return competitive;
     }

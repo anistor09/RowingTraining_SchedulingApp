@@ -26,7 +26,6 @@ public abstract class Activity {
     @Column(name = "id", nullable = false, updatable=false)
     private Long id;
 
-
     /**
      * The owner of the activity.
      */

@@ -164,10 +164,20 @@ public class ActivityService {
         return result;
     }
 
+    /**
+     * Gets an activity with the given id.
+     * @param id
+     * @return the activity with the given id
+     */
     public Activity getById(long id) {
         return activityRepository.findById(id).get();
     }
 
+    /**
+     * Checks if a string is null or empty.
+     * @param o
+     * @return true if the string is null or empty
+     */
     private static boolean isNullOrEmpty(Object o) {
         if (o == null) {
             return true;
