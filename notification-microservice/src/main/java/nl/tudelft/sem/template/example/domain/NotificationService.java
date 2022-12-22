@@ -36,4 +36,8 @@ public class NotificationService {
     public List<Notification> getOwnerNotifications(NetId ownerId){
         return notificationRepository.getAllByOwnerId(ownerId);
     }
+
+    public void deleteNotification(Notification n) {
+        notificationRepository.delete(n);
+    }
 }
