@@ -57,11 +57,11 @@ public class ActivityService {
      * @param id
      * @param request
      */
-    public ResponseEntity editActivity(Username username, Long id, ActivityRequestModel request) throws UnauthorizedException {
+    public ResponseEntity editActivity(NetId netId, int id, ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             Activity change = activity.get();
-            if (change.getOwner().getNetIdValue().equals(username.getUsernameValue())) {
+            if (change.getOwner().getNetIdValue().equals(netId.getNetIdValue())) {
                 if (!isNullOrEmpty(request.getTimeSlot())) {
                     change.setTimeSlot(request.getTimeSlot());
                 }
@@ -86,23 +86,28 @@ public class ActivityService {
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
+        } else {
+            throw new ActivityNotFoundException(id);
         }
         return ResponseEntity.ok("successfully edited the activity");
     }
 
     /**
      * Deletes all activities of the given user.
-     * @param username
+     * @param netId
      * @param logged
      */
-    public void deleteByUser(Username username, Username logged) throws UnauthorizedException {
-        if(username.getUsernameValue().equals(logged.getUsernameValue())) {
+    public void deleteByUser(NetId netId, NetId logged) throws UnauthorizedException, ActivityNotFoundException {
+        if(netId.getNetIdValue().equals(logged.getNetIdValue())) {
             List<Activity> activities = activityRepository.findAll();
             List<Activity> toDelete = new ArrayList<>();
             for (Activity activity : activities) {
-                if (activity.getOwner().getNetIdValue().equals(username.getUsernameValue())) {
+                if (activity.getOwner().getNetIdValue().equals(netId.getNetIdValue())) {
                     toDelete.add(activity);
                 }
+            }
+            if (toDelete.isEmpty()) {
+                throw new ActivityNotFoundException("No activities found for this user.");
             }
             activityRepository.deleteAll(toDelete);
         } else {
@@ -110,14 +115,16 @@ public class ActivityService {
         }
     }
 
-    public void deleteById(Username username, Long id) throws UnauthorizedException {
+    public void deleteById(NetId netId, int id) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
-            if (activity.get().getOwner().getNetIdValue().equals(username.getUsernameValue())) {
+            if (activity.get().getOwner().getNetIdValue().equals(netId.getNetIdValue())) {
                 activityRepository.deleteById(id);
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
+        } else {
+            throw new ActivityNotFoundException(id);
         }
     }
 
@@ -154,12 +161,15 @@ public class ActivityService {
      * @param username
      * @return all activties of the given user
      */
-    public List<Activity> getByUsername(String username) {
+    public List<Activity> getByUsername(String username) throws ActivityNotFoundException {
         List<Activity> activities = getAll();
         List<Activity> result = new ArrayList<>();
         for(Activity activity : activities) {
             if(activity.getOwner().toString().equals(username))
                 result.add(activity);
+        }
+        if (result.isEmpty()) {
+            throw new ActivityNotFoundException("No activities found for this user.");
         }
         return result;
     }
@@ -169,8 +179,12 @@ public class ActivityService {
      * @param id
      * @return the activity with the given id
      */
-    public Activity getById(long id) {
-        return activityRepository.findById(id).get();
+    public Activity getById(int id) throws ActivityNotFoundException {
+        if (activityRepository.findById(id).isPresent()) {
+            return activityRepository.findById(id).get();
+        } else {
+            throw new ActivityNotFoundException(id);
+        }
     }
 
     /**

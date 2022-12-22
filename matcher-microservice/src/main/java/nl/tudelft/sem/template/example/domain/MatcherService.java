@@ -66,7 +66,7 @@ public class MatcherService {
         for (Activity activity : getActivities()) {
             for (String position : activity.getPositions()) {
                 if (handler.handle(activity, position, rm.getParticipant(), timeSlots))
-                    res.add(new TransferMatch(activity.getId(), position, activity.getTimeSlot().toString(),
+                    res.add(new TransferMatch((long) activity.getId(), position, activity.getTimeSlot().toString(),
                             rm.getParticipant().getNetId().toString(),activity.getOwner().toString()));
             }
         }

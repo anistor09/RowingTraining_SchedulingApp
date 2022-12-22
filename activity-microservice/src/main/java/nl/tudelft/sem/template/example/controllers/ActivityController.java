@@ -35,9 +35,9 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @DeleteMapping("/deleteUser/{username}")
-    public void deleteByUser(@PathVariable Username username) throws UnauthorizedException {
-        Username logged = new Username(authManager.getNetId());
-        activityService.deleteByUser(username, logged);
+    public void deleteByUser(@PathVariable NetId netId) throws UnauthorizedException, ActivityNotFoundException {
+        NetId logged = new NetId(authManager.getNetId());
+        activityService.deleteByUser(netId, logged);
     }
 
     /**
@@ -46,8 +46,8 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @DeleteMapping("/deleteId/{id}")
-    public void deleteById(@PathVariable Long id) throws UnauthorizedException{
-        Username username = new Username(authManager.getNetId());
+    public void deleteById(@PathVariable int id) throws UnauthorizedException, ActivityNotFoundException {
+        NetId username = new NetId(authManager.getNetId());
         activityService.deleteById(username, id);
     }
 
@@ -58,8 +58,8 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @PutMapping("/edit/{id}")
-    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException {
-        Username username = new Username(authManager.getNetId());
+    public void editActivity(@PathVariable int id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
+        NetId username = new NetId(authManager.getNetId());
         activityService.editActivity(username, id, request);
     }
 
@@ -114,7 +114,7 @@ public class ActivityController {
      * @return all activities of the given user
      */
     @GetMapping("/{username}")
-    public List<Activity> getByUsername(@PathVariable("username") String username) {
+    public List<Activity> getByUsername(@PathVariable("username") String username) throws ActivityNotFoundException {
         var activity = activityService.getByUsername(username);
         if (activity.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Activity not found");
@@ -128,7 +128,7 @@ public class ActivityController {
      * @return the owner of the activity
      */
     @GetMapping("/user/{id}")
-    public NetId getOwnerById(@PathVariable("id") long id) {
+    public NetId getOwnerById(@PathVariable("id") int id) throws ActivityNotFoundException {
         return activityService.getById(id).getOwner();
     }
 
@@ -138,7 +138,7 @@ public class ActivityController {
      * @return list of activities of the logged in user
      */
     @GetMapping("/user")
-    public List<Activity> getByNetId(UsernamePasswordAuthenticationToken token) {
+    public List<Activity> getByNetId(UsernamePasswordAuthenticationToken token) throws ActivityNotFoundException {
         return activityService.getByUsername(token.getName());
     }
 
@@ -148,7 +148,7 @@ public class ActivityController {
      * @return the activity
      */
     @GetMapping("/activityId/{id}")
-    public Activity getById(@PathVariable("id") long id) {
+    public Activity getById(@PathVariable("id") int id) throws ActivityNotFoundException {
         return activityService.getById(id);
     }
 }
