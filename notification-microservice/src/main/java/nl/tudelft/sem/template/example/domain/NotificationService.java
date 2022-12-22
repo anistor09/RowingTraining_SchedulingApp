@@ -16,8 +16,8 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public Notification createNotification(ActivityId activityId, NetId netId, String message){
-        Notification n = new Notification(activityId, netId, message);
+    public Notification createNotification(ActivityId activityId, NetId netId, NetId ownerId, String message, boolean ownerNotification){
+        Notification n = new Notification(activityId, netId, ownerId, message, ownerNotification);
         return notificationRepository.save(n);
     }
 
@@ -33,7 +33,4 @@ public class NotificationService {
         return notificationRepository.getAllByNetId(netId);
     }
 
-    public List<Notification> getActivityNotifications(ActivityId activityId){
-        return notificationRepository.getAllByActivityId(activityId);
-    }
 }
