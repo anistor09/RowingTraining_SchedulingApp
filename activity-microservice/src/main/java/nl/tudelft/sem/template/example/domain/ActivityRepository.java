@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
         Optional<Activity> findById(int id);
         Boolean existsById(int id);
-
         void deleteById(int id);
 }

@@ -31,7 +31,7 @@ public class ActivityController {
 
     /**
      * Deletes activities of the given user.
-     * @param username
+     * @param netId
      * @throws UnauthorizedException
      */
     @DeleteMapping("/deleteUser/{username}")
