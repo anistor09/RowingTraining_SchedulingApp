@@ -66,22 +66,39 @@ public class ServerUtils {
         return new ArrayList<>();
     }
 
-    transient String MATCHER_SERVER = new String("http://localhost:8085/");
+    transient String NOTIFICATION_SERVER = new String("http://localhost:8085/");
 
-    public TransferMatch sendPendingUser(TransferMatch tm){
+    public ResponseEntity<String> sendPendingUser(TransferMatch tm){
         try{
-            TransferMatch transferMatch= new ResteasyClientBuilder().build()
-                    .target(MATCHER_SERVER).path("getPendingUser")
+            new ResteasyClientBuilder().build()
+                    .target(NOTIFICATION_SERVER).path("notifications/createOwnerNotification")
                     .request(APPLICATION_JSON)
                     .header(HttpHeaders.AUTHORIZATION, credentials+ SecurityContextHolder.getContext().getAuthentication().getCredentials())
                     .accept(APPLICATION_JSON)
-                    .post(Entity.entity(tm,APPLICATION_JSON), TransferMatch.class);
-            return transferMatch;
+                    .post(Entity.entity(tm,APPLICATION_JSON));
+            return ResponseEntity.ok("sent");
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return null;
+        return ResponseEntity.ok("not sent");
     }
 
+    public ResponseEntity<String> sendAcceptedUsers(List<TransferMatch> acceptedMatches) {
+        try{
+            new ResteasyClientBuilder().build()
+                    .target(NOTIFICATION_SERVER).path("notifications/createParticipantNotification")
+                    .request(APPLICATION_JSON)
+                    .header(HttpHeaders.AUTHORIZATION, credentials + SecurityContextHolder.getContext().getAuthentication().getCredentials())
+                    .accept(APPLICATION_JSON)
+                    .post(Entity.entity(acceptedMatches,APPLICATION_JSON));
+
+            return ResponseEntity.ok("Accepted Participants - sent");
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok("Accepted Participants - fail to send");
+    }
 }

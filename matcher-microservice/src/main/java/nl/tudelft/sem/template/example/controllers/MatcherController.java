@@ -72,8 +72,9 @@ public class MatcherController {
 //    }
 
     @PostMapping("/sendAcceptedUsers")
-    public void sendAcceptedUsers(@RequestBody AcceptedUsersModel request){
-        List<TransferMatch> acceptedMatches= request.getTransferMatches();
+    public void sendAcceptedUsers(@RequestBody List<TransferMatch> request){
+        List<TransferMatch> acceptedMatches= request;
         matcherService.removeMatches(acceptedMatches);
+        serverUtils.sendAcceptedUsers(acceptedMatches);
     }
 }
