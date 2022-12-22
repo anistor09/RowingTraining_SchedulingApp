@@ -25,22 +25,22 @@ public class ActivityController {
     }
 
     @DeleteMapping("/deleteUser/{username}")
-    public void deleteByUser(@PathVariable Username username) throws UnauthorizedException, ActivityNotFoundException {
-        Username logged = new Username(authManager.getNetId());
-        activityService.deleteByUser(username, logged);
+    public void deleteByUser(@PathVariable NetId netId) throws UnauthorizedException, ActivityNotFoundException {
+        NetId logged = new NetId(authManager.getNetId());
+        activityService.deleteByUser(netId, logged);
     }
 
 
     @DeleteMapping("/deleteId/{id}")
     public void deleteById(@PathVariable Long id) throws UnauthorizedException, ActivityNotFoundException {
-        Username username = new Username(authManager.getNetId());
+        NetId username = new NetId(authManager.getNetId());
         activityService.deleteById(username, id);
     }
 
 
     @PutMapping("/edit/{id}")
     public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
-        Username username = new Username(authManager.getNetId());
+        NetId username = new NetId(authManager.getNetId());
         activityService.editActivity(username, id, request);
     }
 

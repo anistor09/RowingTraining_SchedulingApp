@@ -24,7 +24,7 @@ public abstract class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable=false)
-    private Long id;
+    private int id;
 
 
     /**
