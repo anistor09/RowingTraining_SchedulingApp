@@ -3,6 +3,7 @@ package nl.tudelft.sem.template.example.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Time;
 import java.util.List;
@@ -26,13 +27,13 @@ public class ActivityServiceTest {
     }
 
     public void setCompetitionRepo() {
-        when(activityRepo.existsById((long) competition.getId())).thenReturn(true);
-        when(activityRepo.findById((long) competition.getId())).thenReturn(java.util.Optional.of(competition));
+        when(activityRepo.existsById(competition.getId())).thenReturn(true);
+        when(activityRepo.findById(competition.getId())).thenReturn(java.util.Optional.of(competition));
     }
 
     public void setTrainingRepo() {
-        when(activityRepo.existsById((long) training.getId())).thenReturn(true);
-        when(activityRepo.findById((long) training.getId())).thenReturn(java.util.Optional.of(training));
+        when(activityRepo.existsById(training.getId())).thenReturn(true);
+        when(activityRepo.findById(training.getId())).thenReturn(java.util.Optional.of(training));
     }
 
     @Test
@@ -75,7 +76,7 @@ public class ActivityServiceTest {
     public void editCompetitionOneField() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
         setCompetitionRepo();
-        service.editActivity(user, (long) competition.getId(), request);
+        service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -87,7 +88,7 @@ public class ActivityServiceTest {
     public void editCompetitionMoreFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 13:00; 10-10-2022 16:00", "boat", List.of("captain", "cox"), "organization", "female", true);
         setCompetitionRepo();
-        service.editActivity(user, (long) competition.getId(), request);
+        service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -101,7 +102,7 @@ public class ActivityServiceTest {
     public void editCompetitionAllFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
         setCompetitionRepo();
-        service.editActivity(user, (long) competition.getId(), request);
+        service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -119,7 +120,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), null, null, false);
         setTrainingRepo();
         ActivityService service = new ActivityService(activityRepo);
-        service.editActivity(new NetId("zosia"), (long) training.getId(), request);
+        service.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
         verify(activityRepo).save(captor.capture());
         Training edited = captor.getValue();
@@ -136,7 +137,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
         setTrainingRepo();
         ActivityService service = new ActivityService(activityRepo);
-        service.editActivity(new NetId("zosia"), (long) training.getId(), request);
+        service.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
         verify(activityRepo).save(captor.capture());
         Training edited = captor.getValue();
@@ -151,7 +152,7 @@ public class ActivityServiceTest {
     public void editTrainingAllFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
         setTrainingRepo();
-        service.editActivity(new NetId("zosia"), (long) training.getId(), request);
+        service.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
         verify(activityRepo).save(captor.capture());
         Training edited = captor.getValue();
@@ -167,7 +168,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
         setTrainingRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("harry"), (long) training.getId(), request));
+        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("harry"), training.getId(), request));
     }
 
 
@@ -176,7 +177,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
         setCompetitionRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), (long) competition.getId(), request));
+        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), competition.getId(), request));
     }
 
     @Test
@@ -263,6 +264,7 @@ public class ActivityServiceTest {
     public void getActivityByIdWithOneActivity() throws ActivityNotFoundException {
         when(activityRepo.findAll()).thenReturn(List.of(training));
         training.setId(1);
+        setTrainingRepo();
         Activity activity = service.getById(1);
 
         assertEquals(training, activity);
@@ -272,6 +274,7 @@ public class ActivityServiceTest {
     public void getActivityByIdWithTwoActivities() throws ActivityNotFoundException {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         competition.setId(2);
+        setCompetitionRepo();
         Activity activity = service.getById(2);
 
         assertEquals(activity, competition);
@@ -286,15 +289,16 @@ public class ActivityServiceTest {
     @Test
     public void deleteActivityByIdWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 1L));
+        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 1));
     }
 
     @Test
     public void deleteActivityByIdWithOneActivity() throws ActivityNotFoundException, UnauthorizedException {
         when(activityRepo.findAll()).thenReturn(List.of(training));
         training.setId(1);
-        service.deleteById(new NetId("zosia"), 1L);
-        verify(activityRepo, times(1)).deleteById(1L);
+        setTrainingRepo();
+        service.deleteById(new NetId("zosia"), 1);
+        verify(activityRepo, times(1)).deleteById(1);
     }
 
     @Test
@@ -302,8 +306,10 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         training.setId(1);
         competition.setId(2);
-        service.deleteById(new NetId("zosia"), 1L);
-        verify(activityRepo, times(1)).deleteById(1L);
+        setTrainingRepo();
+        setCompetitionRepo();
+        service.deleteById(new NetId("zosia"), 1);
+        verify(activityRepo, times(1)).deleteById(1);
     }
 
     @Test
@@ -311,8 +317,10 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         training.setId(1);
         competition.setId(2);
+        setTrainingRepo();
+        setCompetitionRepo();
 
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 3L));
+        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 3));
     }
 
     @Test
@@ -320,8 +328,10 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         training.setId(1);
         competition.setId(2);
+        setTrainingRepo();
+        setCompetitionRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.deleteById(new NetId("harry"), 1L));
+        assertThrows(UnauthorizedException.class, () -> service.deleteById(new NetId("harry"), 1));
     }
 
     @Test
