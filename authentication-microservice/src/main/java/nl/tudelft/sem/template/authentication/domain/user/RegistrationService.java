@@ -30,7 +30,7 @@ public class RegistrationService {
      */
     public AppUser registerUser(NetId netId, Password password) throws Exception {
 
-        if (checkNetIdIsUnique(netId)) {
+        if (checkNetIdIsUnique(netId) && checkNetIdIsValid(netId)) {
             // Hash password
             HashedPassword hashedPassword = passwordHashingService.hash(password);
 
@@ -41,10 +41,18 @@ public class RegistrationService {
             return user;
         }
 
+        else if (!checkNetIdIsUnique(netId))
+            throw new NetIdAlreadyInUseException(netId);
+        else if (!checkNetIdIsValid(netId))
+            throw new NetIdIsInvalidException(netId);
         throw new NetIdAlreadyInUseException(netId);
     }
 
     public boolean checkNetIdIsUnique(NetId netId) {
         return !userRepository.existsByNetId(netId);
+    }
+
+    public boolean checkNetIdIsValid(NetId netId){
+        return netId.isValid();
     }
 }
