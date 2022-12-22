@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, String> {
@@ -15,4 +16,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
      * Check if an existing user already uses a NetID.
      */
     boolean existsByActivityId(ActivityId activityId);
+
+    List<Notification> getAllByNetId(NetId netId);
+
+    List<Notification> getAllByActivityId(ActivityId activityId);
 }
