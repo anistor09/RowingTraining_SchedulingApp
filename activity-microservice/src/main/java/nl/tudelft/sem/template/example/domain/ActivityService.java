@@ -104,13 +104,16 @@ public class ActivityService {
                     toDelete.add(activity);
                 }
             }
+            if(toDelete.size() == 0) {
+                throw new ActivityNotFoundException("No activities found for this user.");
+            }
             activityRepository.deleteAll(toDelete);
         } else {
             throw new UnauthorizedException("You are not the owner of this activity.");
         }
     }
 
-    public void deleteById(Username username, Long id) throws UnauthorizedException {
+    public void deleteById(Username username, Long id) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             if (activity.get().getOwner().getNetIdValue().equals(username.getUsernameValue())) {
@@ -118,6 +121,8 @@ public class ActivityService {
             } else {
                 throw new UnauthorizedException("You are not the owner of this activity.");
             }
+        } else {
+            throw new ActivityNotFoundException(id);
         }
     }
 
@@ -161,11 +166,19 @@ public class ActivityService {
             if(activity.getOwner().toString().equals(username))
                 result.add(activity);
         }
+        if(result.size() == 0) {
+            throw new ActivityNotFoundException("No activities found for this user.");
+        }
         return result;
     }
 
-    public Activity getById(long id) {
-        return activityRepository.findById(id).get();
+    public Activity getById(long id) throws ActivityNotFoundException{
+        Optional<Activity> activity = activityRepository.findById(id);
+        if(activity.isPresent()) {
+            return activity.get();
+        } else {
+            throw new ActivityNotFoundException(id);
+        }
     }
 
     private static boolean isNullOrEmpty(Object o) {

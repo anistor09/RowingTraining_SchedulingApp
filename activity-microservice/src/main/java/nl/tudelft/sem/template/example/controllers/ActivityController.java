@@ -32,7 +32,7 @@ public class ActivityController {
 
 
     @DeleteMapping("/deleteId/{id}")
-    public void deleteById(@PathVariable Long id) throws UnauthorizedException{
+    public void deleteById(@PathVariable Long id) throws UnauthorizedException, ActivityNotFoundException {
         Username username = new Username(authManager.getNetId());
         activityService.deleteById(username, id);
     }
@@ -77,7 +77,7 @@ public class ActivityController {
     }
 
     @GetMapping("/user/{id}")
-    public NetId getOwnerById(@PathVariable("id") long id) {
+    public NetId getOwnerById(@PathVariable("id") long id) throws ActivityNotFoundException {
         return activityService.getById(id).getOwner();
     }
 
@@ -87,7 +87,7 @@ public class ActivityController {
     }
 
     @GetMapping("/activityId/{id}")
-    public Activity getById(@PathVariable("id") long id) {
+    public Activity getById(@PathVariable("id") long id) throws ActivityNotFoundException {
         return activityService.getById(id);
     }
 }
