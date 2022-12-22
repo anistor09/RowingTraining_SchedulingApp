@@ -1,123 +1,114 @@
 package nl.tudelft.sem.template.example.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.sql.Time;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ActivityServiceTest {
 
-    //PASSED
+    ActivityService service;
+    ActivityRepository activityRepo;
+    NetId user = new NetId("paula");
+    Competition competition = new Competition(user, new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "boat", List.of("captain"), "organization", "female", true);
+
+    @BeforeEach
+    public void setUp() {
+        activityRepo  = mock(ActivityRepository.class);
+        service = new ActivityService(activityRepo);
+    }
+
+
     @Test
     public void createTraining() {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), null, null, false);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
-        ActivityRepository activityRepo = mock(ActivityRepository.class);
-        ActivityService service = new ActivityService(activityRepo);
-
-        service.createTraining(new NetId("paula"), request);
+        service.createTraining(user, request);
         verify(activityRepo).save(captor.capture());
         Training training = captor.getValue();
-        assertEquals(1, training.getId());
-        assertEquals("paula", training.getOwner().getNetIdValue());
-        assertEquals("10-10-2022 14:30;10-10-2022 16:00", training.getTimeSlot().toString());
-        assertEquals("yacht", training.getBoat());
-        assertEquals(List.of("captain"), training.getPositions());
+        Training expected = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        assertThat(training.getId()).isEqualTo(expected.getId());
+        assertThat(training.getOwner()).isEqualTo(expected.getOwner());
+        assertThat(training.getTimeSlot()).isEqualTo(expected.getTimeSlot());
+        assertThat(training.getBoat()).isEqualTo(expected.getBoat());
+        assertThat(training.getPositions()).isEqualTo(expected.getPositions());
     }
 
-    //PASSED
+
     @Test
     public void createCompetition() {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
-        ActivityRepository activityRepo = mock(ActivityRepository.class);
-        ActivityService service = new ActivityService(activityRepo);
-
-        service.createCompetition(new NetId("zosia"), request);
+        service.createCompetition(user, request);
         verify(activityRepo).save(captor.capture());
         Competition competition = captor.getValue();
-        assertEquals(1, competition.getId());
-        assertEquals("zosia", competition.getOwner().getNetIdValue());
-        assertEquals("10-10-2022 14:30;10-10-2022 16:00", competition.getTimeSlot().toString());
-        assertEquals("yacht", competition.getBoat());
-        assertEquals(List.of("captain"), competition.getPositions());
-        assertEquals("organization", competition.getOrganization());
-        assertEquals("female", competition.getGender());
-        assertTrue(competition.getCompetitive());
+        Competition expected = new Competition(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"), "organization", "female", true);
+        assertThat(competition.getId()).isEqualTo(expected.getId());
+        assertThat(competition.getOwner()).isEqualTo(expected.getOwner());
+        assertThat(competition.getTimeSlot()).isEqualTo(expected.getTimeSlot());
+        assertThat(competition.getBoat()).isEqualTo(expected.getBoat());
+        assertThat(competition.getPositions()).isEqualTo(expected.getPositions());
+        assertThat(competition.getOrganization()).isEqualTo(expected.getOrganization());
+        assertThat(competition.getGender()).isEqualTo(expected.getGender());
+        assertThat(competition.getCompetitive()).isEqualTo(expected.getCompetitive());
     }
-//
-//    //PASSED
-//    @Test
-//    public void editCompetitionOneField() throws UnauthorizedException, ActivityNotFoundException {
-//        ActivityRequestModel request = new ActivityRequestModel(new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"), "organization", "female", true);
-//        Competition competition = new Competition(new NetId("zosia"), new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "boat", List.of("captain"), "organization", "female", true);
-//        ActivityRepository activityRepo = mock(ActivityRepository.class);
-//        when(activityRepo.existsById(competition.getId())).thenReturn(true);
-//        when(activityRepo.findById(competition.getId())).thenReturn(java.util.Optional.of(competition));
-//        ActivityService service = new ActivityService(activityRepo);
-//        service.editActivity(new Username("zosia"), competition.getId(), request);
-//        ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
-//        verify(activityRepo).save(captor.capture());
-//        Competition edited = captor.getValue();
-//
-//        assertEquals("zosia", edited.getOwner().getNetIdValue());
-//        assertEquals("10-10-2022 14:30;10-10-2022 16:00", edited.getTimeSlot().toString());
-//        assertEquals("yacht", edited.getBoat());
-//        assertEquals(List.of("captain"), edited.getPositions());
-//        assertEquals("organization", edited.getOrganization());
-//        assertEquals("female", edited.getGender());
-//        assertTrue(edited.getCompetitive());
-//    }
-//
-//    //PASSED
-//    @Test
-//    public void editCompetitionMoreFields() throws UnauthorizedException, ActivityNotFoundException {
-//        ActivityRequestModel request = new ActivityRequestModel(new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain", "cox"), "gryffindor", "female", false);
-//        Competition competition = new Competition(new NetId("zosia"), new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "boat", List.of("captain"), "organization", "female", true);
-//        ActivityRepository activityRepo = mock(ActivityRepository.class);
-//        when(activityRepo.existsById(competition.getId())).thenReturn(true);
-//        when(activityRepo.findById(competition.getId())).thenReturn(java.util.Optional.of(competition));
-//        ActivityService service = new ActivityService(activityRepo);
-//        service.editActivity(new Username("zosia"), competition.getId(), request);
-//        ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
-//        verify(activityRepo).save(captor.capture());
-//        Competition edited = captor.getValue();
-//
-//        assertEquals("zosia", edited.getOwner().getNetIdValue());
-//        assertEquals("10-10-2022 14:30;10-10-2022 16:00", edited.getTimeSlot().toString());
-//        assertEquals("yacht", edited.getBoat());
-//        assertEquals(List.of("captain", "cox"), edited.getPositions());
-//        assertEquals("gryffindor", edited.getOrganization());
-//        assertEquals("female", edited.getGender());
-//        assertFalse(edited.getCompetitive());
-//    }
-//
-//    //PASSED
-//    @Test
-//    public void editCompetitionAllFields() throws UnauthorizedException, ActivityNotFoundException {
-//        ActivityRequestModel request = new ActivityRequestModel(new TimeSlot("10-11-2022 14:30; 10-10-2022 15:00"), "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
-//        Competition competition = new Competition(new NetId("zosia"), new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "boat", List.of("captain"), "organization", "female", true);
-//        ActivityRepository activityRepo = mock(ActivityRepository.class);
-//        when(activityRepo.existsById(competition.getId())).thenReturn(true);
-//        when(activityRepo.findById(competition.getId())).thenReturn(java.util.Optional.of(competition));
-//        ActivityService service = new ActivityService(activityRepo);
-//        service.editActivity(new Username("zosia"), competition.getId(), request);
-//        ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
-//        verify(activityRepo).save(captor.capture());
-//        Competition edited = captor.getValue();
-//
-//        assertEquals("zosia", edited.getOwner().getNetIdValue());
-//        assertEquals("10-11-2022 14:30;10-10-2022 15:00", edited.getTimeSlot().toString());
-//        assertEquals("yacht", edited.getBoat());
-//        assertEquals(List.of("captain", "cox"), edited.getPositions());
-//        assertEquals("gryffindor", edited.getOrganization());
-//        assertEquals("male", edited.getGender());
-//        assertFalse(edited.getCompetitive());
-//    }
-//
+
+
+
+    public void setCompetitionRepo() {
+        when(activityRepo.existsById((long) competition.getId())).thenReturn(true);
+        when(activityRepo.findById((long) competition.getId())).thenReturn(java.util.Optional.of(competition));
+    }
+
+    @Test
+    public void editCompetitionOneField() throws UnauthorizedException, ActivityNotFoundException {
+        ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
+        setCompetitionRepo();
+        service.editActivity(user, (long) competition.getId(), request);
+        ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
+        verify(activityRepo).save(captor.capture());
+        Competition edited = captor.getValue();
+
+        assertThat(edited.getBoat()).isEqualTo("yacht");
+    }
+
+    @Test
+    public void editCompetitionMoreFields() throws UnauthorizedException, ActivityNotFoundException {
+        ActivityRequestModel request = new ActivityRequestModel("10-10-2022 13:00; 10-10-2022 16:00", "boat", List.of("captain", "cox"), "organization", "female", true);
+        setCompetitionRepo();
+        service.editActivity(user, (long) competition.getId(), request);
+        ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
+        verify(activityRepo).save(captor.capture());
+        Competition edited = captor.getValue();
+
+        assertThat(edited.getTimeSlot()).isEqualTo(TimeSlot.getTimeSlot("10-10-2022 13:00; 10-10-2022 16:00"));
+        assertThat(edited.getPositions()).isEqualTo(List.of("captain", "cox"));
+    }
+
+
+    @Test
+    public void editCompetitionAllFields() throws UnauthorizedException, ActivityNotFoundException {
+        ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
+        setCompetitionRepo();
+        service.editActivity(user, (long) competition.getId(), request);
+        ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
+        verify(activityRepo).save(captor.capture());
+        Competition edited = captor.getValue();
+
+        assertThat(edited.getTimeSlot()).isEqualTo(TimeSlot.getTimeSlot("11-10-2022 13:00; 11-10-2022 16:00"));
+        assertThat(edited.getBoat()).isEqualTo("yacht");
+        assertThat(edited.getPositions()).isEqualTo(List.of("captain", "cox"));
+        assertThat(edited.getOrganization()).isEqualTo("gryffindor");
+        assertThat(edited.getGender()).isEqualTo("male");
+        assertThat(edited.getCompetitive()).isEqualTo(false);
+    }
+
 //    //PASSED
 //    @Test
 //    public void editTrainingOneField() throws UnauthorizedException, ActivityNotFoundException {
@@ -191,17 +182,12 @@ public class ActivityServiceTest {
 //        assertThrows(UnauthorizedException.class, () -> service.editActivity(new Username("harry"), training.getId(), request));
 //    }
 //
-//    //PASSED
-//    @Test
-//    public void editCompetitionUnauthorized() {
-//        ActivityRequestModel request = new ActivityRequestModel(new TimeSlot("10-11-2022 14:30; 10-10-2022 15:00"), "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
-//        Competition competition = new Competition(new NetId("zosia"), new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "boat", List.of("captain"), "organization", "female", true);
-//        ActivityRepository activityRepo = mock(ActivityRepository.class);
-//        when(activityRepo.existsById(competition.getId())).thenReturn(true);
-//        when(activityRepo.findById(competition.getId())).thenReturn(java.util.Optional.of(competition));
-//        ActivityService service = new ActivityService(activityRepo);
-//        assertThrows(UnauthorizedException.class, () -> service.editActivity(new Username("paula"), competition.getId(), request));
-//    }
+    @Test
+    public void editCompetitionUnauthorized() {
+        ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
+        setCompetitionRepo();
+        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), (long) competition.getId(), request));
+    }
 //
 //    //PASSED
 //    @Test
