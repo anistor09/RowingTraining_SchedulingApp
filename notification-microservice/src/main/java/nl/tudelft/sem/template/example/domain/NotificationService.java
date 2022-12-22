@@ -33,4 +33,7 @@ public class NotificationService {
         return notificationRepository.getAllByNetId(netId);
     }
 
+    public List<Notification> getOwnerNotifications(NetId ownerId){
+        return notificationRepository.getAllByOwnerId(ownerId);
+    }
 }

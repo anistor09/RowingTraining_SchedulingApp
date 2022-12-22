@@ -19,5 +19,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
 
     List<Notification> getAllByNetId(NetId netId);
 
+    List<Notification> getAllByOwnerId(NetId ownerId);
+
     List<Notification> getAllByActivityId(ActivityId activityId);
 }
