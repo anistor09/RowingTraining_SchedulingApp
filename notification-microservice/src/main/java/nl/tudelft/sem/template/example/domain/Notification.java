@@ -30,12 +30,12 @@ public class Notification {
     private NetId ownerId;
     @Column(name="message")
     private String message;
-
     @Column(name="ownerNotification")
     private boolean ownerNotification;
-
-    private transient String position;
-    private transient String timeSlot;
+    @Column(name="position")
+    private String position;
+    @Column(name="timeSlot")
+    private String timeSlot;
 
     @Override
     public boolean equals(Object o){

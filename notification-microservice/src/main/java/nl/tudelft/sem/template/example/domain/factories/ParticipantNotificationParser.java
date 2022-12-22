@@ -23,6 +23,6 @@ public class ParticipantNotificationParser implements Parser{
         NetId ownerId = new NetId(transferMatch.getOwner().toString());
         String message = new String("The owner " + netId + " has approved you to participate in this activity:"
                 + activityId + ", on position:" + transferMatch.getPosition() + ", on " + transferMatch.getTimeSlot());
-        return new Notification(activityId, netId, ownerId, message, true);
+        return new Notification(activityId, netId, ownerId, message, false,transferMatch.getPosition(),transferMatch.getTimeSlot());
     }
 }

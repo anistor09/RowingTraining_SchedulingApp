@@ -152,7 +152,7 @@ public class MatcherService {
     public List<Match> findMatch(TransferMatch tr,List<Match> matches){
         List<Match> toDeletMatches= new ArrayList<>();
         for(Match m : matches){
-            if(m.getNetId().equals(tr.getNetId()))
+            if(m.getActivityId().equals(tr.getActivityId()))
                 if(!toDeletMatches.contains(m))
                     toDeletMatches.add(m);
         }

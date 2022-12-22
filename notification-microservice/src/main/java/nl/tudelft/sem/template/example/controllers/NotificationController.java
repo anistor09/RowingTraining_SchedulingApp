@@ -61,12 +61,15 @@ public class NotificationController {
 
     @GetMapping("/getOwnerNotifications")
     public ResponseEntity<List<TransferMatch>> getOwnerNotifications(){
-        List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
+        List<Notification> notifications = notificationService.getOwnerNotifications((new NetId(authManager.getNetId())));
         List<TransferMatch> result = new ArrayList<>();
         for (Notification n : notifications){
-            if (n.isOwnerNotification())
+            if (n.isOwnerNotification()) {
                 result.add(ownerNotificationParserFactory.createParser().parse(n));
+                notificationService.deleteNotification(n);
+            }
         }
+
         return ResponseEntity.ok(result);
     }
     @GetMapping("/getParticipantNotifications")
@@ -74,9 +77,13 @@ public class NotificationController {
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
         List<TransferMatch> result = new ArrayList<>();
         for (Notification n : notifications){
-            if (!n.isOwnerNotification())
+            if (!n.isOwnerNotification()) {
                 result.add(participantNotificationParserFactory.createParser().parse(n));
+                notificationService.deleteNotification(n);
+            }
         }
+
         return ResponseEntity.ok(result);
     }
+
 }
