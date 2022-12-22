@@ -3,17 +3,15 @@ package nl.tudelft.sem.template.example.domain.participant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.tudelft.sem.template.example.domain.HasEvents;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "participants")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Participant extends HasEvents {
+public class Participant  {
     @Id
     @SequenceGenerator(name = "participant",
             sequenceName = "participant",
