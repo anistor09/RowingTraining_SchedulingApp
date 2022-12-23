@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -67,7 +64,7 @@ public class DefaultController {
      * @throws Exception
      */
     @PostMapping("/details")
-    public ResponseEntity addDetails(@RequestBody ParticipationRequestModel request){
+    public ResponseEntity addDetails(@ModelAttribute("req") @RequestBody ParticipationRequestModel request){
         try{
             NetId netId= new NetId(authManager.getNetId());
             PositionManager positionManager= new PositionManager(request.getPositions());
@@ -83,7 +80,7 @@ public class DefaultController {
         return ResponseEntity.ok("Fine");
     }
     @GetMapping("/requestMatch")
-    public List<TransferMatch> requestMatch(@RequestBody RequestMatchModel request) {
+    public List<TransferMatch> requestMatch(@ModelAttribute @RequestBody RequestMatchModel request) {
         List<String> timeSlots = request.getTimeslots();
         NetId netId= new NetId(authManager.getNetId());
         RequestMatch rm = participantService.getRequestMatch(netId,timeSlots);
@@ -93,7 +90,7 @@ public class DefaultController {
     }
 
     @PostMapping("/acceptedMatch")
-    public ResponseEntity<String> requestTransferMatch(@RequestBody RequetsTransferMatchModel request){
+    public ResponseEntity<String> requestTransferMatch(@ModelAttribute @RequestBody RequetsTransferMatchModel request){
         TransferMatch tm = participantService.getTransferMatch(request);
         return serverUtils.sendAcceptedMatch(tm);
     }
