@@ -76,6 +76,7 @@ public class ActivityServiceTest {
     @Test
     public void editCompetitionOneField() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
+        competition.setId(2L);
         setCompetitionRepo();
         service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
@@ -88,6 +89,7 @@ public class ActivityServiceTest {
     @Test
     public void editCompetitionMoreFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 13:00; 10-10-2022 16:00", "boat", List.of("captain", "cox"), "organization", "female", true);
+        competition.setId(2L);
         setCompetitionRepo();
         service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
@@ -102,6 +104,7 @@ public class ActivityServiceTest {
     @Test
     public void editCompetitionAllFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
+        competition.setId(2L);
         setCompetitionRepo();
         service.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
@@ -119,6 +122,7 @@ public class ActivityServiceTest {
     @Test
     public void editTrainingOneField() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), null, null, false);
+        training.setId(1L);
         setTrainingRepo();
         ActivityService service = new ActivityService(activityRepo);
         service.editActivity(new NetId("zosia"), training.getId(), request);
@@ -136,6 +140,7 @@ public class ActivityServiceTest {
     @Test
     public void editTrainingSomeFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
+        training.setId(1L);
         setTrainingRepo();
         ActivityService service = new ActivityService(activityRepo);
         service.editActivity(new NetId("zosia"), training.getId(), request);
@@ -152,6 +157,7 @@ public class ActivityServiceTest {
     @Test
     public void editTrainingAllFields() throws UnauthorizedException, ActivityNotFoundException {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
+        training.setId(1L);
         setTrainingRepo();
         service.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
@@ -167,6 +173,7 @@ public class ActivityServiceTest {
     @Test
     public void editTrainingUnauthorized() {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
+        training.setId(1L);
         setTrainingRepo();
 
         assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("harry"), training.getId(), request));
@@ -176,6 +183,7 @@ public class ActivityServiceTest {
     @Test
     public void editCompetitionUnauthorized() {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
+        competition.setId(2L);
         setCompetitionRepo();
 
         assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), competition.getId(), request));
