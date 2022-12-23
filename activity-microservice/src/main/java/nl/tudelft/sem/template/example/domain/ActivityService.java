@@ -180,7 +180,7 @@ public class ActivityService {
      * @param id
      * @return the activity with the given id
      */
-    public Activity getById(Long id) throws ActivityNotFoundException {
+    public Activity getById(long id) throws ActivityNotFoundException {
         if (activityRepository.findById(id).isPresent()) {
             return activityRepository.findById(id).get();
         } else {
