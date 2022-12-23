@@ -1,8 +1,10 @@
 package nl.tudelft.sem.template.example.domain.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class NotificationRequestModel {
     private String activityId;
     private String netId;
