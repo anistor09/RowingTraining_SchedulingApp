@@ -12,6 +12,15 @@ public class TransferMatch {
     String  timeSlot;
     String netId;
     String owner;
+
+    /**
+     * Constructor for TransferMatch.
+     * @param activityId
+     * @param position
+     * @param timeSlot
+     * @param netId
+     * @param owner
+     */
     public TransferMatch(Long activityId, String position, String timeSlot,String netId,String owner) {
         this.activityId = activityId;
         this.position = position;

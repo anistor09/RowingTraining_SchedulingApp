@@ -36,16 +36,28 @@ public class CommunicationController {
         this.serverUtils = serverUtils;
     }
 
+    /**
+     * Get the list of activities.
+     * @return list of activities
+     */
     @GetMapping("/getActivities")
     public List<Activity> getActivities() {
         return serverUtils.getActivities();
     }
 
+    /**
+     * Get the list of trainings.
+     * @return list of trainings
+     */
     @GetMapping("/getTrainings")
     public List<Training> getTrainings() {
         return serverUtils.getTrainings();
     }
 
+    /**
+     * Get the list of competitions.
+     * @return list of competitions
+     */
     @GetMapping("/getCompetitions")
     public List<Competition> getCompetitions() {
         return serverUtils.getCompetitions();
