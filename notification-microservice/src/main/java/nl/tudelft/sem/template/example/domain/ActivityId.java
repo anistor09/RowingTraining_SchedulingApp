@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 public class ActivityId {
     private transient String id;
 
+    /**
+     * Constructor for ActivityId.
+     * @param id
+     */
     public ActivityId(String id){
         this.id = id;
     }

@@ -27,6 +27,11 @@ public class NotificationController {
 
     private final transient ParserFactory participantNotificationParserFactory;
 
+    /**
+     * Constructor for NotificationController.
+     * @param notificationService
+     * @param authManager
+     */
     @Autowired
     public NotificationController(NotificationService notificationService, AuthManager authManager){
         this.notificationService = notificationService;
@@ -35,12 +40,20 @@ public class NotificationController {
         this.participantNotificationParserFactory = new ParticipantNotificationParserFactory();
     }
 
+    /**
+     * Get all notifications.
+     * @return List of notifications
+     */
     @GetMapping("/findAll")
     public List<Notification> findAllNotifications(){
         return notificationService.getAllNotifications();
     }
 
-
+    /**
+     * Create participant notification.
+     * @param requests
+     * @return
+     */
     @PostMapping("/createParticipantNotification")
     public ResponseEntity<List<Notification>> createParticipantNotification(@RequestBody List<TransferMatch> requests){
         List<Notification> result = new ArrayList<>();
@@ -52,6 +65,11 @@ public class NotificationController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * Create owner notification.
+     * @param request
+     * @return
+     */
     @PostMapping("/createOwnerNotification")
     public ResponseEntity<Notification> createOwnerNotification (@RequestBody TransferMatch request){
         Notification temp = ownerNotificationParserFactory.createParser().parseOtherWay(request);
@@ -59,6 +77,10 @@ public class NotificationController {
         return ResponseEntity.ok(temp);
     }
 
+    /**
+     * Get all notifications for the owner.
+     * @return
+     */
     @GetMapping("/getOwnerNotifications")
     public ResponseEntity<List<TransferMatch>> getOwnerNotifications(){
         List<Notification> notifications = notificationService.getOwnerNotifications((new NetId(authManager.getNetId())));
@@ -72,6 +94,11 @@ public class NotificationController {
 
         return ResponseEntity.ok(result);
     }
+
+    /**
+     * Get all notifications for the participant.
+     * @return
+     */
     @GetMapping("/getParticipantNotifications")
     public ResponseEntity<List<TransferMatch>> getParticipantNotifications(){
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));

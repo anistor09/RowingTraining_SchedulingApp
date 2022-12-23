@@ -3,7 +3,6 @@ package nl.tudelft.sem.template.example.domain.utils;
 import nl.tudelft.sem.template.example.domain.Activity;
 import nl.tudelft.sem.template.example.domain.Competition;
 import nl.tudelft.sem.template.example.domain.Training;
-import nl.tudelft.sem.template.example.domain.transferObject.OwnerNotification;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import java.util.List;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -24,6 +22,11 @@ public class ServerUtils {
     transient String ACTIVITY_SERVER = new String("http://localhost:8084/activity/");
 
     transient String credentials="Bearer ";
+
+    /**
+     * Gets all the activities from the activity server.
+     * @return list of activities
+     */
     public List<Activity> getActivities(){
         try {
             return new ResteasyClientBuilder().build()
@@ -38,6 +41,10 @@ public class ServerUtils {
         return new ArrayList<>();
     }
 
+    /**
+     * Gets all training activities from the activity server.
+     * @return list of training activities
+     */
     public List<Training> getTrainings() {
         try {
             return new ResteasyClientBuilder().build()
@@ -52,6 +59,10 @@ public class ServerUtils {
         return new ArrayList<>();
     }
 
+    /**
+     * Gets all competition activities from the activity server.
+     * @return list of competition activities
+     */
     public List<Competition> getCompetitions() {
         try {
             return new ResteasyClientBuilder().build()
@@ -68,6 +79,11 @@ public class ServerUtils {
 
     transient String NOTIFICATION_SERVER = new String("http://localhost:8085/");
 
+    /**
+     * Sends a notification to the notification server.
+     * @param tm
+     * @return response entity
+     */
     public ResponseEntity<String> sendPendingUser(TransferMatch tm){
         try{
             new ResteasyClientBuilder().build()
@@ -84,6 +100,11 @@ public class ServerUtils {
         return ResponseEntity.ok("not sent");
     }
 
+    /**
+     * Sends a notification to the notification server.
+     * @param acceptedMatches
+     * @return response entity
+     */
     public ResponseEntity<String> sendAcceptedUsers(List<TransferMatch> acceptedMatches) {
         try{
             new ResteasyClientBuilder().build()

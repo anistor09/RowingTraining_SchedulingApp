@@ -3,17 +3,15 @@ package nl.tudelft.sem.template.example.domain.participant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import nl.tudelft.sem.template.example.domain.HasEvents;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "participants")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Participant extends HasEvents {
+public class Participant  {
     @Id
     @SequenceGenerator(name = "participant",
             sequenceName = "participant",
@@ -45,6 +43,15 @@ public class Participant extends HasEvents {
     private Boolean level;
 
 
+    /**
+     * Constructor for Participant.
+     * @param netId
+     * @param positionManager
+     * @param gender
+     * @param certificate
+     * @param organization
+     * @param level
+     */
     public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, Boolean level){
         this.netId= netId;
         this.positionManager= positionManager;
@@ -53,10 +60,4 @@ public class Participant extends HasEvents {
         this.organization= organization;
         this.level=level;
     }
-//    public void requestMatch(List<String> timeSlots){
-//        //this.recordThat(new ParticipantRequestedMatchEvent(this.username,timeSlots));
-//        TestEvent tv = new TestEvent(this.netId,timeSlots);
-//        this.recordThat(tv);
-//    }
-
 }

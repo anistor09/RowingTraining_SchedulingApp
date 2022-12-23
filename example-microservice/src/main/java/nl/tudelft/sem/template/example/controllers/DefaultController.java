@@ -82,6 +82,12 @@ public class DefaultController {
         }
         return ResponseEntity.ok("Fine");
     }
+
+    /**
+     * Endpoint for getting the matches of a participant
+     * @param request
+     * @return List of matches
+     */
     @GetMapping("/requestMatch")
     public List<TransferMatch> requestMatch(@RequestBody RequestMatchModel request) {
         List<String> timeSlots = request.getTimeslots();
@@ -92,6 +98,11 @@ public class DefaultController {
 
     }
 
+    /**
+     * Endpoint for requesting a transfer match.
+     * @param request
+     * @return 200 OK if the request is successful
+     */
     @PostMapping("/acceptedMatch")
     public ResponseEntity<String> requestTransferMatch(@RequestBody RequetsTransferMatchModel request){
         TransferMatch tm = participantService.getTransferMatch(request);

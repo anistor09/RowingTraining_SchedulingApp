@@ -58,6 +58,17 @@ public class Notification {
         this.message = message;
         this.ownerNotification = ownerNotification;
     }
+
+    /**
+     * Constructor for a notification.
+     * @param activityId
+     * @param netId
+     * @param ownerId
+     * @param message
+     * @param ownerNotification
+     * @param position
+     * @param timeSlot
+     */
     public Notification(ActivityId activityId, NetId netId, NetId ownerId, String message, boolean ownerNotification, String position, String timeSlot){
         this.activityId = activityId;
         this.netId = netId;

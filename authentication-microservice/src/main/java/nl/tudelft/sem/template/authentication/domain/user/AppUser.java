@@ -45,15 +45,27 @@ public class AppUser extends HasEvents {
         this.recordThat(new UserWasCreatedEvent(netId));
     }
 
+    /**
+     * Changes the password of the user.
+     * @param password
+     */
     public void changePassword(HashedPassword password) {
         this.password = password;
         this.recordThat(new PasswordWasChangedEvent(this));
     }
 
+    /**
+     * Returns the NetId of the user.
+     * @return
+     */
     public NetId getNetId() {
         return netId;
     }
 
+    /**
+     * Returns the password of the user.
+     * @return
+     */
     public HashedPassword getPassword() {
         return password;
     }

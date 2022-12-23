@@ -16,7 +16,10 @@ public class PositionManager {
     private List<String> positions;
 
 
-
+    /**
+     * Constructor for the position manager.
+     * @param positionsDB
+     */
     public PositionManager(String positionsDB){
 
         String[] returnedPos = positionsDB.split(",");
@@ -25,8 +28,9 @@ public class PositionManager {
             positions.add(s);
         }
 
-        this.positions=positions;
+        this.positions = positions;
     }
+
     @Override
     public String toString() {
         String res = "";
