@@ -2,7 +2,8 @@ package nl.tudelft.sem.template.example.domain;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CertificateTest {
 
@@ -30,5 +31,12 @@ class CertificateTest {
         Certificate certificate= new Certificate("C4");
         Certificate certificate1= new Certificate("4+");
         assertFalse(certificate.isBetterCertificate(certificate1));
+    }
+
+    @Test
+    void testToString() {
+        String s="C4";
+        Certificate certificate= new Certificate(s);
+        assertTrue(certificate.toString().equals(s));
     }
 }
