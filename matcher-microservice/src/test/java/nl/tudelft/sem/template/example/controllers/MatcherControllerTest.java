@@ -10,16 +10,24 @@ import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 // activate profiles to have spring use mocks during auto-injection of certain beans.
-@ActiveProfiles({"test", "mockTokenVerifier", "mockAuthenticationManager"})
+@ActiveProfiles({"test", "mockTokenVerifier", "mockAuthenticationManager","matcherService"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 class MatcherControllerTest {
@@ -48,7 +56,7 @@ class MatcherControllerTest {
     @Autowired
     private transient AuthManager mockAuthenticationManager;
 
-    @Autowired
+    @MockBean
     private transient MatcherService matcherService;
 
     @BeforeEach
@@ -56,36 +64,37 @@ class MatcherControllerTest {
         when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
         when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
         when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
     }
 
 
     @Test
     void requestMatchTest() throws Exception {
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        Participant participant = getParticipant();
-//        List<String> timeSlots = new ArrayList<>();
-//        timeSlots.add("");
-//
-//        RequestMatch requestMatch = new RequestMatch(participant,timeSlots);
-//        String jsonRequest = mapper.writeValueAsString(requestMatch);
-//
-//        TransferMatch expected = new TransferMatch(1L,"cox","timeslot",
-//                "participant","owner");
-//        when(matcherService.computeMatch(any())).thenReturn(List.of(expected));
-//
-//        ResultActions result = mockMvc.perform(post("/requestMatch")
-//                .header("Authorization", "Bearer MockedToken")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(jsonRequest));
-//        result.andExpect(status().isOk());
-//
-//        String response = result.andReturn().getResponse().getContentAsString();
-//        List<TransferMatch> transferMatches = mapper.readValue(response, List.class);
-//        TransferMatch transferMatch = transferMatches.get(0);
-//
-//        assertThat(transferMatch.getActivityId().equals(expected.getActivityId()));
+        ObjectMapper mapper = new ObjectMapper();
+        Participant participant = getParticipant();
+        List<String> timeSlots = new ArrayList<>();
+        timeSlots.add("20-12-2022 09:00;20-12-2022 11:00");
+
+        RequestMatch requestMatch = new RequestMatch(participant,timeSlots);
+        String jsonRequest = mapper.writeValueAsString(requestMatch);
+
+        TransferMatch expected = new TransferMatch(1L,"cox","timeslot",
+                "participant","owner");
+        List<TransferMatch> lst = new ArrayList<>();
+        lst.add(expected);
+        when(matcherService.computeMatch(any())).thenReturn(lst);
+
+        ResultActions result = mockMvc.perform(post("/requestMatch")
+                .header("Authorization", "Bearer MockedToken")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        result.andExpect(status().isOk());
+
+        String response = result.andReturn().getResponse().getContentAsString();
+        List<TransferMatch> transferMatches = mapper.readValue(response, new TypeReference<List<TransferMatch>>() {});
+        TransferMatch transferMatch = transferMatches.get(0);
+
+        assertThat(transferMatch.getActivityId().equals(expected.getActivityId()));
 
     }
 
