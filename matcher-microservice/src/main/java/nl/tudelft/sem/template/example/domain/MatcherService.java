@@ -19,7 +19,11 @@ public class MatcherService {
     private final transient MatcherRepository matcherRepository;
     private final transient ServerUtils serverUtils;
 
-
+    /**
+     * Constructor for MatcherService.
+     * @param matcherRepository
+     * @param serverUtils
+     */
     public MatcherService(MatcherRepository matcherRepository, ServerUtils serverUtils) {
         this.matcherRepository = matcherRepository;
         this.serverUtils = serverUtils;
@@ -29,6 +33,11 @@ public class MatcherService {
     transient Validator handler;
     transient List<TimeSlot> timeSlots;
 
+    /**
+     * Method to match a participant.
+     * @param rm
+     * @return list of matches
+     */
     public List<TransferMatch> computeMatch(RequestMatch rm) {
         List<TransferMatch> res = new ArrayList<>();
         handler = setValidators();
@@ -44,6 +53,10 @@ public class MatcherService {
 
     }
 
+    /**
+     * Method to set the validators.
+     * @return validator
+     */
     private Validator setValidators() {
         Validator handler = new TimeSlotValidator();
         Validator positionValidator = new PositionValidator();
@@ -56,7 +69,10 @@ public class MatcherService {
         return handler;
     }
 
-
+    /**
+     * Method to get all activities.
+     * @return list of activities
+     */
     public List<Activity> getActivities() {
         List<Activity> activities = new ArrayList<>();
         activities.addAll(getTrainings());
@@ -64,27 +80,46 @@ public class MatcherService {
         return activities;
     }
 
+    /**
+     * Method to get all trainings.
+     * @return list of trainings
+     */
     public List<Training> getTrainings() {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.convertValue(serverUtils.getTrainings(), new TypeReference<List<Training>>() { });
     }
 
+    /**
+     * Method to get all competitions.
+     * @return list of competitions
+     */
     public List<Competition> getCompetitions() {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.convertValue(serverUtils.getCompetitions(), new TypeReference<List<Competition>>() { });
     }
 
-
+    /**
+     * Method to save a match.
+     * @param m
+     */
     public void saveMatch(Match m) {
         matcherRepository.save(m);
     }
 
+    /**
+     * Method to get all matches.
+     * @return list of matches
+     */
     public List<Match> getAllMatches() {
         return matcherRepository.findAll();
     }
 
     transient List<Match> matches;
 
+    /**
+     * Method to remove matches.
+     * @param acceptedMatches
+     */
     public void removeMatches(List<TransferMatch> acceptedMatches) {
         matches= getAllMatches();
         for(TransferMatch transferMatch: acceptedMatches){
@@ -94,6 +129,12 @@ public class MatcherService {
         }
     }
 
+    /**
+     * Method to find a match.
+     * @param tr
+     * @param matches
+     * @return list of matches
+     */
     public List<Match> findMatch(TransferMatch tr,List<Match> matches){
         List<Match> toDeletMatches= new ArrayList<>();
         for(Match m : matches){
@@ -104,6 +145,10 @@ public class MatcherService {
         return toDeletMatches;
     }
 
+    /**
+     * Method to delete a match.
+     * @param m
+     */
     public void deleteMatch(Match m){
         matcherRepository.delete(m);
     }

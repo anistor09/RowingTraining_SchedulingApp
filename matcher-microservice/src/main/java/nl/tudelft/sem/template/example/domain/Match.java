@@ -31,6 +31,12 @@ public class Match {
     @Column(name="position", nullable = false)
     private String position;
 
+    /**
+     * Constructor for Match.
+     * @param netId
+     * @param activityId
+     * @param position
+     */
     public Match(String netId, Long activityId,String position) {
         this.netId = netId;
         this.activityId = activityId;

@@ -18,7 +18,6 @@ public abstract class Activity {
     @Column(name = "id", nullable = false, updatable=false)
     private long id;
 
-
     @Column(name= "owner", nullable = false)
     @Convert(converter = NetIdAttributeConverter.class)
     private NetId owner;
@@ -34,6 +33,13 @@ public abstract class Activity {
     @Convert(converter = PositionListConverter.class)
     private List<String> positions;
 
+    /**
+     * Constructor for Activity.
+     * @param owner
+     * @param timeSlot
+     * @param boat
+     * @param positions
+     */
     public Activity(NetId owner, TimeSlot timeSlot, String boat, List<String> positions) {
         this.owner = owner;
         this.timeSlot = timeSlot;

@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 public class NetId {
     private transient String id;
 
+    /**
+     * Constructor for NetId.
+     * @param id
+     */
     public NetId(String id){
         this.id = id;
     }
