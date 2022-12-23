@@ -71,7 +71,7 @@ public abstract class Activity {
         this.positions = positions;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
