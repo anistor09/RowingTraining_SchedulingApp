@@ -53,17 +53,13 @@ public class NotificationServiceTest {
     @Test
     public void getAllWithNoNotifications() throws NoNotificationsException {
         when(notificationRepo.findAll()).thenReturn(List.of());
-        List<Notification> notifications = service.getAllNotifications();
-        assertEquals(0, notifications.size());
         assertThrows(NoNotificationsException.class, () -> service.getAllNotifications());
     }
 
     @Test
     public void getUserNotificationsWithNoNotifications() throws NoNotificationsException {
         when(notificationRepo.getAllByNetId(any())).thenReturn(List.of());
-        List<Notification> notifications = service.getUserNotifications(new NetId("sem"));
-        assertEquals(0, notifications.size());
-        assertThrows(NoNotificationsException.class, () -> service.getUserNotifications(new NetId("sem")));
+        assertThrows(NoNotificationsException.class, () -> service.getUserNotifications(paula));
     }
 
     @Test
@@ -77,8 +73,6 @@ public class NotificationServiceTest {
     @Test
     public void getOwnerNotificationsWithNoNotifications() throws NoNotificationsException {
         when(notificationRepo.getAllByOwnerId(any())).thenReturn(List.of());
-        List<Notification> notifications = service.getOwnerNotifications(new NetId("sem"));
-        assertEquals(0, notifications.size());
         assertThrows(NoNotificationsException.class, () -> service.getOwnerNotifications(new NetId("sem")));
     }
 
