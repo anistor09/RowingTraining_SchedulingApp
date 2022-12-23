@@ -32,10 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,6 +97,50 @@ class MatcherControllerTest {
         assertThat(transferMatch.getActivityId().equals(expected.getActivityId()));
 
     }
+    @Test
+    void acceptedMatch() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+       TransferMatch tm = new TransferMatch(
+               1L,"cox","20-12-2022 09:00;20-12-2022 11:00",
+               "participant","owner");
+        String jsonRequest = mapper.writeValueAsString(tm);
+        Match m = new Match(tm.getNetId(),tm.getActivityId(),tm.getPosition());
+
+
+
+        ResultActions result = mockMvc.perform(post("/acceptedMatch")
+                .header("Authorization", "Bearer MockedToken")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest));
+        result.andExpect(status().isOk());
+        verify(matcherService).saveMatch(any(Match.class));
+
+    }
+    @Test
+    void getPendingMatches() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+
+        Match expectedMatch = new Match("participant",1L,"cox");
+        when(matcherService.getAllMatches()).thenReturn(List.of(expectedMatch));
+
+
+
+        ResultActions result = mockMvc.perform(get("/getAllPendingMatches")
+                .header("Authorization", "Bearer MockedToken"));
+        result.andExpect(status().isOk());
+        String response = result.andReturn().getResponse().getContentAsString();
+        List<Match> pendingMatches = mapper.readValue(response, new TypeReference<List<Match>>() {});
+        assertEquals(pendingMatches.get(0).getNetId(),expectedMatch.getNetId());
+        assertEquals(pendingMatches.get(0).getActivityId(),expectedMatch.getActivityId());
+        assertEquals(pendingMatches.get(0).getPosition(),expectedMatch.getPosition());
+
+
+
+    }
+
 
     private Participant getParticipant() {
         return new Participant(new NetId("participant"),
