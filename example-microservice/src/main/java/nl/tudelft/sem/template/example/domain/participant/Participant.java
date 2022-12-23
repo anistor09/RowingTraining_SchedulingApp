@@ -43,6 +43,15 @@ public class Participant  {
     private Boolean level;
 
 
+    /**
+     * Constructor method for the participant
+     * @param netId netId of the user
+     * @param positionManager positions that the participant is able to fill
+     * @param gender gender of the participant
+     * @param certificate certificate of the participant
+     * @param organization organization of the participant
+     * @param level if he is competitive or not
+     */
     public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, Boolean level){
         this.netId= netId;
         this.positionManager= positionManager;

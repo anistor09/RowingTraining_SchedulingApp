@@ -2,6 +2,9 @@ package nl.tudelft.sem.template.example.domain.models;
 
 import lombok.Data;
 
+/**
+ * model representing a request model for TranferMatch
+ */
 @Data
 public class RequetsTransferMatchModel {
     Long activityId;

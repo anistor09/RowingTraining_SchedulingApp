@@ -16,7 +16,10 @@ public class PositionManager {
     private List<String> positions;
 
 
-
+    /**
+     * Constructor method
+     * @param positionsDB string that contains all the positions
+     */
     public PositionManager(String positionsDB){
 
         String[] returnedPos = positionsDB.split(",");

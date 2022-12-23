@@ -17,12 +17,19 @@ import java.util.Map;
 public class Certificate {
     final transient String certificateType;
 
+    /**
+     * Constructor method
+     * @param certificateType string that contains the certificate
+     */
     public Certificate(String certificateType){
         this.certificateType=certificateType;
     }
 
 
-
+    /**
+     * Method that verify if the certificate is valid or not
+     * @return true in case it is valid, else false
+     */
     boolean isValid() {
         ArrayList<String> strings=new ArrayList<String>(List.of(new String[]{"C4", "4+", "8+"}));
         if(strings.contains(certificateType))
@@ -34,7 +41,11 @@ public class Certificate {
         return certificateType;
     }
 
-
+    /**
+     * Method that compare if a certificate is better than another one
+     * @param other a certificate to compare actual certificate to
+     * @return true if it is better, lese if not
+     */
     boolean isBetterCertificate(Certificate other) {
         Map<String,Integer> hm = Map.of("C4",1, "4+", 2,"8+",3);
 

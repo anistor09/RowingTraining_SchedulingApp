@@ -4,6 +4,9 @@ package nl.tudelft.sem.template.example.domain.participant;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+/**
+ * Converter class for the certificate
+ */
 @Converter
 public class CertificateAttributeConverter implements AttributeConverter<Certificate, String> {
 

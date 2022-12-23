@@ -27,6 +27,11 @@ public class UserDetailsController {
         this.authManager = authManager;
         this.participantService= participantService;
     }
+
+    /**
+     *
+     * @return positions of a participant
+     */
     @GetMapping("/positions")
     public List<String> getPositions() {
 
@@ -42,6 +47,10 @@ public class UserDetailsController {
 
     }
 
+    /**
+     *
+     * @return certificate of a participant
+     */
     @GetMapping("/certificate")
     public String getCertificate() {
 
@@ -56,6 +65,11 @@ public class UserDetailsController {
 
 
     }
+
+    /**
+     *
+     * @return gender of a participant
+     */
     @GetMapping("/gender")
     public String getGender() {
 
@@ -70,6 +84,11 @@ public class UserDetailsController {
 
 
     }
+
+    /**
+     *
+     * @return level of competitiveness of a participant
+     */
     @GetMapping("/level")
     public Boolean getLevel() {
         try {
@@ -81,6 +100,11 @@ public class UserDetailsController {
         }
 
     }
+
+    /**
+     *
+     * @return organization of a participant
+     */
     @GetMapping("/organization")
     public String getOrganization() {
         try {

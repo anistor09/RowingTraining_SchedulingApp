@@ -48,6 +48,12 @@ public class ParticipantService {
         //}
         //throw new Exception("some exception we need to create");
     }
+
+    /**
+     * Get a participant from the repository based on his username
+     * @param netId The username of the participant
+     * @return the participant with that username
+     */
     public Participant getParticipant(NetId netId){
         if(participantRepository.findByNetId(netId)!=null) {
             Optional<Participant> participant = participantRepository.findByNetId(netId);
@@ -58,6 +64,12 @@ public class ParticipantService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     }
+
+    /**
+     * Get positions of a participant based on his username
+     * @param netId The username
+     * @return positions that a participant with the entered netId is capable to fill
+     */
     public List<String> getParticipantPositions(NetId netId) {
 
         if(getParticipant(netId).getPositionManager().getPositions()!=null){
@@ -67,6 +79,11 @@ public class ParticipantService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Get certificate of a participant based on his username
+     * @param netId The username
+     * @return certificate of that participant
+     */
     public String getParticipantCertificate(NetId netId) {
         if(getParticipant(netId).getCertificate()!=null){
             String certificate= getParticipant(netId).getCertificate().toString();
@@ -74,6 +91,12 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Get organization of a participant based on his username
+     * @param netId The username
+     * @return organization of that participant
+     */
     public String getParticipantOrganization(NetId netId) {
         if(getParticipant(netId).getOrganization()!=null){
             String organization= getParticipant(netId).getOrganization();
@@ -81,6 +104,11 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+    /**
+     * Get gender of a participant based on his username
+     * @param netId The username
+     * @return gender of that participant
+     */
     public String getParticipantGender(NetId netId) {
         if(getParticipant(netId).getGender()!=null){
             String gender= getParticipant(netId).getGender();
@@ -88,6 +116,11 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+    /**
+     * Get level of competitiveness of a participant based on his username
+     * @param netId The username
+     * @return level of competitiveness of that participant
+     */
     public Boolean getParticipantLevel(NetId netId) {
         if(getParticipant(netId).getLevel()!=null){
             Boolean level= getParticipant(netId).getLevel();
@@ -96,12 +129,23 @@ public class ParticipantService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Create a new RequestMatch based on the netId and the timeslots of the user
+     * @param netId username of the participant
+     * @param timeSlots the time slots when he is able to participate in activities
+     * @return a request match
+     */
     public RequestMatch getRequestMatch(NetId netId, List<String> timeSlots) {
         Participant p = getParticipant(netId);
         return new RequestMatch(p,timeSlots);
 
     }
 
+    /**
+     * Based on the TransferMatchModel it creates a new TransferMatch
+     * @param request a model that contains the id of the activity, positions, timeslot, netId and the name of the owner
+     * @return a new TranferMatch
+     */
     public TransferMatch getTransferMatch(RequetsTransferMatchModel request){
         Long activityId = request.getActivityId();
         String positions = request.getPosition();

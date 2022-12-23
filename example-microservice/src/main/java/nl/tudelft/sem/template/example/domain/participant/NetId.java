@@ -11,6 +11,10 @@ import lombok.Getter;
 public class NetId {
     private final transient String netIdValue;
 
+    /**
+     * Constructor method
+     * @param netId a string that contains the netId of the user
+     */
     public NetId(String netId) {
         // validate NetID
         this.netIdValue = netId;

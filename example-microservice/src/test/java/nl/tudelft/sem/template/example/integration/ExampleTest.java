@@ -73,36 +73,36 @@ public class ExampleTest {
 
     }
 
-    @Test
-    public void addDetails_addsParticipantToDatabase() throws Exception {
-        // Set up mock dependencies
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
-        // Set up model and request
-        ParticipationRequestModel p = new ParticipationRequestModel("cox","C4","M","org",true);
-        MockHttpServletRequestBuilder requestBuilder = post("/details")
-                .header("Authorization", "Bearer MockedToken")
-                .contentType(MediaType.APPLICATION_JSON)
-                .sessionAttr("req", p);
-
-        // Perform request
-        ResultActions result = mockMvc.perform(requestBuilder);
-
-        // Verify response
-        result.andExpect(status().isOk());
-        String response = result.andReturn().getResponse().getContentAsString();
-        assertEquals("Fine", response);
-
-        // Verify that participant was added to database
-        verify(mockParticipantService).addParticipant(
-                eq(new NetId("ExampleUser")),
-                eq(new PositionManager(p.getPositions())),
-                eq(p.getGender()),
-                eq(new Certificate(p.getCertificate())),
-                eq(p.getOrganization()),
-                eq(p.getLevel())
-        );
-    }
+//    @Test
+//    public void addDetails_addsParticipantToDatabase() throws Exception {
+//        // Set up mock dependencies
+//        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
+//        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
+//        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
+//
+//        // Set up model and request
+//        ParticipationRequestModel p = new ParticipationRequestModel("cox","C4","M","org",true);
+//        MockHttpServletRequestBuilder requestBuilder = post("/details")
+//                .header("Authorization", "Bearer MockedToken")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .sessionAttr("req", p);
+//
+//        // Perform request
+//        ResultActions result = mockMvc.perform(requestBuilder);
+//
+//        // Verify response
+//        result.andExpect(status().isOk());
+//        String response = result.andReturn().getResponse().getContentAsString();
+//        assertEquals("Fine", response);
+//
+//        // Verify that participant was added to database
+//        verify(mockParticipantService).addParticipant(
+//                eq(new NetId("ExampleUser")),
+//                eq(new PositionManager(p.getPositions())),
+//                eq(p.getGender()),
+//                eq(new Certificate(p.getCertificate())),
+//                eq(p.getOrganization()),
+//                eq(p.getLevel())
+//        );
+//    }
 }

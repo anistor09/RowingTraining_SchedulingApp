@@ -2,7 +2,9 @@ package nl.tudelft.sem.template.example.domain.participant;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
+/**
+ * Converter class for the positions
+ */
 @Converter
 public class PositionAttributeCoverter implements AttributeConverter<PositionManager, String> {
 
