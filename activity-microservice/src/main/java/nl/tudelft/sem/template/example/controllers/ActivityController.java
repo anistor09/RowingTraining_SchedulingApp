@@ -1,14 +1,12 @@
 package nl.tudelft.sem.template.example.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import nl.tudelft.sem.template.example.authentication.AuthManager;
-import nl.tudelft.sem.template.example.authentication.JwtTokenVerifier;
 import nl.tudelft.sem.template.example.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,7 +37,7 @@ public class ActivityController {
 
 
     @PutMapping("/edit/{id}")
-    public void editActivity(@RequestParam(value = "id", required = true) @PathVariable long id, @ModelAttribute("request") @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
+    public void editActivity(@PathVariable long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
         activityService.editActivity(username, id, request);
     }
