@@ -49,14 +49,29 @@ public class RegistrationService {
             throw new Exception("Something went wrong");
     }
 
+    /**
+     * Check if the password is valid.
+     * @param password
+     * @return true if the password is valid
+     */
     public boolean checkPasswordIsValid(Password password) {
         return password.isValid();
     }
 
+    /**
+     * Check if the NetID is unique.
+     * @param netId
+     * @return true if the NetID is unique
+     */
     public boolean checkNetIdIsUnique(NetId netId) {
         return !userRepository.existsByNetId(netId);
     }
 
+    /**
+     * Check if the NetID is valid.
+     * @param netId
+     * @return true if the NetID is valid
+     */
     public boolean checkNetIdIsValid(NetId netId){
         return netId.isValid();
     }

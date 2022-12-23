@@ -6,10 +6,18 @@ package nl.tudelft.sem.template.authentication.domain.user;
 public class PasswordWasChangedEvent {
     private final AppUser user;
 
+    /**
+     * Constructor for PasswordWasChangedEvent.
+     * @param user
+     */
     public PasswordWasChangedEvent(AppUser user) {
         this.user = user;
     }
 
+    /**
+     * Gets the user.
+     * @return user
+     */
     public AppUser getUser() {
         return this.user;
     }

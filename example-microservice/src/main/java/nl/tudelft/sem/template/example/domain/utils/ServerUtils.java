@@ -21,6 +21,11 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
     transient String MATCHER_SERVER = new String("http://localhost:8083/");
 
+    /**
+     * Send a request match to the matcher server.
+     * @param rm
+     * @return
+     */
     public List<TransferMatch> sendRequestMatch(RequestMatch rm){
         try{
             List<TransferMatch> res = new ResteasyClientBuilder().build()
@@ -37,7 +42,11 @@ public class ServerUtils {
         return new ArrayList<>();
     }
 
-
+    /**
+     * Send accept match to the matcher server.
+     * @param tm
+     * @return
+     */
     public ResponseEntity<String> sendAcceptedMatch(TransferMatch tm){
         try{
              new ResteasyClientBuilder().build()
@@ -55,5 +64,4 @@ public class ServerUtils {
         }
         return ResponseEntity.ok("Not added");
     }
-
 }

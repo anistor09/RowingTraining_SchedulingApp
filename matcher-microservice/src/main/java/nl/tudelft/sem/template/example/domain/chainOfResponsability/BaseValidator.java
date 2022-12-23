@@ -13,6 +13,13 @@ public abstract class BaseValidator implements Validator {
         this.next = h;
     }
 
+    /**
+     * Checks if the next validator is null.
+     * @param activity
+     * @param participant
+     * @param timeslots
+     * @return
+     */
     protected boolean checkNext(Activity activity, String position, Participant participant, List<TimeSlot> timeslots) {
         if (next == null) {
             return true;

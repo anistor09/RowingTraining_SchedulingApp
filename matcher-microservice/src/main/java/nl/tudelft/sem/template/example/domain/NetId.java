@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 public class NetId {
     private  transient String netIdValue;
 
+    /**
+     * Constructor for NetId.
+     * @param netId
+     */
     public NetId(String netId) {
         // validate NetID
         this.netIdValue = netId;

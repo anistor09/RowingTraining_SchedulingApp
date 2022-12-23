@@ -7,6 +7,11 @@ import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 
 public class OwnerNotificationParser implements Parser{
 
+    /**
+     * Parse a Notification to a TransferMatch.
+     * @param notification
+     * @return
+     */
     @Override
     public TransferMatch parse(Notification notification){
         Long activityId = Long.parseLong(notification.getActivityId().toString());
@@ -17,6 +22,11 @@ public class OwnerNotificationParser implements Parser{
         return new TransferMatch(activityId, position, timeSlot, netId, owner);
     }
 
+    /**
+     * Parse a TransferMatch to a Notification.
+     * @param transferMatch
+     * @return
+     */
     @Override
     public Notification parseOtherWay(TransferMatch transferMatch){
         ActivityId activityId = new ActivityId(transferMatch.getActivityId().toString());
