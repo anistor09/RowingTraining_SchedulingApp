@@ -253,8 +253,6 @@ public class ActivityServiceTest {
 
     @Test
     public void getActivityByIdWithNoActivities() {
-        ActivityRepository activityRepo = mock(ActivityRepository.class);
-        ActivityService service = new ActivityService(activityRepo);
         when(activityRepo.findAll()).thenReturn(List.of());
 
         assertThrows(ActivityNotFoundException.class, () -> service.getById(1L));
