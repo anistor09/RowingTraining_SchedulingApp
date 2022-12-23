@@ -14,12 +14,15 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 public class TimeSlot {
-    private transient Date begin;
-    private transient Date end;
-    transient SimpleDateFormat converter;
+    transient Date begin;
+    transient Date end;
 
+    /**
+     * Constructor for the TimeSlot.
+     * @param timeSlot
+     */
     public TimeSlot(String timeSlot) {
-        converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+        SimpleDateFormat converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
         converter.setTimeZone(TimeZone.getTimeZone("UTC"));
         String[] dates = timeSlot.split(";");
         try {
@@ -42,7 +45,10 @@ public class TimeSlot {
         return new TimeSlot(timeSlot);
     }
 
-    public String timeSlotToString() {
+    @Override
+    public String toString() {
+        SimpleDateFormat converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
+        converter.setTimeZone(TimeZone.getTimeZone("UTC"));
         return converter.format(begin) +";"+ converter.format(end);
     }
 }

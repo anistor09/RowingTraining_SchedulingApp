@@ -7,15 +7,25 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TransferMatch {
-    String activityName;
+    Long activityId;
     String position;
     String  timeSlot;
-
     String netId;
-    public TransferMatch(String activityName, String position, String timeSlot,String netId) {
-        this.activityName = activityName;
+    String owner;
+
+    /**
+     * Constructor for TransferMatch.
+     * @param activityId
+     * @param position
+     * @param timeSlot
+     * @param netId
+     * @param owner
+     */
+    public TransferMatch(Long activityId, String position, String timeSlot,String netId,String owner) {
+        this.activityId = activityId;
         this.position = position;
         this.timeSlot = timeSlot;
         this.netId = netId;
+        this.owner=owner;
     }
 }

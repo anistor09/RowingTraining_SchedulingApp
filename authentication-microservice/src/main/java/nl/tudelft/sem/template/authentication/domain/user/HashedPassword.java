@@ -9,6 +9,10 @@ import lombok.EqualsAndHashCode;
 public class HashedPassword {
     private final transient String hash;
 
+    /**
+     * Constructor for HashedPassword.
+     * @param hash
+     */
     public HashedPassword(String hash) {
         // Validate input
         this.hash = hash;

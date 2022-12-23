@@ -13,6 +13,11 @@ public class RequestMatch {
     Participant participant;
     List<String> timeSlots;
 
+    /**
+     * Constructor for the request match.
+     * @param participant
+     * @param timeSlots
+     */
     public RequestMatch(Participant participant, List<String> timeSlots) {
         this.participant = participant;
         this.timeSlots = timeSlots;

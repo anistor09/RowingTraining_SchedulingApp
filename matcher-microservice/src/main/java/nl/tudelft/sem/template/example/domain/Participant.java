@@ -29,10 +29,18 @@ public class Participant  {
     private String organization;
 
     @Column(name = "level")
-    private String level;
+    private Boolean level;
 
-
-    public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, String level){
+    /**
+     * Constructor for Participant.
+     * @param netId
+     * @param positionManager
+     * @param gender
+     * @param certificate
+     * @param organization
+     * @param level
+     */
+    public Participant(NetId netId, PositionManager positionManager, String gender, Certificate certificate, String organization, Boolean level){
         this.netId= netId;
         this.positionManager= positionManager;
         this.gender=gender;
@@ -40,10 +48,4 @@ public class Participant  {
         this.organization= organization;
         this.level=level;
     }
-//    public void requestMatch(List<String> timeSlots){
-//        //this.recordThat(new ParticipantRequestedMatchEvent(this.username,timeSlots));
-//        TestEvent tv = new TestEvent(this.netId,timeSlots);
-//        this.recordThat(tv);
-//    }
-
 }

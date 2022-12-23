@@ -17,6 +17,7 @@ import java.util.List;
 public class UserDetailsController {
     private final transient AuthManager authManager;
     private final transient ParticipantService participantService;
+
     /**
      * Instantiates a new controller.
      *
@@ -27,6 +28,11 @@ public class UserDetailsController {
         this.authManager = authManager;
         this.participantService= participantService;
     }
+
+    /**
+     * Gets positions of the user.
+     * @return list of positions
+     */
     @GetMapping("/positions")
     public List<String> getPositions() {
 
@@ -38,10 +44,12 @@ public class UserDetailsController {
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
-
     }
 
+    /**
+     * Gets the certificate of the user.
+     * @return certificate
+     */
     @GetMapping("/certificate")
     public String getCertificate() {
 
@@ -53,9 +61,12 @@ public class UserDetailsController {
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
-
     }
+
+    /**
+     * Gets gender of the user.
+     * @return gender
+     */
     @GetMapping("/gender")
     public String getGender() {
 
@@ -67,20 +78,28 @@ public class UserDetailsController {
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
-
     }
+
+    /**
+     * Gets the level of the user.
+     * @return level
+     */
     @GetMapping("/level")
-    public String getLevel() {
+    public Boolean getLevel() {
         try {
             NetId participantName = new NetId(authManager.getNetId());
-            String level = participantService.getParticipantLevel(participantName);
+            Boolean level = participantService.getParticipantLevel(participantName);
             return level;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
     }
+
+    /**
+     * Gets the organization of the user.
+     * @return organization
+     */
     @GetMapping("/organization")
     public String getOrganization() {
         try {
@@ -90,6 +109,5 @@ public class UserDetailsController {
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
     }
 }

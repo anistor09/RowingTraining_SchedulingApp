@@ -39,15 +39,18 @@ public class ParticipantService {
      * @throws Exception
      */
     public Participant addParticipant(NetId netId, PositionManager positionManager, String gender, Certificate certificate,
-                                      String organization, String level){
-       // if(checkUsernameIsUnique(username)){
+                                      String organization, Boolean level) {
             Participant participant= new Participant(netId,positionManager,gender,certificate,organization,level);
 
             participantRepository.save(participant);
             return participant;
-        //}
-        //throw new Exception("some exception we need to create");
     }
+
+    /**
+     * Get the participant by netId.
+     * @param netId
+     * @return participant
+     */
     public Participant getParticipant(NetId netId){
         if(participantRepository.findByNetId(netId)!=null) {
             Optional<Participant> participant = participantRepository.findByNetId(netId);
@@ -58,6 +61,12 @@ public class ParticipantService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
     }
+
+    /**
+     * Get the positions of the participant by netId.
+     * @param netId
+     * @return positions
+     */
     public List<String> getParticipantPositions(NetId netId) {
 
         if(getParticipant(netId).getPositionManager().getPositions()!=null){
@@ -67,6 +76,11 @@ public class ParticipantService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Get the certificate of the participant by netId.
+     * @param netId
+     * @return certificate
+     */
     public String getParticipantCertificate(NetId netId) {
         if(getParticipant(netId).getCertificate()!=null){
             String certificate= getParticipant(netId).getCertificate().toString();
@@ -74,6 +88,12 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Gets the organization of the participant by netId.
+     * @param netId
+     * @return organization
+     */
     public String getParticipantOrganization(NetId netId) {
         if(getParticipant(netId).getOrganization()!=null){
             String organization= getParticipant(netId).getOrganization();
@@ -81,6 +101,12 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Gets the gender of the participant by netId.
+     * @param netId
+     * @return gender
+     */
     public String getParticipantGender(NetId netId) {
         if(getParticipant(netId).getGender()!=null){
             String gender= getParticipant(netId).getGender();
@@ -88,36 +114,45 @@ public class ParticipantService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
-    public String getParticipantLevel(NetId netId) {
+
+    /**
+     * Gets the level of the participant by netId.
+     * @param netId
+     * @return level
+     */
+    public Boolean getParticipantLevel(NetId netId) {
         if(getParticipant(netId).getLevel()!=null){
-            String level= getParticipant(netId).getLevel();
+            Boolean level= getParticipant(netId).getLevel();
             return level;
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Gets the RequestMatch of the participant.
+     * @param netId
+     * @param timeSlots
+     * @return RequestMatch
+     */
     public RequestMatch getRequestMatch(NetId netId, List<String> timeSlots) {
         Participant p = getParticipant(netId);
         return new RequestMatch(p,timeSlots);
 
     }
 
+    /**
+     * Gets the TransferMatch of the participant.
+     * @param request
+     * @return TransferMatch
+     */
     public TransferMatch getTransferMatch(RequetsTransferMatchModel request){
-        String activityName = request.getActivityName();
+        Long activityId = request.getActivityId();
         String positions = request.getPosition();
         String timeSlot = request.getTimeSlot();
-        String netId= request.getNetId();
-        TransferMatch transferMatch= new TransferMatch(activityName,positions,timeSlot,netId);
+        String netId = request.getNetId();
+        String owner = request.getOwner();
+        TransferMatch transferMatch= new TransferMatch(activityId,positions,timeSlot,netId,owner);
         return transferMatch;
 
     }
-//    public void requestMatch(NetId netId, List<String> timeSlots){
-//        Participant p = getParticipant(netId);
-//        p.requestMatch(timeSlots);
-//    }
-
-
-    //public boolean checkUsernameIsUnique(Username username){
-      //  return !participantRepository.existsByUsername(username);
-    //}
 }

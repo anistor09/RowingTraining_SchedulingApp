@@ -11,5 +11,5 @@ public class ParticipationRequestModel {
     private String certificate;
     private String gender;
     private String organization;
-    private String level;
+    private Boolean level;
 }
