@@ -29,7 +29,7 @@ public class ActivityController {
 
     /**
      * Deletes activities of the given user.
-     * @param netId
+     * @param username
      * @throws UnauthorizedException
      */
     @DeleteMapping("/deleteUser/{username}")
@@ -44,7 +44,7 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @DeleteMapping("/deleteId/{id}")
-    public void deleteById(@PathVariable int id) throws UnauthorizedException, ActivityNotFoundException {
+    public void deleteById(@PathVariable long id) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
         activityService.deleteById(username, id);
     }
@@ -132,7 +132,7 @@ public class ActivityController {
 
     /**
      * Gets activites of the logged in user.
-     * @param token
+     * @param
      * @return list of activities of the logged in user
      */
     @GetMapping("/user")
