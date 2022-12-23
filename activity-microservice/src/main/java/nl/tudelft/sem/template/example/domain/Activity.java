@@ -2,9 +2,12 @@ package nl.tudelft.sem.template.example.domain;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "activities")
@@ -16,16 +19,16 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public abstract class Activity {
 
     /**
      * The id of the activity.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, updatable=false)
-    private Long id;
-
+    private long id;
 
     /**
      * The owner of the activity.
@@ -66,6 +69,10 @@ public abstract class Activity {
         this.timeSlot = timeSlot;
         this.boat = boat;
         this.positions = positions;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setTimeSlot(TimeSlot timeSlot) {
