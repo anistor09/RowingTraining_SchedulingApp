@@ -1,5 +1,6 @@
 package nl.tudelft.sem.template.example.domain;
 
+        import nl.tudelft.sem.template.example.domain.exceptions.NoNotificationsException;
         import nl.tudelft.sem.template.example.domain.models.NotificationRequestModel;
         import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ public class NotificationServiceTest {
 
 
     @Test
-    public void getAllWithOneNotification() {
+    public void getAllWithOneNotification() throws NoNotificationsException {
         when(notificationRepo.findAll()).thenReturn(List.of(forPaula));
         List<Notification> notifications = service.getAllNotifications();
         assertEquals(1, notifications.size());
@@ -50,21 +51,23 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void getAllWithNoNotifications() {
+    public void getAllWithNoNotifications() throws NoNotificationsException {
         when(notificationRepo.findAll()).thenReturn(List.of());
         List<Notification> notifications = service.getAllNotifications();
         assertEquals(0, notifications.size());
+        assertThrows(NoNotificationsException.class, () -> service.getAllNotifications());
     }
 
     @Test
-    public void getUserNotificationsWithNoNotifications() {
+    public void getUserNotificationsWithNoNotifications() throws NoNotificationsException {
         when(notificationRepo.getAllByNetId(any())).thenReturn(List.of());
         List<Notification> notifications = service.getUserNotifications(new NetId("sem"));
         assertEquals(0, notifications.size());
+        assertThrows(NoNotificationsException.class, () -> service.getUserNotifications(new NetId("sem")));
     }
 
     @Test
-    public void getUserNotificationsWithOneNotification() {
+    public void getUserNotificationsWithOneNotification() throws NoNotificationsException {
         when(notificationRepo.getAllByNetId(any())).thenReturn(List.of(forPaula));
         List<Notification> notifications = service.getUserNotifications(new NetId("paula"));
         assertEquals(1, notifications.size());
@@ -72,24 +75,18 @@ public class NotificationServiceTest {
     }
 
     @Test
-    public void getOwnerNotificationsWithNoNotifications() {
+    public void getOwnerNotificationsWithNoNotifications() throws NoNotificationsException {
         when(notificationRepo.getAllByOwnerId(any())).thenReturn(List.of());
         List<Notification> notifications = service.getOwnerNotifications(new NetId("sem"));
         assertEquals(0, notifications.size());
+        assertThrows(NoNotificationsException.class, () -> service.getOwnerNotifications(new NetId("sem")));
     }
 
     @Test
-    public void getOwnerNotificationsWithOneNotification() {
+    public void getOwnerNotificationsWithOneNotification() throws NoNotificationsException {
         when(notificationRepo.getAllByOwnerId(any())).thenReturn(List.of(forOwner));
         List<Notification> notifications = service.getOwnerNotifications(new NetId("owner"));
         assertEquals(1, notifications.size());
         assertEquals(forOwner, notifications.get(0));
-    }
-
-    @Test
-    public void getUserNotificationsWithWrongNetId() {
-        when(notificationRepo.getAllByNetId(any())).thenReturn(List.of());
-        List<Notification> notifications = service.getUserNotifications(new NetId("minouk"));
-        assertEquals(0, notifications.size());
     }
 }

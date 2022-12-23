@@ -6,6 +6,7 @@ import nl.tudelft.sem.template.example.domain.ActivityId;
 import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
 import nl.tudelft.sem.template.example.domain.NotificationService;
+import nl.tudelft.sem.template.example.domain.exceptions.NoNotificationsException;
 import nl.tudelft.sem.template.example.domain.factories.OwnerNotificationParserFactory;
 import nl.tudelft.sem.template.example.domain.factories.ParserFactory;
 import nl.tudelft.sem.template.example.domain.factories.Parser;
@@ -36,7 +37,7 @@ public class NotificationController {
     }
 
     @GetMapping("/findAll")
-    public List<Notification> findAllNotifications(){
+    public List<Notification> findAllNotifications() throws NoNotificationsException {
         return notificationService.getAllNotifications();
     }
 
@@ -60,7 +61,7 @@ public class NotificationController {
     }
 
     @GetMapping("/getOwnerNotifications")
-    public ResponseEntity<List<TransferMatch>> getOwnerNotifications(){
+    public ResponseEntity<List<TransferMatch>> getOwnerNotifications() throws NoNotificationsException {
         List<Notification> notifications = notificationService.getOwnerNotifications((new NetId(authManager.getNetId())));
         List<TransferMatch> result = new ArrayList<>();
         for (Notification n : notifications){
@@ -73,7 +74,7 @@ public class NotificationController {
         return ResponseEntity.ok(result);
     }
     @GetMapping("/getParticipantNotifications")
-    public ResponseEntity<List<TransferMatch>> getParticipantNotifications(){
+    public ResponseEntity<List<TransferMatch>> getParticipantNotifications() throws NoNotificationsException {
         List<Notification> notifications = notificationService.getUserNotifications(new NetId(authManager.getNetId()));
         List<TransferMatch> result = new ArrayList<>();
         for (Notification n : notifications){
