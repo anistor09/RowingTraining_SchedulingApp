@@ -28,7 +28,7 @@ public abstract class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false, updatable=false)
-    private Long id;
+    private long id;
 
     /**
      * The owner of the activity.

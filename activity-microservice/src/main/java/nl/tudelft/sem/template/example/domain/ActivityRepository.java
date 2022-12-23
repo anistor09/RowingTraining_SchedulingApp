@@ -7,7 +7,4 @@ import java.util.Optional;
 
 @Repository
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
-    Optional<Activity> findById(int id);
-
-    void deleteById(int id);
 }
