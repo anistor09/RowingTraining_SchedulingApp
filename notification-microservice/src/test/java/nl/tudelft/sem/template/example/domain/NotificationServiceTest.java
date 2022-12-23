@@ -1,6 +1,7 @@
 package nl.tudelft.sem.template.example.domain;
 
         import nl.tudelft.sem.template.example.domain.models.NotificationRequestModel;
+        import org.junit.jupiter.api.BeforeEach;
         import org.junit.jupiter.api.Test;
         import org.mockito.ArgumentCaptor;
 
@@ -14,92 +15,81 @@ package nl.tudelft.sem.template.example.domain;
 
 public class NotificationServiceTest {
 
+    private NotificationService service;
+    private NotificationRepository notificationRepo;
+    private NetId paula = new NetId("paula");
+    private NetId minouk = new NetId("minouk");
+    private NetId owner = new NetId("owner");
+
+    private Notification forPaula = new Notification(new ActivityId("1"), paula, owner, "message", false);
+    private Notification forMinouk = new Notification(new ActivityId("2"), minouk, owner, "message", false);
+    private Notification forOwner = new Notification(new ActivityId("3"), owner, owner, "message", true);
+
+    @BeforeEach
+    public void setUp() {
+        notificationRepo = mock(NotificationRepository.class);
+        service = new NotificationService(notificationRepo);
+    }
+
     @Test
     public void createValidNotification() {
         ArgumentCaptor<Notification> captor = ArgumentCaptor.forClass(Notification.class);
-        NotificationRepository notificationRepo = mock(NotificationRepository.class);
-        when(notificationRepo.save(any(Notification.class))).thenReturn(null);
-        NotificationService service = new NotificationService(notificationRepo);
-
-        service.createNotification(new ActivityId("1"), new NetId("sem"), new NetId("owner"),"test message", false);
+        service.createNotification(new ActivityId("1"), new NetId("paula"), new NetId("owner"),"message", false);
         verify(notificationRepo).save(captor.capture());
         Notification notification = captor.getValue();
-        assertEquals("1", notification.getActivityId().toString());
-        assertEquals("sem", notification.getNetId().toString());
-        assertEquals("owner", notification.getOwnerId().toString());
-        assertEquals("test message", notification.getMessage());
-        assertEquals(false, notification.isOwnerNotification());
+        assertEquals(forPaula, notification);
     }
-    //PASSED
 
 
     @Test
     public void getAllWithOneNotification() {
-        NotificationRepository NotificationRepo = mock(NotificationRepository.class);
-        NotificationService service = new NotificationService(NotificationRepo);
-        Notification notification = new Notification(new ActivityId("1"), new NetId("sem"),new NetId("owner"),"test message", false);
-        when(NotificationRepo.findAll()).thenReturn(List.of(notification));
+        when(notificationRepo.findAll()).thenReturn(List.of(forPaula));
         List<Notification> notifications = service.getAllNotifications();
         assertEquals(1, notifications.size());
-        assertEquals("sem", notifications.get(0).getNetId().toString());
-        assertEquals("1", notifications.get(0).getActivityId().toString());
-        assertEquals("sem", notifications.get(0).getNetId().toString());
-        assertEquals("owner", notifications.get(0).getOwnerId().toString());
-        assertEquals("test message", notifications.get(0).getMessage());
-        assertEquals(false, notifications.get(0).isOwnerNotification());
+        assertEquals(forPaula, notifications.get(0));
     }
-    //PASSED
 
     @Test
     public void getAllWithNoNotifications() {
-        NotificationRepository NotificationRepo = mock(NotificationRepository.class);
-        NotificationService service = new NotificationService(NotificationRepo);
-        when(NotificationRepo.findAll()).thenReturn(List.of());
+        when(notificationRepo.findAll()).thenReturn(List.of());
         List<Notification> notifications = service.getAllNotifications();
         assertEquals(0, notifications.size());
     }
-    //PASSED
 
     @Test
     public void getUserNotificationsWithNoNotifications() {
-        NotificationRepository notificationRepo = mock(NotificationRepository.class);
-        NotificationService service = new NotificationService(notificationRepo);
-        when(notificationRepo.getAllByNetId(null)).thenReturn(List.of());
+        when(notificationRepo.getAllByNetId(any())).thenReturn(List.of());
         List<Notification> notifications = service.getUserNotifications(new NetId("sem"));
         assertEquals(0, notifications.size());
     }
-    //PASSED
+
     @Test
     public void getUserNotificationsWithOneNotification() {
-        NotificationRepository NotificationRepo = mock(NotificationRepository.class);
-        NotificationService service = new NotificationService(NotificationRepo);
-        Notification notification = new Notification(new ActivityId("1"), new NetId("sem"),new NetId("owner"),"test message", false);
-        when(NotificationRepo.getAllByNetId(notification.getNetId())).thenReturn(List.of(notification));
-        List<Notification> notifications = service.getUserNotifications(new NetId("sem"));
+        when(notificationRepo.getAllByNetId(any())).thenReturn(List.of(forPaula));
+        List<Notification> notifications = service.getUserNotifications(new NetId("paula"));
         assertEquals(1, notifications.size());
-        assertEquals("sem", notifications.get(0).getNetId().toString());
-        assertEquals("1", notifications.get(0).getActivityId().toString());
-        assertEquals("sem", notifications.get(0).getNetId().toString());
-        assertEquals("owner", notifications.get(0).getOwnerId().toString());
-        assertEquals("test message", notifications.get(0).getMessage());
-        assertEquals(false, notifications.get(0).isOwnerNotification());
+        assertEquals(forPaula, notifications.get(0));
     }
-    //PASSED but should be improved (see below)
+
+    @Test
+    public void getOwnerNotificationsWithNoNotifications() {
+        when(notificationRepo.getAllByOwnerId(any())).thenReturn(List.of());
+        List<Notification> notifications = service.getOwnerNotifications(new NetId("sem"));
+        assertEquals(0, notifications.size());
+    }
+
+    @Test
+    public void getOwnerNotificationsWithOneNotification() {
+        when(notificationRepo.getAllByOwnerId(any())).thenReturn(List.of(forOwner));
+        List<Notification> notifications = service.getOwnerNotifications(new NetId("owner"));
+        assertEquals(1, notifications.size());
+        assertEquals(forOwner, notifications.get(0));
+    }
 
     @Test
     public void getUserNotificationsWithWrongNetId() {
-        NotificationRepository NotificationRepo = mock(NotificationRepository.class);
-        NotificationService service = new NotificationService(NotificationRepo);
-        Notification notification = new Notification(new ActivityId("1"), new NetId("sem"),new NetId("owner"),"test message", false);
-        when(NotificationRepo.getAllByNetId(notification.getNetId())).thenReturn(List.of(notification));
-        List<Notification> notifications = service.getUserNotifications(new NetId("sem2"));
+        when(notificationRepo.getAllByNetId(any())).thenReturn(List.of());
+        List<Notification> notifications = service.getUserNotifications(new NetId("minouk"));
         assertEquals(0, notifications.size());
     }
-    //FAILS - NetId does not match but getUserNotifications still retrieves the notification
-
-
-
-
-
-
 }
