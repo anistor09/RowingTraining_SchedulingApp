@@ -16,7 +16,7 @@ public abstract class Activity {
 
     @Id
     @Column(name = "id", nullable = false, updatable=false)
-    private Long id;
+    private long id;
 
 
     @Column(name= "owner", nullable = false)

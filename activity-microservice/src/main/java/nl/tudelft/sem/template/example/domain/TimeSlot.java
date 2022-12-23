@@ -17,6 +17,10 @@ public class TimeSlot {
     transient Date begin;
     transient Date end;
 
+    /**
+     * Constructor for the TimeSlot.
+     * @param timeSlot
+     */
     public TimeSlot(String timeSlot) {
         SimpleDateFormat converter = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);
         converter.setTimeZone(TimeZone.getTimeZone("UTC"));
