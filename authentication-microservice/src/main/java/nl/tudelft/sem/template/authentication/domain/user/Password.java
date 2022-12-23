@@ -14,6 +14,10 @@ public class Password {
         this.passwordValue = password;
     }
 
+    public boolean isValid(){
+        return (passwordValue.length() > 5) && (passwordValue != null);
+    }
+
     @Override
     public String toString() {
         return passwordValue;
