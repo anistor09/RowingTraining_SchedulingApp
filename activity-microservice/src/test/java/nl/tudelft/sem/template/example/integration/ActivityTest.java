@@ -245,7 +245,7 @@ class ActivityTest {
         activityRepository.save(training1);
         activityRepository.save(training2);
 
-        int id2 = training2.getId();
+        long id2 = training2.getId();
 
         ResultActions result = mockMvc.perform(get("/activity/activityId/"+id2)
                 .header("Authorization", "Bearer MockedToken")
@@ -270,8 +270,8 @@ class ActivityTest {
         activityRepository.save(training1);
         activityRepository.save(training2);
 
-        int id1 = training1.getId();
-        int id2 = training2.getId();
+        long id1 = training1.getId();
+        long id2 = training2.getId();
 
         ResultActions result = mockMvc.perform(get("/activity/user/"+id1)
                 .header("Authorization", "Bearer MockedToken")

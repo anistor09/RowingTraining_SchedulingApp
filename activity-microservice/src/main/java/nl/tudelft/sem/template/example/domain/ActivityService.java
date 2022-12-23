@@ -59,7 +59,7 @@ public class ActivityService {
      * @param id
      * @param request
      */
-    public ResponseEntity editActivity(NetId netId, int id, ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
+    public ResponseEntity editActivity(NetId netId, long id, ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             Activity change = activity.get();
@@ -117,7 +117,7 @@ public class ActivityService {
         }
     }
 
-    public void deleteById(NetId netId, int id) throws UnauthorizedException, ActivityNotFoundException {
+    public void deleteById(NetId netId, long id) throws UnauthorizedException, ActivityNotFoundException {
         Optional<Activity> activity = activityRepository.findById(id);
         if (activity.isPresent()) {
             if (activity.get().getOwner().getNetIdValue().equals(netId.getNetIdValue())) {
@@ -176,7 +176,7 @@ public class ActivityService {
         return result;
     }
 
-    public Activity getById(int id) throws ActivityNotFoundException {
+    public Activity getById(long id) throws ActivityNotFoundException {
         if (activityRepository.findById(id).isPresent()) {
             return activityRepository.findById(id).get();
         } else {
