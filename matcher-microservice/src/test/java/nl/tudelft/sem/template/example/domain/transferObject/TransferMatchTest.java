@@ -2,17 +2,38 @@ package nl.tudelft.sem.template.example.domain.transferObject;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TransferMatchTest {
 
     @Test
     void getTransferMatch() {
         TransferMatch t= new TransferMatch(1L,"cox","12-03-2027","user","owner");
-        assertTrue(t.getActivityId().equals(1L));
-        assertTrue(t.getOwner().equals("owner"));
-        assertTrue(t.getNetId().equals("user"));
-        assertTrue(t.getTimeSlot().equals("12-03-2027"));
-        assertTrue(t.getPosition().equals("cox"));
+        assertEquals(1L, (long) t.getActivityId());
+        assertEquals("owner", t.getOwner());
+        assertEquals("user", t.getNetId());
+        assertEquals("12-03-2027", t.getTimeSlot());
+        assertEquals("cox", t.getPosition());
+    }
+    @Test
+    void constructorsTest() {
+        TransferMatch t= new TransferMatch(1L,"cox","12-03-2027","user","owner");
+        assertNotNull(new TransferMatch());
+        assertNotNull(t);
+    }
+    @Test
+    void settersTest() {
+        TransferMatch t= new TransferMatch();
+        t.setActivityId(1L);
+        t.setOwner("owner");
+        t.setNetId("user");
+        t.setPosition("cox");
+        t.setTimeSlot("12-03-2027");
+        assertEquals(1L, (long) t.getActivityId());
+        assertEquals("owner", t.getOwner());
+        assertEquals("user", t.getNetId());
+        assertEquals("12-03-2027", t.getTimeSlot());
+        assertEquals("cox", t.getPosition());
+
     }
 }

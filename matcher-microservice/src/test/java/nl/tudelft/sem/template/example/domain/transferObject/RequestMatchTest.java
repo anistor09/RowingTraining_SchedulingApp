@@ -1,6 +1,10 @@
 package nl.tudelft.sem.template.example.domain.transferObject;
 
+import nl.tudelft.sem.template.example.domain.Participant;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,14 +12,29 @@ class RequestMatchTest {
 
     @Test
     void getTransferMatch() {
-//        TransferMatch t= new TransferMatch(1L,"cox","12-03-2027","user","owner");
-//        assertTrue(t.getActivityId().equals(1L));
-//        assertTrue(t.getOwner().equals("owner"));
-//        assertTrue(t.getNetId().equals("user"));
-//        assertTrue(t.getTimeSlot().equals("12-03-2027"));
-//        assertTrue(t.getPosition().equals("cox"));
-//        Parti
-//        RequestMatch requestMatch = new RequestMatch()
+        Participant participant = Mockito.mock(Participant.class);
+
+        RequestMatch requestMatch = new RequestMatch(participant,new ArrayList<>());
+        assertNotNull(requestMatch);
+        assertNotNull(new RequestMatch());
+    }
+    @Test
+    void getterTesting() {
+        Participant participant = Mockito.mock(Participant.class);
+
+        RequestMatch requestMatch = new RequestMatch(participant,new ArrayList<>());
+        assertEquals(participant,requestMatch.getParticipant());
+        assertEquals(new ArrayList<>(),requestMatch.getTimeSlots());
+    }
+    @Test
+    void setterTesting() {
+        Participant participant = Mockito.mock(Participant.class);
+
+        RequestMatch requestMatch = new RequestMatch();
+        requestMatch.setParticipant(participant);
+        requestMatch.setTimeSlots(new ArrayList<>());
+        assertEquals(participant,requestMatch.getParticipant());
+        assertEquals(new ArrayList<>(),requestMatch.getTimeSlots());
     }
 
 }
