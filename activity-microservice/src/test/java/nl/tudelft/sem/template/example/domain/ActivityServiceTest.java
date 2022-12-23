@@ -257,15 +257,15 @@ public class ActivityServiceTest {
         ActivityService service = new ActivityService(activityRepo);
         when(activityRepo.findAll()).thenReturn(List.of());
 
-        assertThrows(ActivityNotFoundException.class, () -> service.getById(1));
+        assertThrows(ActivityNotFoundException.class, () -> service.getById(1L));
     }
 
     @Test
     public void getActivityByIdWithOneActivity() throws ActivityNotFoundException {
         when(activityRepo.findAll()).thenReturn(List.of(training));
-        training.setId(1);
+        training.setId(1L);
         setTrainingRepo();
-        Activity activity = service.getById(1);
+        Activity activity = service.getById(1L);
 
         assertEquals(training, activity);
     }
@@ -273,9 +273,9 @@ public class ActivityServiceTest {
     @Test
     public void getActivityByIdWithTwoActivities() throws ActivityNotFoundException {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        competition.setId(2);
+        competition.setId(2L);
         setCompetitionRepo();
-        Activity activity = service.getById(2);
+        Activity activity = service.getById(2L);
 
         assertEquals(activity, competition);
     }
@@ -283,55 +283,55 @@ public class ActivityServiceTest {
     @Test
     public void getActivityByIdWithTwoActivitiesAndWrongId() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        assertThrows(ActivityNotFoundException.class, () -> service.getById(3));
+        assertThrows(ActivityNotFoundException.class, () -> service.getById(3L));
     }
 
     @Test
     public void deleteActivityByIdWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 1));
+        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 1L));
     }
 
     @Test
     public void deleteActivityByIdWithOneActivity() throws ActivityNotFoundException, UnauthorizedException {
         when(activityRepo.findAll()).thenReturn(List.of(training));
-        training.setId(1);
+        training.setId(1L);
         setTrainingRepo();
-        service.deleteById(new NetId("zosia"), 1);
-        verify(activityRepo, times(1)).deleteById(1);
+        service.deleteById(new NetId("zosia"), 1L);
+        verify(activityRepo, times(1)).deleteById(1L);
     }
 
     @Test
     public void deleteActivityByIdWithTwoActivities() throws ActivityNotFoundException, UnauthorizedException {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        training.setId(1);
-        competition.setId(2);
+        training.setId(1L);
+        competition.setId(2L);
         setTrainingRepo();
         setCompetitionRepo();
-        service.deleteById(new NetId("zosia"), 1);
-        verify(activityRepo, times(1)).deleteById(1);
+        service.deleteById(new NetId("zosia"), 1L);
+        verify(activityRepo, times(1)).deleteById(1L);
     }
 
     @Test
     public void deleteActivityByIdWithTwoActivitiesAndWrongId() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        training.setId(1);
-        competition.setId(2);
+        training.setId(1L);
+        competition.setId(2L);
         setTrainingRepo();
         setCompetitionRepo();
 
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 3));
+        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 3L));
     }
 
     @Test
     public void deleteActivityByIdWithTwoActivitiesAndWrongOwner() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        training.setId(1);
-        competition.setId(2);
+        training.setId(1L);
+        competition.setId(2L);
         setTrainingRepo();
         setCompetitionRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.deleteById(new NetId("harry"), 1));
+        assertThrows(UnauthorizedException.class, () -> service.deleteById(new NetId("harry"), 1L));
     }
 
     @Test

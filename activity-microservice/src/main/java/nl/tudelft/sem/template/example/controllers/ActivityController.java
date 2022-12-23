@@ -46,7 +46,7 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @DeleteMapping("/deleteId/{id}")
-    public void deleteById(@PathVariable int id) throws UnauthorizedException, ActivityNotFoundException {
+    public void deleteById(@PathVariable Long id) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
         activityService.deleteById(username, id);
     }
@@ -58,7 +58,7 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @PutMapping("/edit/{id}")
-    public void editActivity(@PathVariable int id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
+    public void editActivity(@PathVariable Long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
         activityService.editActivity(username, id, request);
     }
@@ -128,7 +128,7 @@ public class ActivityController {
      * @return the owner of the activity
      */
     @GetMapping("/user/{id}")
-    public NetId getOwnerById(@PathVariable("id") int id) throws ActivityNotFoundException {
+    public NetId getOwnerById(@PathVariable("id") Long id) throws ActivityNotFoundException {
         return activityService.getById(id).getOwner();
     }
 
@@ -148,7 +148,7 @@ public class ActivityController {
      * @return the activity
      */
     @GetMapping("/activityId/{id}")
-    public Activity getById(@PathVariable("id") int id) throws ActivityNotFoundException {
+    public Activity getById(@PathVariable("id") Long id) throws ActivityNotFoundException {
         return activityService.getById(id);
     }
 }

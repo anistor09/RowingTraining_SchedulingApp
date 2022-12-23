@@ -27,7 +27,7 @@ public abstract class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, updatable=false)
-    private int id;
+    private Long id;
 
     /**
      * The owner of the activity.
@@ -70,7 +70,7 @@ public abstract class Activity {
         this.positions = positions;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

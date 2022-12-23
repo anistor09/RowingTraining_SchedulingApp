@@ -7,7 +7,7 @@ public class ActivityNotFoundException extends Exception {
      * Constructor for the ActivityNotFoundException.
      * @param id
      */
-    public ActivityNotFoundException(int id) {
+    public ActivityNotFoundException(Long id) {
         super("Activity with id " + id + " not found");
     }
 
