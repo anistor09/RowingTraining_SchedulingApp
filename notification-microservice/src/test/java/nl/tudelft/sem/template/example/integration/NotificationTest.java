@@ -6,8 +6,10 @@ import net.minidev.json.JSONUtil;
 import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.authentication.JwtTokenVerifier;
 import nl.tudelft.sem.template.example.domain.ActivityId;
+import nl.tudelft.sem.template.example.domain.NetId;
 import nl.tudelft.sem.template.example.domain.Notification;
 import nl.tudelft.sem.template.example.domain.NotificationRepository;
+import nl.tudelft.sem.template.example.domain.factories.OwnerNotificationParserFactory;
 import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,4 +93,44 @@ public class NotificationTest {
         assertThat(notificationRepository.findAll().containsAll(received));
     }
 
+    @Test
+    void getOwnerNotificationTest() throws Exception{
+        Notification n1 = new Notification(new ActivityId("1"), new NetId("participant1"), new NetId("ExampleUser"), "participant1 request", true);
+        Notification n2 = new Notification(new ActivityId("1"), new NetId("participant2"), new NetId("ExampleUser"), "participant2 request", true);
+        notificationRepository.save(n1);
+        notificationRepository.save(n2);
+
+        ResultActions result = mockMvc.perform(get("/notifications/getOwnerNotifications")
+                .header("Authorization", "Bearer MockedToken")
+                .contentType(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isOk());
+        String response = result.andReturn().getResponse().getContentAsString();
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<TransferMatch> received = mapper.readValue(response, new TypeReference<List<TransferMatch>>(){});
+
+        OwnerNotificationParserFactory factory = new OwnerNotificationParserFactory();
+        TransferMatch t1 = factory.createParser().parse(n1);
+        TransferMatch t2 = factory.createParser().parse(n2);
+        assertThat(received.equals(List.of(t1, t2)));
+    }
+
+    @Test
+    void getParticipantNotificationTest() throws Exception{
+        Notification n = new Notification(new ActivityId("1"), new NetId("ExampleUser"), new NetId("owner"), "you are accepted", true);
+        notificationRepository.save(n);
+
+        ResultActions result = mockMvc.perform(get("/notifications/getParticipantNotifications")
+                .header("Authorization", "Bearer MockedToken")
+                .contentType(MediaType.APPLICATION_JSON));
+        result.andExpect(status().isOk());
+        String response = result.andReturn().getResponse().getContentAsString();
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<TransferMatch> received = mapper.readValue(response, new TypeReference<List<TransferMatch>>(){});
+
+        OwnerNotificationParserFactory factory = new OwnerNotificationParserFactory();
+        TransferMatch t = factory.createParser().parse(n);
+        assertThat(received.equals(List.of(t)));
+    }
 }
