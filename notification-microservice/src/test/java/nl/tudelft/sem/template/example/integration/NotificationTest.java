@@ -88,12 +88,7 @@ public class NotificationTest {
         String response = result.andReturn().getResponse().getContentAsString();
         ObjectMapper mapper = new ObjectMapper();
         List<Notification> received = mapper.readValue(response, new TypeReference<List<Notification>>() {});
-        Notification expected = notificationRepository.findByActivityId(new ActivityId("1")).get();
-        assertThat(received.get(0)).isEqualTo(expected);
+        assertThat(notificationRepository.findAll().containsAll(received));
     }
 
-    @Test
-    void getOwnerNotificationsTest() throws Exception{
-
-    }
 }
