@@ -1,11 +1,22 @@
 package nl.tudelft.sem.template.example.domain;
 
-public class ActivityNotFoundException extends RuntimeException {
+public class ActivityNotFoundException extends Exception {
+    private static final long serialVersionUID = 1;
+
+    /**
+     * Constructor for the ActivityNotFoundException.
+     * @param id
+     */
     public ActivityNotFoundException(Long id) {
-        super("Could not find activity with id: " + id);
+        super("Activity with id " + id + " not found");
     }
 
+    /**
+     * Constructor for the ActivityNotFoundException.
+     * @param s
+     */
     public ActivityNotFoundException(String s) {
         super(s);
     }
 }
+

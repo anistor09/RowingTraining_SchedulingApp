@@ -66,7 +66,7 @@ public class MatcherService {
         for (Activity activity : getActivities()) {
             for (String position : activity.getPositions()) {
                 if (handler.handle(activity, position, rm.getParticipant(), timeSlots))
-                    res.add(new TransferMatch(activity.getId(), position, activity.getTimeSlot().toString(),
+                    res.add(new TransferMatch((long) activity.getId(), position, activity.getTimeSlot().toString(),
                             rm.getParticipant().getNetId().toString(),activity.getOwner().toString()));
             }
         }
@@ -152,7 +152,7 @@ public class MatcherService {
     public List<Match> findMatch(TransferMatch tr,List<Match> matches){
         List<Match> toDeletMatches= new ArrayList<>();
         for(Match m : matches){
-            if(m.getNetId().equals(tr.getNetId()))
+            if(m.getActivityId().equals(tr.getActivityId()))
                 if(!toDeletMatches.contains(m))
                     toDeletMatches.add(m);
         }
