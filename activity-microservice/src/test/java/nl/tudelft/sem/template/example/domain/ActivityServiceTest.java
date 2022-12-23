@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.sql.Time;
 import java.util.List;
 
