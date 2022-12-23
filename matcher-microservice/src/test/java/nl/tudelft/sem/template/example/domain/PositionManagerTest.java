@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PositionManagerTest {
@@ -22,4 +23,10 @@ class PositionManagerTest {
         PositionManager pm= new PositionManager(s);
         assertTrue(pm.toString().equals(s));
     }
+    @Test
+    void testConstructor(){
+        assertNotNull(new PositionManager());
+    }
+
+
 }
