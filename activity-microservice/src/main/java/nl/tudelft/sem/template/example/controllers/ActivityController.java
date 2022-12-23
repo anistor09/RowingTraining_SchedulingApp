@@ -1,14 +1,12 @@
 package nl.tudelft.sem.template.example.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import nl.tudelft.sem.template.example.authentication.AuthManager;
-import nl.tudelft.sem.template.example.authentication.JwtTokenVerifier;
 import nl.tudelft.sem.template.example.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -58,7 +56,7 @@ public class ActivityController {
      * @throws UnauthorizedException
      */
     @PutMapping("/edit/{id}")
-    public void editActivity(@RequestParam(value = "id", required = true) @PathVariable int id, @ModelAttribute("request") @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
+    public void editActivity(@PathVariable long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
         activityService.editActivity(username, id, request);
     }
@@ -128,7 +126,7 @@ public class ActivityController {
      * @return the owner of the activity
      */
     @GetMapping("/user/{id}")
-    public NetId getOwnerById(@PathVariable("id") Long id) throws ActivityNotFoundException {
+    public NetId getOwnerById(@PathVariable("id") long id) throws ActivityNotFoundException {
         return activityService.getById(id).getOwner();
     }
 
@@ -148,7 +146,7 @@ public class ActivityController {
      * @return the activity
      */
     @GetMapping("/activityId/{id}")
-    public Activity getById(@PathVariable("id") Long id) throws ActivityNotFoundException {
+    public Activity getById(@PathVariable("id") long id) throws ActivityNotFoundException {
         return activityService.getById(id);
     }
 }

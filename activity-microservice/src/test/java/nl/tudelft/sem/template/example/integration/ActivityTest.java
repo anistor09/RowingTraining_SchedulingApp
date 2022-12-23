@@ -1,14 +1,12 @@
 package nl.tudelft.sem.template.example.integration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.authentication.JwtTokenVerifier;
 import nl.tudelft.sem.template.example.domain.*;
-import nl.tudelft.sem.template.example.integration.utils.JsonUtil;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestReporter;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,15 +17,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -53,12 +46,14 @@ class ActivityTest {
     @Autowired
     private transient ActivityRepository activityRepository;
 
-    @Test
-    void createTrainingTest() throws Exception {
+    @BeforeEach
+    void setUp() {
         when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
         when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
         when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
+    }
+    @Test
+    void createTrainingTest() throws Exception {
         String jsonRequest = "{\"timeSlot\":\"20-12-2022 10:00;20-12-2022 14:00\",\"boat\":\"C4\",\"positions\":[\"cox\",\"coach\"]}";
 
         ResultActions result = mockMvc.perform(post("/activity/createTraining")
@@ -76,17 +71,6 @@ class ActivityTest {
 
     @Test
     void createCompetitionTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
-//        ActivityRequestModel model = new ActivityRequestModel();
-//        model.setTimeSlot("20-12-2022 10:00;20-12-2022 14:00");
-//        model.setBoat("C4");
-//        model.setPositions(List.of("cox", "coach"));
-//        model.setOrganization("org");
-//        model.setGender("female");
-//        model.setCompetitive(true);
         String jsonRequest = "{\"timeSlot\":\"20-12-2022 10:00;20-12-2022 14:00\",\"boat\":\"C4\",\"positions\":[\"cox\",\"coach\"],\"organization\":\"org\",\"gender\":\"female\",\"competitive\":true}";
 
         ResultActions result = mockMvc.perform(post("/activity/createCompetition")
@@ -102,38 +86,25 @@ class ActivityTest {
         assertThat(activities).containsExactly(competition);
     }
 
-//    @Test
-//    void editTrainingTest() throws Exception {
-//        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-//        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-//        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-//
-//        Training training = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
-//        activityRepository.save(training);
-//        String jsonRequest = "{\"timeSlot\":\"20-12-2022 14:00;20-12-2022 18:00\",\"boat\":\"C4\",\"positions\":[\"cox\",\"coach\"]}";
-//
-//        ActivityRequestModel model = new ActivityRequestModel();
-//        model.setTimeSlot("20-12-2022 12:00;20-12-2022 14:00");
-//        model.setBoat("C4");
-//        model.setPositions(List.of("cox", "coach"));
-//
-//        ResultActions result = mockMvc.perform(post("/activity/edit/"+1)
-//                .header("Authorization", "Bearer MockedToken")
-//                .requestAttr("id", 1)
-//                .sessionAttr("request", model)
-//                .contentType(MediaType.APPLICATION_JSON));
-//
-//        Activity edited = activityRepository.findById(training.getId()).get();
-//        assertThat(edited.getTimeSlot()).isEqualTo(TimeSlot.getTimeSlot("20-12-2022 14:00;20-12-2022 18:00"));
-//        assertThat(edited.getPositions()).isEqualTo(List.of("cox", "coach"));
-//    }
+    @Test
+    void editTrainingTest() throws Exception {
+        Training training = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
+        activityRepository.save(training);
+        String jsonRequest = "{\"timeSlot\":\"20-12-2022 14:00;20-12-2022 18:00\",\"boat\":\"C4\",\"positions\":[\"cox\",\"coach\"]}";
+
+        ResultActions result = mockMvc.perform(put("/activity/edit/{id}", training.getId())
+                .header("Authorization", "Bearer MockedToken")
+                .param("id", Long.toString(training.getId()))
+                .content(jsonRequest)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        Activity edited = activityRepository.findById(training.getId()).get();
+        assertThat(edited.getTimeSlot()).isEqualTo(TimeSlot.getTimeSlot("20-12-2022 14:00;20-12-2022 18:00"));
+        assertThat(edited.getPositions()).isEqualTo(List.of("cox", "coach"));
+    }
 
     @Test
     void getTrainingTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training1 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         Training training2 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("21-12-2022 08:00;21-12-2022 10:00"), "8+", List.of("coach"));
         activityRepository.save(training1);
@@ -154,10 +125,6 @@ class ActivityTest {
 
     @Test
     void getCompetitionTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Competition competition1 = new Competition(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"), "org", "female", true);
         Competition competition2 = new Competition(new NetId("ExampleUser"), TimeSlot.getTimeSlot("21-12-2022 08:00;21-12-2022 10:00"), "8+", List.of("coach"), "org", "male", false);
         activityRepository.save(competition1);
@@ -178,10 +145,6 @@ class ActivityTest {
 
     @Test
     void deleteByIdTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         activityRepository.save(training);
 
@@ -195,10 +158,6 @@ class ActivityTest {
 
     @Test
     void deleteByUserTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         activityRepository.save(training);
 
@@ -212,10 +171,6 @@ class ActivityTest {
 
     @Test
     void getByNetIdTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training1 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         Training training2 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("21-12-2022 08:00;21-12-2022 10:00"), "8+", List.of("coach"));
 
@@ -235,17 +190,13 @@ class ActivityTest {
 
     @Test
     void getById() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training1 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         Training training2 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("21-12-2022 08:00;21-12-2022 10:00"), "8+", List.of("coach"));
 
         activityRepository.save(training1);
         activityRepository.save(training2);
 
-        int id2 = training2.getId();
+        long id2 = training2.getId();
 
         ResultActions result = mockMvc.perform(get("/activity/activityId/"+id2)
                 .header("Authorization", "Bearer MockedToken")
@@ -260,18 +211,14 @@ class ActivityTest {
 
     @Test
     void getOwnerById() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training1 = new Training(new NetId("ExampleUser1"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         Training training2 = new Training(new NetId("ExampleUser2"), TimeSlot.getTimeSlot("21-12-2022 08:00;21-12-2022 10:00"), "8+", List.of("coach"));
 
         activityRepository.save(training1);
         activityRepository.save(training2);
 
-        int id1 = training1.getId();
-        int id2 = training2.getId();
+        long id1 = training1.getId();
+        long id2 = training2.getId();
 
         ResultActions result = mockMvc.perform(get("/activity/user/"+id1)
                 .header("Authorization", "Bearer MockedToken")
@@ -293,10 +240,6 @@ class ActivityTest {
 
     @Test
     void getByUsernameTest() throws Exception {
-        when(mockAuthenticationManager.getNetId()).thenReturn("ExampleUser");
-        when(mockJwtTokenVerifier.validateToken(anyString())).thenReturn(true);
-        when(mockJwtTokenVerifier.getNetIdFromToken(anyString())).thenReturn("ExampleUser");
-
         Training training1 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("20-12-2022 10:00;20-12-2022 14:00"), "C4", List.of("cox"));
         Training training2 = new Training(new NetId("ExampleUser"), TimeSlot.getTimeSlot("21-12-2022 08:00;21-12-2022 10:00"), "8+", List.of("coach"));
 
