@@ -15,7 +15,9 @@ import static org.mockito.Mockito.*;
 
 public class ActivityServiceTest {
 
-    ActivityService service;
+    ActivityServiceGet serviceGet;
+    ActivityServiceCreateDelete serviceCreateDelete;
+    ActivityServiceEdit serviceEdit;
     ActivityRepository activityRepo;
     NetId user = new NetId("paula");
     Competition competition = new Competition(user, new TimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "boat", List.of("captain"), "organization", "female", true);
@@ -24,7 +26,9 @@ public class ActivityServiceTest {
     @BeforeEach
     public void setUp() {
         activityRepo  = mock(ActivityRepository.class);
-        service = new ActivityService(activityRepo);
+        serviceGet = new ActivityServiceGet(activityRepo);
+        serviceCreateDelete = new ActivityServiceCreateDelete(activityRepo);
+        serviceEdit = new ActivityServiceEdit(activityRepo);
     }
 
     public void setCompetitionRepo() {
@@ -41,7 +45,7 @@ public class ActivityServiceTest {
     public void createTraining() {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), null, null, false);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
-        service.createTraining(user, request);
+        serviceCreateDelete.createTraining(user, request);
         verify(activityRepo).save(captor.capture());
         Training training = captor.getValue();
         Training expected = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
@@ -58,7 +62,7 @@ public class ActivityServiceTest {
     public void createCompetition() {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
-        service.createCompetition(user, request);
+        serviceCreateDelete.createCompetition(user, request);
         verify(activityRepo).save(captor.capture());
         Competition competition = captor.getValue();
         Competition expected = new Competition(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"), "organization", "female", true);
@@ -78,7 +82,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), "organization", "female", true);
         competition.setId(2L);
         setCompetitionRepo();
-        service.editActivity(user, competition.getId(), request);
+        serviceEdit.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -91,7 +95,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 13:00; 10-10-2022 16:00", "boat", List.of("captain", "cox"), "organization", "female", true);
         competition.setId(2L);
         setCompetitionRepo();
-        service.editActivity(user, competition.getId(), request);
+        serviceEdit.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -106,7 +110,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("11-10-2022 13:00; 11-10-2022 16:00", "yacht", List.of("captain", "cox"), "gryffindor", "male", false);
         competition.setId(2L);
         setCompetitionRepo();
-        service.editActivity(user, competition.getId(), request);
+        serviceEdit.editActivity(user, competition.getId(), request);
         ArgumentCaptor<Competition> captor = ArgumentCaptor.forClass(Competition.class);
         verify(activityRepo).save(captor.capture());
         Competition edited = captor.getValue();
@@ -124,8 +128,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:30; 10-10-2022 16:00", "yacht", List.of("captain"), null, null, false);
         training.setId(1L);
         setTrainingRepo();
-        ActivityService service = new ActivityService(activityRepo);
-        service.editActivity(new NetId("zosia"), training.getId(), request);
+        serviceEdit.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
         verify(activityRepo).save(captor.capture());
         Training edited = captor.getValue();
@@ -142,8 +145,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
         training.setId(1L);
         setTrainingRepo();
-        ActivityService service = new ActivityService(activityRepo);
-        service.editActivity(new NetId("zosia"), training.getId(), request);
+        serviceEdit.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
         verify(activityRepo).save(captor.capture());
         Training edited = captor.getValue();
@@ -159,7 +161,7 @@ public class ActivityServiceTest {
         ActivityRequestModel request = new ActivityRequestModel("10-10-2022 14:00; 10-11-2022 16:00", "yacht", List.of("captain"), null, null, false);
         training.setId(1L);
         setTrainingRepo();
-        service.editActivity(new NetId("zosia"), training.getId(), request);
+        serviceEdit.editActivity(new NetId("zosia"), training.getId(), request);
         ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
         verify(activityRepo).save(captor.capture());
         Training edited = captor.getValue();
@@ -176,7 +178,7 @@ public class ActivityServiceTest {
         training.setId(1L);
         setTrainingRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("harry"), training.getId(), request));
+        assertThrows(UnauthorizedException.class, () -> serviceEdit.editActivity(new NetId("harry"), training.getId(), request));
     }
 
 
@@ -186,13 +188,13 @@ public class ActivityServiceTest {
         competition.setId(2L);
         setCompetitionRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.editActivity(new NetId("zosia"), competition.getId(), request));
+        assertThrows(UnauthorizedException.class, () -> serviceEdit.editActivity(new NetId("zosia"), competition.getId(), request));
     }
 
     @Test
     public void getAllWithOneActivity() {
         when(activityRepo.findAll()).thenReturn(List.of(training));
-        List<Activity> activities = service.getAll();
+        List<Activity> activities = serviceGet.getAll();
 
         assertEquals(1, activities.size());
         assertEquals(training, activities.get(0));
@@ -202,7 +204,7 @@ public class ActivityServiceTest {
     @Test
     public void getAllWithTrainingsAndCompetitions() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        List<Activity> activities = service.getAll();
+        List<Activity> activities = serviceGet.getAll();
 
         assertEquals(2, activities.size());
         assertEquals(training, activities.get(0));
@@ -212,7 +214,7 @@ public class ActivityServiceTest {
     @Test
     public void getTrainingsWithTrainingsAndCompetitions() {
         when(activityRepo.findAll()).thenReturn(List.of(training));
-        List<Training> trainings = service.getTrainings();
+        List<Training> trainings = serviceGet.getTrainings();
 
         assertEquals(1, trainings.size());
         assertEquals(training, trainings.get(0));
@@ -221,7 +223,7 @@ public class ActivityServiceTest {
     @Test
     public void getAllWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        List<Activity> activities = service.getAll();
+        List<Activity> activities = serviceGet.getAll();
 
         assertEquals(0, activities.size());
     }
@@ -229,7 +231,7 @@ public class ActivityServiceTest {
     @Test
     public void getAllCompetitionsWithOneCompetition() {
         when(activityRepo.findAll()).thenReturn(List.of(competition));
-        List<Competition> competitions = service.getCompetitions();
+        List<Competition> competitions = serviceGet.getCompetitions();
 
         assertEquals(1, competitions.size());
         assertEquals(competition, competitions.get(0));
@@ -238,7 +240,7 @@ public class ActivityServiceTest {
     @Test
     public void getAllCompetitionsWithNoCompetitions() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        List<Competition> competitions = service.getCompetitions();
+        List<Competition> competitions = serviceGet.getCompetitions();
 
         assertEquals(0, competitions.size());
     }
@@ -246,7 +248,7 @@ public class ActivityServiceTest {
     @Test
     public void getAllCompetitionsWithTrainingsAndCompetitions() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        List<Competition> competitions = service.getCompetitions();
+        List<Competition> competitions = serviceGet.getCompetitions();
 
         assertEquals(1, competitions.size());
         assertEquals(competition, competitions.get(0));
@@ -255,7 +257,7 @@ public class ActivityServiceTest {
     @Test
     public void getAllTrainingsWithJustCompetitions() {
         when(activityRepo.findAll()).thenReturn(List.of(competition));
-        List<Training> trainings = service.getTrainings();
+        List<Training> trainings = serviceGet.getTrainings();
 
         assertEquals(0, trainings.size());
     }
@@ -264,7 +266,7 @@ public class ActivityServiceTest {
     public void getActivityByIdWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
 
-        assertThrows(ActivityNotFoundException.class, () -> service.getById(1L));
+        assertThrows(ActivityNotFoundException.class, () -> serviceGet.getById(1L));
     }
 
     @Test
@@ -272,7 +274,7 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training));
         training.setId(1L);
         setTrainingRepo();
-        Activity activity = service.getById(1L);
+        Activity activity = serviceGet.getById(1L);
 
         assertEquals(training, activity);
     }
@@ -282,7 +284,7 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         competition.setId(2L);
         setCompetitionRepo();
-        Activity activity = service.getById(2L);
+        Activity activity = serviceGet.getById(2L);
 
         assertEquals(activity, competition);
     }
@@ -290,13 +292,13 @@ public class ActivityServiceTest {
     @Test
     public void getActivityByIdWithTwoActivitiesAndWrongId() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        assertThrows(ActivityNotFoundException.class, () -> service.getById(3L));
+        assertThrows(ActivityNotFoundException.class, () -> serviceGet.getById(3L));
     }
 
     @Test
     public void deleteActivityByIdWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 1L));
+        assertThrows(ActivityNotFoundException.class, () -> serviceCreateDelete.deleteById(new NetId("zosia"), 1L));
     }
 
     @Test
@@ -304,7 +306,7 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training));
         training.setId(1L);
         setTrainingRepo();
-        service.deleteById(new NetId("zosia"), 1L);
+        serviceCreateDelete.deleteById(new NetId("zosia"), 1L);
         verify(activityRepo, times(1)).deleteById(1L);
     }
 
@@ -315,7 +317,7 @@ public class ActivityServiceTest {
         competition.setId(2L);
         setTrainingRepo();
         setCompetitionRepo();
-        service.deleteById(new NetId("zosia"), 1L);
+        serviceCreateDelete.deleteById(new NetId("zosia"), 1L);
         verify(activityRepo, times(1)).deleteById(1L);
     }
 
@@ -327,7 +329,7 @@ public class ActivityServiceTest {
         setTrainingRepo();
         setCompetitionRepo();
 
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteById(new NetId("zosia"), 3L));
+        assertThrows(ActivityNotFoundException.class, () -> serviceCreateDelete.deleteById(new NetId("zosia"), 3L));
     }
 
     @Test
@@ -338,50 +340,50 @@ public class ActivityServiceTest {
         setTrainingRepo();
         setCompetitionRepo();
 
-        assertThrows(UnauthorizedException.class, () -> service.deleteById(new NetId("harry"), 1L));
+        assertThrows(UnauthorizedException.class, () -> serviceCreateDelete.deleteById(new NetId("harry"), 1L));
     }
 
     @Test
     public void deleteActivityByUserWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        assertThrows(ActivityNotFoundException.class, () -> service.deleteByUser(new NetId("zosia"), new NetId("zosia")));
+        assertThrows(ActivityNotFoundException.class, () -> serviceCreateDelete.deleteByUser(new NetId("zosia"), new NetId("zosia")));
     }
 
     @Test
     public void deleteActivityByUserWithOneActivity() throws ActivityNotFoundException, UnauthorizedException {
         when(activityRepo.findAll()).thenReturn(List.of(training));
-        service.deleteByUser(new NetId("zosia"), new NetId("zosia"));
+        serviceCreateDelete.deleteByUser(new NetId("zosia"), new NetId("zosia"));
         verify(activityRepo, times(1)).deleteAll(List.of(training));
     }
 
     @Test
     public void deleteActivityByUserWithTwoActivities() throws ActivityNotFoundException, UnauthorizedException {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        service.deleteByUser(new NetId("zosia"), new NetId("zosia"));
+        serviceCreateDelete.deleteByUser(new NetId("zosia"), new NetId("zosia"));
         verify(activityRepo, times(1)).deleteAll(List.of(training));
     }
 
     @Test
     public void deleteActivityByUserWithTwoActivitiesAndWrongOwner() {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        assertThrows(UnauthorizedException.class, () -> service.deleteByUser(new NetId("zosia"), new NetId("paula")));
+        assertThrows(UnauthorizedException.class, () -> serviceCreateDelete.deleteByUser(new NetId("zosia"), new NetId("paula")));
     }
 
     @Test
     public void getActivitiesByUserWithNoActivities() {
         when(activityRepo.findAll()).thenReturn(List.of());
-        assertThrows(ActivityNotFoundException.class, () -> service.getByUsername("zosia"));
+        assertThrows(ActivityNotFoundException.class, () -> serviceGet.getByUsername("zosia"));
     }
 
     @Test
     public void getActivitiesByUserWithOneActivity() throws ActivityNotFoundException {
         when(activityRepo.findAll()).thenReturn(List.of(training));
-        assertEquals(List.of(training), service.getByUsername("zosia"));
+        assertEquals(List.of(training), serviceGet.getByUsername("zosia"));
     }
 
     @Test
     public void getActivitiesByUserWithTwoActivities() throws ActivityNotFoundException {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
-        assertEquals(List.of(training), service.getByUsername("zosia"));
+        assertEquals(List.of(training), serviceGet.getByUsername("zosia"));
     }
 }

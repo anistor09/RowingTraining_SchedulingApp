@@ -15,16 +15,19 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("activity")
 public class ActivityController {
     private final transient AuthManager authManager;
-    private final transient ActivityService activityService;
+    private final transient ActivityServiceCreateDelete activityServiceCreateDelete;
+    private final transient ActivityServiceEdit activityServiceEdit;
 
     /**
      * Constructor for ActivityController.
      * @param authManager the authentication manager
-     * @param activityService the service for activities
+     * @param activityServiceCreateDelete the service for creating or deleting activities
+     * @param activityServiceEdit the service for creating or editing activities
      */
-    public ActivityController(AuthManager authManager, ActivityService activityService) {
+    public ActivityController(AuthManager authManager, ActivityServiceCreateDelete activityServiceCreateDelete, ActivityServiceEdit activityServiceEdit) {
         this.authManager = authManager;
-        this.activityService = activityService;
+        this.activityServiceCreateDelete = activityServiceCreateDelete;
+        this.activityServiceEdit = activityServiceEdit;
     }
 
     /**
@@ -35,7 +38,7 @@ public class ActivityController {
     @DeleteMapping("/deleteUser/{username}")
     public void deleteByUser(@PathVariable String username) throws UnauthorizedException, ActivityNotFoundException {
         NetId logged = new NetId(authManager.getNetId());
-        activityService.deleteByUser(new NetId(username), logged);
+        activityServiceCreateDelete.deleteByUser(new NetId(username), logged);
     }
 
     /**
@@ -46,7 +49,7 @@ public class ActivityController {
     @DeleteMapping("/deleteId/{id}")
     public void deleteById(@PathVariable long id) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
-        activityService.deleteById(username, id);
+        activityServiceCreateDelete.deleteById(username, id);
     }
 
     /**
@@ -58,7 +61,7 @@ public class ActivityController {
     @PutMapping("/edit/{id}")
     public void editActivity(@PathVariable long id, @RequestBody ActivityRequestModel request) throws UnauthorizedException, ActivityNotFoundException {
         NetId username = new NetId(authManager.getNetId());
-        activityService.editActivity(username, id, request);
+        activityServiceEdit.editActivity(username, id, request);
     }
 
     /**
@@ -69,7 +72,7 @@ public class ActivityController {
     @PostMapping("/createCompetition")
     public ResponseEntity<Competition> createCompetition(@RequestBody ActivityRequestModel request) {
         NetId username = new NetId(authManager.getNetId());
-        return ResponseEntity.ok(activityService.createCompetition(username, request));
+        return ResponseEntity.ok(activityServiceCreateDelete.createCompetition(username, request));
     }
 
     /**
@@ -80,6 +83,6 @@ public class ActivityController {
     @PostMapping("/createTraining")
     public ResponseEntity<Training> createTraining(@RequestBody ActivityRequestModel request) {
         NetId username = new NetId(authManager.getNetId());
-        return ResponseEntity.ok(activityService.createTraining(username, request));
+        return ResponseEntity.ok(activityServiceCreateDelete.createTraining(username, request));
     }
 }

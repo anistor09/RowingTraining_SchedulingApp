@@ -15,11 +15,11 @@ import java.util.List;
 @RequestMapping("activity")
 public class ActivityGetterController {
     private final transient AuthManager authManager;
-    private final transient ActivityService activityService;
+    private final transient ActivityServiceGet activityServiceGet;
 
-    public ActivityGetterController(AuthManager authManager, ActivityService activityService) {
+    public ActivityGetterController(AuthManager authManager, ActivityServiceGet activityServiceGet) {
         this.authManager = authManager;
-        this.activityService = activityService;
+        this.activityServiceGet = activityServiceGet;
     }
 
     /**
@@ -28,7 +28,7 @@ public class ActivityGetterController {
      */
     @GetMapping("/all")
     public List<Activity> getAll() {
-        return activityService.getAll();
+        return activityServiceGet.getAll();
     }
 
     /**
@@ -36,14 +36,14 @@ public class ActivityGetterController {
      * @return all trainings
      */
     @GetMapping("/training")
-    public List<Training> getTrainings() { return activityService.getTrainings(); }
+    public List<Training> getTrainings() { return activityServiceGet.getTrainings(); }
 
     /**
      * Gets all competitions.
      * @return all competitions
      */
     @GetMapping("/competition")
-    public List<Competition> getCompetitions() { return activityService.getCompetitions(); }
+    public List<Competition> getCompetitions() { return activityServiceGet.getCompetitions(); }
 
     /**
      * Gets all activities of the given user.
@@ -52,7 +52,7 @@ public class ActivityGetterController {
      */
     @GetMapping("/{username}")
     public List<Activity> getByUsername(@PathVariable("username") String username) throws ActivityNotFoundException {
-        var activity = activityService.getByUsername(username);
+        var activity = activityServiceGet.getByUsername(username);
         if (activity.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Activity not found");
         }
@@ -66,7 +66,7 @@ public class ActivityGetterController {
      */
     @GetMapping("/user/{id}")
     public NetId getOwnerById(@PathVariable("id") long id) throws ActivityNotFoundException {
-        return activityService.getById(id).getOwner();
+        return activityServiceGet.getById(id).getOwner();
     }
 
     /**
@@ -76,7 +76,7 @@ public class ActivityGetterController {
      */
     @GetMapping("/user")
     public List<Activity> getByNetId() throws ActivityNotFoundException {
-        return activityService.getByUsername(authManager.getNetId());
+        return activityServiceGet.getByUsername(authManager.getNetId());
     }
 
     /**
@@ -86,6 +86,6 @@ public class ActivityGetterController {
      */
     @GetMapping("/activityId/{id}")
     public Activity getById(@PathVariable("id") long id) throws ActivityNotFoundException {
-        return activityService.getById(id);
+        return activityServiceGet.getById(id);
     }
 }
