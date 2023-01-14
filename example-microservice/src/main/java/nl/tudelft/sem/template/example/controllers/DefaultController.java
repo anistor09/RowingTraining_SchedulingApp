@@ -4,16 +4,12 @@ import nl.tudelft.sem.template.example.authentication.AuthManager;
 import nl.tudelft.sem.template.example.domain.models.ParticipationRequestModel;
 import nl.tudelft.sem.template.example.domain.models.RequestMatchModel;
 import nl.tudelft.sem.template.example.domain.models.RequetsTransferMatchModel;
-import nl.tudelft.sem.template.example.domain.participant.Certificate;
-import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
-import nl.tudelft.sem.template.example.domain.participant.PositionManager;
-import nl.tudelft.sem.template.example.domain.participant.NetId;
+import nl.tudelft.sem.template.example.domain.participant.*;
 import nl.tudelft.sem.template.example.domain.transferClasses.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferClasses.TransferMatch;
 import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,19 +29,20 @@ import java.util.List;
 public class DefaultController {
 
     private final transient AuthManager authManager;
-    private final transient ParticipantService participantService;
+    private final transient ParticipantDetailsService participantDetailsService;
     private final transient ServerUtils serverUtils;
-
+    private final transient ParticipantService participantService;
     /**
      * Instantiates a new controller.
      *
      * @param authManager Spring Security component used to authenticate and authorize the user
      */
     @Autowired
-    public DefaultController(AuthManager authManager, ParticipantService participantService, ServerUtils serverUtils) {
+    public DefaultController(AuthManager authManager, ParticipantDetailsService participantDetailsService, ServerUtils serverUtils, ParticipantService participantService) {
         this.authManager = authManager;
-        this.participantService= participantService;
+        this.participantDetailsService = participantDetailsService;
         this.serverUtils = serverUtils;
+        this.participantService = participantService;
     }
 
     /**

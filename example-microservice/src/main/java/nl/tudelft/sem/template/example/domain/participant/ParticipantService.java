@@ -10,11 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Service for adding new Participants and their details
- */
 @Service
 public class ParticipantService {
+
     private final transient ParticipantRepository participantRepository;
 
     /**
@@ -40,10 +38,10 @@ public class ParticipantService {
      */
     public Participant addParticipant(NetId netId, PositionManager positionManager, String gender, Certificate certificate,
                                       String organization, Boolean level) {
-            Participant participant= new Participant(netId,positionManager,gender,certificate,organization,level);
+        Participant participant= new Participant(netId,positionManager,gender,certificate,organization,level);
 
-            participantRepository.save(participant);
-            return participant;
+        participantRepository.save(participant);
+        return participant;
     }
 
     /**
@@ -62,71 +60,6 @@ public class ParticipantService {
 
     }
 
-    /**
-     * Get the positions of the participant by netId.
-     * @param netId
-     * @return positions
-     */
-    public List<String> getParticipantPositions(NetId netId) {
-
-        if(getParticipant(netId).getPositionManager().getPositions()!=null){
-            List<String> positions= getParticipant(netId).getPositionManager().getPositions();
-            return positions;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Get the certificate of the participant by netId.
-     * @param netId
-     * @return certificate
-     */
-    public String getParticipantCertificate(NetId netId) {
-        if(getParticipant(netId).getCertificate()!=null){
-            String certificate= getParticipant(netId).getCertificate().toString();
-            return certificate;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Gets the organization of the participant by netId.
-     * @param netId
-     * @return organization
-     */
-    public String getParticipantOrganization(NetId netId) {
-        if(getParticipant(netId).getOrganization()!=null){
-            String organization= getParticipant(netId).getOrganization();
-            return organization;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Gets the gender of the participant by netId.
-     * @param netId
-     * @return gender
-     */
-    public String getParticipantGender(NetId netId) {
-        if(getParticipant(netId).getGender()!=null){
-            String gender= getParticipant(netId).getGender();
-            return gender;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Gets the level of the participant by netId.
-     * @param netId
-     * @return level
-     */
-    public Boolean getParticipantLevel(NetId netId) {
-        if(getParticipant(netId).getLevel()!=null){
-            Boolean level= getParticipant(netId).getLevel();
-            return level;
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    }
 
     /**
      * Gets the RequestMatch of the participant.
@@ -155,4 +88,5 @@ public class ParticipantService {
         return transferMatch;
 
     }
+
 }
