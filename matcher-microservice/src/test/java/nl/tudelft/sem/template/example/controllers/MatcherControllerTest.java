@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 // activate profiles to have spring use mocks during auto-injection of certain beans.
-@ActiveProfiles({"test", "mockTokenVerifier", "mockAuthenticationManager","matcherService"})
+@ActiveProfiles({"test", "mockTokenVerifier", "mockAuthenticationManager","matcherEditService","matcherComputingService"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 class MatcherControllerTest {
@@ -57,7 +57,10 @@ class MatcherControllerTest {
     private transient AuthManager mockAuthenticationManager;
 
     @MockBean
-    private transient MatcherService matcherService;
+    private transient MatcherEditService matcherEditService;
+
+    @MockBean
+    private transient MatcherComputingService matcherComputingService;
 
     @BeforeEach
     void setUp() {
@@ -82,7 +85,7 @@ class MatcherControllerTest {
                 "participant","owner");
         List<TransferMatch> lst = new ArrayList<>();
         lst.add(expected);
-        when(matcherService.computeMatch(any())).thenReturn(lst);
+        when(matcherComputingService.computeMatch(any())).thenReturn(lst);
 
         ResultActions result = mockMvc.perform(post("/requestMatch")
                 .header("Authorization", "Bearer MockedToken")
@@ -114,7 +117,7 @@ class MatcherControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest));
         result.andExpect(status().isOk());
-        verify(matcherService).saveMatch(any(Match.class));
+        verify(matcherEditService).saveMatch(any(Match.class));
 
     }
     @Test
@@ -124,7 +127,7 @@ class MatcherControllerTest {
 
 
         Match expectedMatch = new Match("participant",1L,"cox");
-        when(matcherService.getAllMatches()).thenReturn(List.of(expectedMatch));
+        when(matcherEditService.getAllMatches()).thenReturn(List.of(expectedMatch));
 
 
 
