@@ -1,7 +1,7 @@
 package nl.tudelft.sem.template.example.controllers;
 
 import nl.tudelft.sem.template.example.authentication.AuthManager;
-import nl.tudelft.sem.template.example.domain.participant.ParticipantService;
+import nl.tudelft.sem.template.example.domain.participant.ParticipantDetailsService;
 import nl.tudelft.sem.template.example.domain.participant.NetId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("userDetails")
 public class UserDetailsController {
     private final transient AuthManager authManager;
-    private final transient ParticipantService participantService;
+    private final transient ParticipantDetailsService participantDetailsService;
 
     /**
      * Instantiates a new controller.
@@ -24,9 +24,9 @@ public class UserDetailsController {
      * @param authManager Spring Security component used to authenticate and authorize the user
      */
     @Autowired
-    public UserDetailsController(AuthManager authManager, ParticipantService participantService) {
+    public UserDetailsController(AuthManager authManager, ParticipantDetailsService participantDetailsService) {
         this.authManager = authManager;
-        this.participantService= participantService;
+        this.participantDetailsService = participantDetailsService;
     }
 
     /**
@@ -39,7 +39,7 @@ public class UserDetailsController {
         try {
             List<String> positions;
             NetId participantName = new NetId(authManager.getNetId());
-             positions = participantService.getParticipantPositions(participantName);
+             positions = participantDetailsService.getParticipantPositions(participantName);
             return positions;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -56,7 +56,7 @@ public class UserDetailsController {
         try {
 
             NetId participantName = new NetId(authManager.getNetId());
-            String certificate = participantService.getParticipantCertificate(participantName);
+            String certificate = participantDetailsService.getParticipantCertificate(participantName);
             return certificate;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -73,7 +73,7 @@ public class UserDetailsController {
         try {
 
             NetId participantName = new NetId(authManager.getNetId());
-            String gender = participantService.getParticipantGender(participantName);
+            String gender = participantDetailsService.getParticipantGender(participantName);
             return gender;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -88,7 +88,7 @@ public class UserDetailsController {
     public Boolean getLevel() {
         try {
             NetId participantName = new NetId(authManager.getNetId());
-            Boolean level = participantService.getParticipantLevel(participantName);
+            Boolean level = participantDetailsService.getParticipantLevel(participantName);
             return level;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -104,7 +104,7 @@ public class UserDetailsController {
     public String getOrganization() {
         try {
             NetId participantName = new NetId(authManager.getNetId());
-            String organization = participantService.getParticipantOrganization(participantName);
+            String organization = participantDetailsService.getParticipantOrganization(participantName);
             return organization;
         }   catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
