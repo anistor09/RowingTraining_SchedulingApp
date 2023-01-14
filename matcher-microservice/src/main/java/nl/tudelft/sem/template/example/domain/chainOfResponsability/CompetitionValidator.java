@@ -21,6 +21,6 @@ public class CompetitionValidator extends BaseValidator {
             return false;
         if (!participant.getOrganization().equals(competition.getOrganization()))
             return false;
-        return !participant.getLevel().equals(competition.getCompetitive());
+        return participant.getLevel().equals(competition.getCompetitive());
     }
 }
