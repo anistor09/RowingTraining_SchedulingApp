@@ -100,13 +100,7 @@ public class ActivityService {
      */
     public void deleteByUser(NetId netId, NetId logged) throws UnauthorizedException, ActivityNotFoundException {
         if(netId.getNetIdValue().equals(logged.getNetIdValue())) {
-            List<Activity> activities = activityRepository.findAll();
-            List<Activity> toDelete = new ArrayList<>();
-            for (Activity activity : activities) {
-                if (activity.getOwner().getNetIdValue().equals(netId.getNetIdValue())) {
-                    toDelete.add(activity);
-                }
-            }
+            List<Activity> toDelete = toDelete(netId);
             if (toDelete.isEmpty()) {
                 throw new ActivityNotFoundException("No activities found for this user.");
             }
@@ -114,6 +108,16 @@ public class ActivityService {
         } else {
             throw new UnauthorizedException("You are not the owner of this activity.");
         }
+    }
+
+    public List<Activity> toDelete(NetId netId) {
+        List<Activity> toDelete = new ArrayList<>();
+        for(Activity activity : activityRepository.findAll()) {
+            if (activity.getOwner().getNetIdValue().equals(netId.getNetIdValue())) {
+                toDelete.add(activity);
+            }
+        }
+        return toDelete;
     }
 
     public void deleteById(NetId netId, long id) throws UnauthorizedException, ActivityNotFoundException {
