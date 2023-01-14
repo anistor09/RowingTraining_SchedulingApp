@@ -20,15 +20,18 @@ public class TimeSlotValidator extends BaseValidator {
         startActivity = adjustStartTime(activity.getTimeSlot().getBegin(), activity instanceof Competition);
         activityTime = activity.getTimeSlot();
         for (TimeSlot participantTime : timeslots)
-            if ((participantTime.getBegin().before(startActivity)
-                    || participantTime.getBegin().equals(startActivity))
-                    && (participantTime.getEnd().after(activityTime.getEnd())
-                    || participantTime.getEnd().equals(activityTime.getEnd())))
+            if (isTimeValid(startActivity,activityTime,participantTime))
                 return super.checkNext(activity, position, participant, timeslots);
 
         return false;
+    }
 
-
+    public boolean isTimeValid(Date startActivity,TimeSlot activityTime, TimeSlot participantTime){
+        if(participantTime.getBegin().after(startActivity))
+            return false;
+        if(participantTime.getEnd().before(activityTime.getEnd()))
+            return false;
+        return true;
     }
 
     public Date adjustStartTime(Date startTime, boolean isCompetition) {
