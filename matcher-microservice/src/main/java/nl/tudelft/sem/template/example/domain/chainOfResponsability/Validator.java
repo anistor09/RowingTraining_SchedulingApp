@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface Validator {
     void setNext(Validator handler);
+    Validator getNext();
 
     boolean handle(Activity activity, String position, Participant participant, List<TimeSlot> timeslots);
 

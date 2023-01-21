@@ -60,7 +60,7 @@ public class MatcherComputingService {
      *
      * @return validator
      */
-    private Validator setValidators() {
+    public Validator setValidators() {
         Validator handler = new TimeSlotValidator();
         Validator positionValidator = new PositionValidator();
         Validator competitionValidator = new CompetitionValidator();

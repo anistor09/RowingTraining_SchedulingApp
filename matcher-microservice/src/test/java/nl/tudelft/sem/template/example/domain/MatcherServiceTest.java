@@ -1,33 +1,33 @@
 package nl.tudelft.sem.template.example.domain;
 
-import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
-import org.junit.jupiter.api.BeforeEach;
+import nl.tudelft.sem.template.example.domain.chainOfResponsability.*;
+
+import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
+
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+
 
 class MatcherServiceTest {
-//    transient MatcherService matcherService;
-//    @BeforeEach
-//    void setUp(){
-//        matcherService = new MatcherService();
-//    }
+
 
     @Test
-    void computeMatch() {
-//        Participant participant = new Participant(new NetId("netId"),
-//                new PositionManager("cox"),
-//                "M",
-//                new Certificate("C4"),
-//                "org",true);
-//        RequestMatch requestMatch = new RequestMatch(participant, List.of("21-12-2012 17:33;29-12-2022 15:22"));
+    void setValidators() {
+        MatcherRepository matcherRepository = mock(MatcherRepository.class);
+        ServerUtils serverUtils = mock(ServerUtils.class);
+        MatcherComputingService mc = new MatcherComputingService(matcherRepository,serverUtils);
 
-    }
+        Validator first = mc.setValidators();
+        Validator second = first.getNext();
+        Validator third = second.getNext();
+        Validator forth = third.getNext();
 
-    @Test
-    void getActivities() {
+        assertTrue(first instanceof TimeSlotValidator);
+        assertTrue(second instanceof PositionValidator);
+        assertTrue(third instanceof CompetitionValidator);
+        assertTrue(forth instanceof CertificateValidator);
     }
 
     @Test
