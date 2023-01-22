@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.sql.Time;
+import java.text.ParseException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -170,6 +171,19 @@ public class ActivityServiceTest {
         assertEquals("10-10-2022 14:00;10-11-2022 16:00", edited.getTimeSlot().toString());
         assertEquals("yacht", edited.getBoat());
         assertEquals(List.of("captain"), edited.getPositions());
+    }
+
+    @Test
+    public void invalidTimeSlot() throws ParseException {
+        TimeSlot timeSlot = new TimeSlot("invalid;timeslot");
+    }
+
+    @Test
+    public void getMultipleTimeSlots(){
+        List<String> timeSlots = List.of("10-10-2022 14:00;10-10-2022 16:00","22-01-2023 14:00;22-01-2023 16:00");
+        assertEquals(2, TimeSlot.getTimeSlots(timeSlots).size());
+        assertEquals("10-10-2022 14:00;10-10-2022 16:00", TimeSlot.getTimeSlots(timeSlots).get(0).toString());
+        assertEquals("22-01-2023 14:00;22-01-2023 16:00", TimeSlot.getTimeSlots(timeSlots).get(1).toString());
     }
 
     @Test
