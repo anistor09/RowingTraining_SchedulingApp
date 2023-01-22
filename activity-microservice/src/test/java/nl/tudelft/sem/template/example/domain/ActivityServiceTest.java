@@ -400,4 +400,27 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         assertEquals(List.of(training), serviceGet.getByUsername("zosia"));
     }
+
+    @Test
+    public void equalHashCode() {
+        Training training1 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        Training training2 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        assertEquals(training1.hashCode(), training2.hashCode());
+    }
+
+    @Test
+    public void notEqualHashCode() {
+        Training training1 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        Training training2 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "canoe", List.of("cox"));
+        assertNotEquals(training1.hashCode(), training2.hashCode());
+    }
+
+    @Test
+    public void convertToString() {
+        TimeSlot timeSlot = new TimeSlot("22-01-2023 14:00;22-01-2023 16:00");
+        assertEquals("22-01-2023 14:00;22-01-2023 16:00",  timeSlot.toString());
+    }
+
+
+
 }
