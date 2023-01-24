@@ -94,4 +94,12 @@ public class NotificationServiceTest {
         List<Notification> notifications = serviceGet.getUserNotifications(new NetId("minouk"));
         assertEquals(0, notifications.size());
     }
+
+    @Test
+    public void deleteNotif(){
+        ArgumentCaptor<Notification> captor = ArgumentCaptor.forClass(Notification.class);
+        Notification notif = new Notification(new ActivityId("1"), paula, owner, "message", false);
+        serviceEdit.deleteNotification(notif);
+        verify(notificationRepo).delete(captor.capture());
+    }
 }
