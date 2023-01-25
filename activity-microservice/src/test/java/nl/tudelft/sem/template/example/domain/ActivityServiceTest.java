@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.sql.Time;
+import java.text.ParseException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -386,4 +387,52 @@ public class ActivityServiceTest {
         when(activityRepo.findAll()).thenReturn(List.of(training, competition));
         assertEquals(List.of(training), serviceGet.getByUsername("zosia"));
     }
+
+    @Test
+    public void equalHashCode() {
+        Training training1 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        Training training2 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        assertEquals(training1.hashCode(), training2.hashCode());
+    }
+
+    @Test
+    public void notEqualHashCode() {
+        Training training1 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        Training training2 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "canoe", List.of("cox"));
+        assertNotEquals(training1.hashCode(), training2.hashCode());
+    }
+
+    @Test
+    public void EqualTrainingString() {
+        Training training1 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        Training training2 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        assertEquals(training1.toString(), training2.toString());
+    }
+
+    @Test
+    public void notEqualTrainingString() {
+        Training training1 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "yacht", List.of("captain"));
+        Training training2 = new Training(user, TimeSlot.getTimeSlot("10-10-2022 14:30; 10-10-2022 16:00"), "canoe", List.of("cox"));
+        assertNotEquals(training1.toString(), training2.toString());
+    }
+
+    @Test
+    public void usernameToString() {
+        Username username = new Username("Minouk");
+        assertEquals("Minouk", username.toString());
+    }
+
+    @Test
+    public void invalidTimeSlot() throws ParseException {
+        TimeSlot timeSlot = new TimeSlot("invalid;timeslot");
+    }
+
+    @Test
+    public void getMultipleTimeSlots() {
+        List<String> timeSlots = List.of("10-10-2022 14:00;10-10-2022 16:00", "22-01-2023 14:00;22-01-2023 16:00");
+        assertEquals(2, TimeSlot.getTimeSlots(timeSlots).size());
+        assertEquals("10-10-2022 14:00;10-10-2022 16:00", TimeSlot.getTimeSlots(timeSlots).get(0).toString());
+        assertEquals("22-01-2023 14:00;22-01-2023 16:00", TimeSlot.getTimeSlots(timeSlots).get(1).toString());
+    }
+
 }
