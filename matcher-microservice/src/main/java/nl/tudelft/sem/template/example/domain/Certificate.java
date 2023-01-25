@@ -53,7 +53,6 @@ public class Certificate {
         Map<String,Integer> hm = Map.of("C4",1, "4+", 2,"8+",3);
 
             return hm.get(this.getCertificateType())>=hm.get(other.getCertificateType());
-
     }
 
 }

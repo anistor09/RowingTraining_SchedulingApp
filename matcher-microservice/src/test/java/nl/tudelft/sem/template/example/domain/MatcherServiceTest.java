@@ -1,42 +1,45 @@
 package nl.tudelft.sem.template.example.domain;
 
+import nl.tudelft.sem.template.example.domain.chainOfResponsability.*;
 import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
 import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+
 
 class MatcherServiceTest {
+
     transient MatcherEditService matcherEditService;
     MatcherRepository matcherRepository;
-
+    
     @BeforeEach
     void setUp(){
-        matcherRepository = Mockito.mock(MatcherRepository.class);
+        matcherRepository = mock(MatcherRepository.class);
         matcherEditService = new MatcherEditService(matcherRepository, new ServerUtils());
     }
 
-//    @Test
-//    void computeMatch() {
-//        Participant participant = new Participant(new NetId("netId"),
-//                new PositionManager("cox"),
-//                "M",
-//                new Certificate("C4"),
-//                "org",true);
-//        RequestMatch requestMatch = new RequestMatch(participant, List.of("21-12-2012 17:33;29-12-2022 15:22"));
-//
-//    }
-
     @Test
-    void getActivities() {
+    void setValidators() {
+        MatcherRepository matcherRepository = mock(MatcherRepository.class);
+        ServerUtils serverUtils = mock(ServerUtils.class);
+        MatcherComputingService mc = new MatcherComputingService(matcherRepository,serverUtils);
+
+        Validator first = mc.setValidators();
+        Validator second = first.getNext();
+        Validator third = second.getNext();
+        Validator forth = third.getNext();
+
+        assertTrue(first instanceof TimeSlotValidator);
+        assertTrue(second instanceof PositionValidator);
+        assertTrue(third instanceof CompetitionValidator);
+        assertTrue(forth instanceof CertificateValidator);
     }
 
     @Test
