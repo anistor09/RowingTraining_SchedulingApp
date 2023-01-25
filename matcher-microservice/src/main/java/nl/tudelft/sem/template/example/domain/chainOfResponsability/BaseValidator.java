@@ -26,4 +26,7 @@ public abstract class BaseValidator implements Validator {
         }
         return next.handle(activity, position, participant, timeslots);
     }
+    public Validator getNext() {
+        return next;
+    }
 }

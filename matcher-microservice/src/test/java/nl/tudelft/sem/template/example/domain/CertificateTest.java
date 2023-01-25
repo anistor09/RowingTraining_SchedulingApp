@@ -20,6 +20,13 @@ class CertificateTest {
     }
 
     @Test
+    void isBetterCertificateSame() {
+        Certificate certificate= new Certificate("C4");
+        Certificate certificate1= new Certificate("C4");
+        assertTrue(certificate1.isBetterCertificate(certificate));
+    }
+
+    @Test
     void isBetterCertificate() {
         Certificate certificate= new Certificate("C4");
         Certificate certificate1= new Certificate("4+");

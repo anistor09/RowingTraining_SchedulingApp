@@ -18,4 +18,6 @@ public class CertificateValidator extends BaseValidator {
             return super.checkNext(activity, position, participant, timeslots);
         return false;
     }
+
+
 }

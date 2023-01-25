@@ -24,6 +24,14 @@ class CompetitionTest {
 
     }
     @Test
+    void getCompetitiveFalse(){
+        Competition competition = new Competition(new NetId("owner"),
+                new TimeSlot("21-12-2012 17:33;29-12-2022 15:22"),
+                "C4", List.of("cox"),"org","M",false);
+        assertFalse(competition.getCompetitive());
+
+    }
+    @Test
     void constructorTest(){
         assertNotNull(new Competition());
     }
