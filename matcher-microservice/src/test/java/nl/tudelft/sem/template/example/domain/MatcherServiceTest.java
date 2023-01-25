@@ -1,17 +1,29 @@
 package nl.tudelft.sem.template.example.domain;
 
 import nl.tudelft.sem.template.example.domain.chainOfResponsability.*;
-
+import nl.tudelft.sem.template.example.domain.transferObject.RequestMatch;
+import nl.tudelft.sem.template.example.domain.transferObject.TransferMatch;
 import nl.tudelft.sem.template.example.domain.utils.ServerUtils;
+import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
-import org.junit.jupiter.api.Test;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 
 class MatcherServiceTest {
 
+    transient MatcherEditService matcherEditService;
+    MatcherRepository matcherRepository;
+    
+    @BeforeEach
+    void setUp(){
+        matcherRepository = mock(MatcherRepository.class);
+        matcherEditService = new MatcherEditService(matcherRepository, new ServerUtils());
+    }
 
     @Test
     void setValidators() {
@@ -48,10 +60,20 @@ class MatcherServiceTest {
 
     @Test
     void removeMatches() {
+        TransferMatch tm = new TransferMatch(1L, "cox", "20-12-2022 09:00;20-12-2022 11:00",
+                "participant", "owner");
+        Match match = new Match("participant", 1L, "coach");
+        Mockito.when(matcherRepository.findAll()).thenReturn(List.of(match));
+        matcherEditService.removeMatches(List.of(tm));
+        verify(matcherRepository, times(1)).delete(match);
     }
-
     @Test
     void findMatch() {
+        TransferMatch tm = new TransferMatch(1L, "cox", "20-12-2022 09:00;20-12-2022 11:00",
+                "participant", "owner");
+        Match match = new Match("participant", 1L, "coach");
+        List<Match> matches = matcherEditService.findMatch(tm, List.of(match));
+        assertThat(matches).containsExactly(match);
     }
 
     @Test
